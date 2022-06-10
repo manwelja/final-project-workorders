@@ -90,4 +90,5 @@ const workorders = [
 ];
 
 storiesOf("queueListItem", module)
-  .add("QueueListItem", () => <QueueListItem>workorders</QueueListItem>)
+  .add("Empty", () => <QueueListItem />)
+  .add("DisplayWorkorder", () => <QueueListItem workorder= { workorders[0]}/>)
