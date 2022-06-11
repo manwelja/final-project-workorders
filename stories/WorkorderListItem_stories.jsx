@@ -3,6 +3,7 @@ import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 
 import WorkorderListItem from "components/WorkorderListItem";
+import WorkorderList from "../src/components/WorkorderList";
 
 const users = [
 {
@@ -49,64 +50,101 @@ archive: false
 }
 ];
 
-const workorder = 
-   {id: 4,
-    user_student_id: 8,
-    user_mentor_id: 4,
-    status_id: 1,
-    category_id: 1,
-    module_id: 3,
-    environment: "M1",
-    description: "Code review please",
-    screenshot: null,
-    link_to_module: null,
-    escalate: false,
-    mentor_notes: "Not bad coding style, but there were some arries that could be more 'DRY'. Recommended helper functions",
-    student_notes: "Meh",
-    mentor_rating: 5,
-    student_rating: 3,
-    date_created: "2018-03-14T12:00:00.000Z",
-    date_pickup: "2018-03-14T12:03:00.000Z",
-    date_closed: "2018-03-14T13:00:00.000Z"
-    };
-
-const getMentorNameById = mentorId => {
-for (const user of users) {
-  if (user.id === mentorId) {
-    return `${user.first_name} ${user.last_name}`
-    }
+const workorders = [
+{ id: 4,
+  user_student_id: 8,
+  user_mentor_id: 4,
+  status_id: 1,
+  category_id: 1,
+  module_id: 3,
+  environment: "M1",
+  description: "Code review please",
+  screenshot: null,
+  link_to_module: "www.google.com",
+  escalate: false,
+  mentor_notes: "Not bad coding style, but there were some arries that could be more 'DRY'. Recommended helper functions",
+  student_notes: "Meh",
+  mentor_rating: 5,
+  student_rating: 3,
+  date_created: "2018-03-14T12:00:00.000Z",
+  date_pickup: "2018-03-14T12:03:00.000Z",
+  date_closed: "2018-03-14T13:00:00.000Z"
+},
+{
+  id: 3,
+  user_student_id: 2,
+  user_mentor_id: 4,
+  status_id: 1,
+  category_id: 2,
+  module_id: 3,
+  environment: "WSL",
+  description: "Discussion",
+  screenshot: null,
+  link_to_module: null,
+  escalate: false,
+  mentor_notes: "M1 issue - needed to change package.json as per Francis' recommendation ",
+  student_notes: "Mentor fixed problem super quick",
+  mentor_rating: 1,
+  student_rating: 1,
+  date_created: "2018-03-13T12:00:00.000Z",
+  date_pickup: "2018-03-13T12:03:00.000Z",
+  date_closed: "2018-03-13T13:00:00.000Z",
+  student_first_name: "Jane",
+  student_last_name: "Doe",
+  mentor_first_name: "Patricia",
+  mentor_last_name: "Anderson",
+  week: 1,
+  day: 1,
+  topic: "Bootcamp Reference Guide"
+  },
+  {
+  id: 12,
+  user_student_id: 1,
+  user_mentor_id: 19,
+  status_id: 1,
+  category_id: 1,
+  module_id: 3,
+  environment: "M1",
+  description: "Code review",
+  screenshot: null,
+  link_to_module: null,
+  escalate: false,
+  mentor_notes: "Not bad coding style, but there were some arries that could be more 'DRY'. Recommended helper functions",
+  student_notes: "Meh",
+  mentor_rating: 5,
+  student_rating: 3,
+  date_created: "2018-03-14T12:00:00.000Z",
+  date_pickup: "2018-03-14T12:03:00.000Z",
+  date_closed: "2018-03-14T13:00:00.000Z",
+  student_first_name: "John",
+  student_last_name: "Doe",
+  mentor_first_name: "Patricia",
+  mentor_last_name: "Anderson",
+  week: 1,
+  day: 1,
+  topic: "Bootcamp Reference Guide"
   }
-};
+];
+  
 
-const getStudentNameById = studentId => {
-for (const user of users) {
-  if (user.id === studentId) {
-    return `${user.first_name} ${user.last_name}`
-    }
-  }
-};
-
-const getModuleById = moduleId => {
-for (const module of modules) {
-  if (module.id === moduleId) {
-    return module
-    }
-  }
-};
+storiesOf("WorkorderList", module)
+  .add("ViewWorkorders", () => (
+  <WorkorderList 
+    workorders={workorders}
+    users = {users}
+    modules = {modules}
+    />
+  ));
 
 
 storiesOf("WorkorderListItem", module)
-  .add("View", () => (
+  .add("ViewWorkorder", () => (
   <WorkorderListItem 
-    workorder_id={workorder.id}
-    mentor_name={getMentorNameById(workorder.user_mentor_id)}
-    student_name={getStudentNameById(workorder.student_id)}
-    ref_link={workorder.link_to_module}
-    description={workorder.description}
-    mentor_notes={workorder.mentor_notes}
-    student_rating={workorder.student_rating}
-    student_notes={workorder.student_notes}
-    date_created={workorder.date_created}
-    module={getModuleById(workorder.module_id)}
+    workorder={workorders[0]}
+    user = {users[0]}
+    module = {modules[0]}
     />
   ));
+
+
+

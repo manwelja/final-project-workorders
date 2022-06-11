@@ -7,36 +7,52 @@ import React, { Fragment } from "react";
 
 
 
-
-
-
-
 export default function WorkorderListItem(props) {
-const { workorder_id } = props;
+const { 
+  workorder_id, 
+  mentor_name, 
+  student_name, 
+  ref_link, 
+  description, 
+  mentor_notes, 
+  student_rating, 
+  student_notes, 
+  date_closed, 
+  module } 
+  = props;
 
  return (
     <main>
+
+      <section className="workorder-view-container">
+
+        <section className="top-workorder-container">
+          <h4>Workorder Id: {workorder_id}</h4>
+          <h4 className="text--light">Mentor Name: {mentor_name}</h4>
+          <h4 className="text--regular">Module Link: {ref_link}</h4>
+          <h4 className="text--regular">Issue Descripton: {description}</h4>
+          <h4 className="text--regular">Ticket Closed On: {date_closed}</h4>
+        </section>
+
+
+
       <section>
-        <h2>{workorder_id}</h2>
-        <section>
-          <h4 className="text--light">Interviewer</h4>
-          <h3 className="text--regular">Emma</h3>
-        </section>
-      </section>
-      <section className="appointment__card-right">
         <section className="appointment__actions">
-          <img
-            className="appointment__actions-button"
-            src="images/edit.png"
-            alt="Edit"
-          />
-          <img
-            className="appointment__actions-button"
-            src="images/trash.png"
-            alt="Delete"
-          />
+          <h4 className="text--regular">Module Name: {module.topic} </h4>
+          <h4 className="text--regular">Module Week: {module.week} </h4>
+          <h4 className="text--regular">Module Day: {module.day} </h4>
+        </section>
+      <section>
+        <section className="feedback-area">
+          <h4 className="text--regular"> Mentor Feedback Notes: {mentor_notes} </h4>
         </section>
       </section>
+   </section>
+      
+      
+      </section>
+      
+
     </main>
   );
 }
