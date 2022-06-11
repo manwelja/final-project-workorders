@@ -38,9 +38,7 @@ const {
 
       <section>
         <section className="appointment__actions">
-          <h4 className="text--regular">Module Name: {module.topic} </h4>
-          <h4 className="text--regular">Module Week: {module.week} </h4>
-          <h4 className="text--regular">Module Day: {module.day} </h4>
+          <h4 className="text--regular">Module: {module.topic} (Week: {module.week} Day: {module.day}) </h4>
         </section>
       <section>
         <section className="feedback-area">
