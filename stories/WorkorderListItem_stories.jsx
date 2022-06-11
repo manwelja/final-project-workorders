@@ -127,6 +127,30 @@ const workorders = [
 ];
   
 
+ const getModuleById = moduleId => {
+    for (const module of modules) {
+      if (module.id === moduleId) {
+        return module;
+      }
+    }
+  };
+
+  const getMentorNameById = mentorId => {
+    for (const user of users) {
+      if (user.id === mentorId) {
+        return `${user.first_name} ${user.last_name}`;
+      }
+    }
+  };
+
+  const getStudentNameById = studentId => {
+    for (const user of users) {
+      if (user.id === studentId) {
+        return `${user.first_name} ${user.last_name}`;
+      }
+    }
+  };
+
 storiesOf("WorkorderList", module)
   .add("ViewWorkorders", () => (
   <WorkorderList 
@@ -140,9 +164,16 @@ storiesOf("WorkorderList", module)
 storiesOf("WorkorderListItem", module)
   .add("ViewWorkorder", () => (
   <WorkorderListItem 
-    workorder={workorders[0]}
-    user = {users[0]}
-    module = {modules[0]}
+    workorder_id={workorders[0].id}
+    mentor_name={getMentorNameById(workorders[0].user_mentor_id)}
+    student_name={getStudentNameById(workorders[0].student_id)}
+    ref_link={workorders[0].link_to_module}
+    description={workorders[0].description}
+    mentor_notes={workorders[0].mentor_notes}
+    student_rating={workorders[0].student_rating}
+    student_notes={workorders[0].student_notes}
+    date_closed={workorders[0].date_closed}
+    module={getModuleById(workorders[0].module_id)}
     />
   ));
 
