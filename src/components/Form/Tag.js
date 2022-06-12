@@ -2,14 +2,14 @@ import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Badge from 'react-bootstrap/Badge';
 
-const ActiveTicket = () => {
+const Tag = (props) => {
   return (
     <>
-      <Badge bg="success">
-        <h2>Active Tickets</h2>
+      <Badge bg="danger">
+        {props.name}
       </Badge>
     </>
   );
 };
 
-export default ActiveTicket;
+export default Tag;

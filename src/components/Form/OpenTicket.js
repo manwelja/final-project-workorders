@@ -1,11 +1,11 @@
 import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Badge from 'react-bootstrap/Button';
+import Badge from 'react-bootstrap/Badge';
 
 const ActiveTicket = (props) => {
   return (
-    <Badge>
-      {props.total} Total Open Tickets
+    <Badge bg="primary">
+      <h5>{props.total} Total Open Tickets</h5>
     </Badge>
   );
 };
