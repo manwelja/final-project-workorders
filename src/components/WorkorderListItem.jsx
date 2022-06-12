@@ -24,8 +24,8 @@ const {
 
 const options = { year: "numeric", month: "long", day: "numeric" }
 const formattedDate =  new Date(date_closed).toLocaleDateString(undefined, options)
-const formattedTime = new Date(date_closed).toLocaleTimeString('en-US')
-const formattedDateTime = formattedDate +  " - " + formattedTime;
+const formattedTime = new Date(date_closed).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+const formattedDateTime = `${formattedDate} ${formattedTime}`;
 
  return (
     <main>
@@ -37,11 +37,11 @@ const formattedDateTime = formattedDate +  " - " + formattedTime;
         </section>
 
           <div className="meta-data"></div>
-          <div class="card-body">Status: {status}</div>
-          <div class="card-body">Module: {module.topic} (Week: {module.week} Day: {module.day}) </div>
-          <div class="card-body">Mentor Name: {mentor_name}</div>
-          <div class="card-body">Module Link: {ref_link}</div>
-          <div class="card-body">Issue Descripton: {description}</div>
+          <div class="card-body"> Status: {status}</div>
+          <div class="card-body"> Module: {module.topic} (Week: {module.week} Day: {module.day}) </div>
+          <div class="card-body"> Mentor Name: {mentor_name}</div>
+          <div class="card-body"> Module Link: {ref_link}</div>
+          <div class="card-body"> Issue Descripton: {description}</div>
           
         
           <section className="feedback-section">
@@ -52,8 +52,6 @@ const formattedDateTime = formattedDate +  " - " + formattedTime;
         </section>
       
       </div>
-      
-
     </main>
   );
 }
