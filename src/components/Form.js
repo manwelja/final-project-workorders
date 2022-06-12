@@ -11,18 +11,14 @@ import Tag from "./Form/Tag";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
 const Form = (props) => {
-  const tags = ["EJS", "CSS", "React", "Ruby", "SQL"];
 
-  const tagItems = tags.map(tag => {
-
+  const tagItems = props.data.tags.map(tag => {
     return (
       <Tag name={tag} />
     );
   });
-
-
-
 
   return (
     <div class="p-2 card">
@@ -40,23 +36,22 @@ const Form = (props) => {
 
       <section class="p-2 card">
         <section class="d-flex justify-content-between">
-          <h3>Workorder #2</h3>
-          <h3>Created 2 minutes ago</h3>
+          <h3>Workorder #{props.data.id}</h3>
+          <h3>Created {props.data.date} ago</h3>
         </section>
 
         <hr />
         <div class="d-flex justify-content-between">
           <section>
-            <h5>Student Name: Not Aaron</h5>
-            <h5>Reference Link: <a href="...">www.thismodule.com</a></h5>
+            <h5>Student Name: {props.data.first_name} {props.data.last_name}</h5>
+            <h5>Reference Link: <a href="...">{props.data.link_to_module}</a></h5>
 
             <br />
 
             <h5>Issue Description:</h5>
             <div class="d-flex">
               <p class="p-2 border border-secondary">
-                Tried some stuff, didn't work. Tried some more stuff, still didin't work.
-                I think it's because of this.
+                {props.data.description}
               </p>
             </div>
 
@@ -74,7 +69,7 @@ const Form = (props) => {
 
           <section>
             <div class="d-sm-flex flex-column flex-wrap">
-              <h4>Module Name: <ModuleName name="TinyApp" /></h4>
+              <h4>Module Name: <ModuleName name={props.data.topic} /></h4>
               <h4>Tags: {tagItems}</h4>
             </div>
 
