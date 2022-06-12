@@ -1,6 +1,7 @@
 // Emma - my workorders --> Just need it to link to them
 import React from "react";
 import WorkorderListItem from "components/WorkorderListItem";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 //Component that invokes a QueueListItem child for each workorder in the data set

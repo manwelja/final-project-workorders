@@ -174,6 +174,7 @@ storiesOf("WorkorderListItem", module)
     student_notes={workorders[0].student_notes}
     date_closed={workorders[0].date_closed}
     module={getModuleById(workorders[0].module_id)}
+    status={workorders[0].status_id}
     />
   ));
 
