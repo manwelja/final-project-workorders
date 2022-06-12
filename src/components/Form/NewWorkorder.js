@@ -1,7 +1,38 @@
 // form when student is creating a new workorder
-import React, { Fragment } from "react";
+import React, { useState, useEffect, Fragment } from "react";
+import axios from 'axios';
 
-const NewWorkorder = (props) => {
+export default function NewWorkorder(props){
+ 
+  const [module, setModule] = useState([{}]);
+
+  const [value, setValue] = React.useState({
+    selectedModule: "",      
+  });
+
+  //populate the schedule when the application loads
+  useEffect(() => {        
+    Promise.all([      
+      
+      //console.log("port", process.env.API_PORT);
+      axios.get("http://localhost:8001/api/modules"),
+      //axios.get("/api/appointments"),
+      //axios.get("/api/interviewers")
+    ]).then((all) => {    
+      //const modules = all[0].data.map((entry, idx) => [{label: entry.id, value: entry.topic}].flatten)
+      //console.log("modules",modules)
+      const modules = all[0].data;
+      console.log("modules", modules)
+      setModule(modules);     
+      
+      console.log("state modules", module)
+      })
+    },[])
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+
   return (
     <main>
       <article>
@@ -37,7 +68,7 @@ const NewWorkorder = (props) => {
         <section>
           <section>
             <p>Please specify your computer environment</p>
-
+            <p></p>
             <button>M1</button>
             <button>Vagrant (Mac)</button>
             <button>Windows</button>
@@ -46,11 +77,12 @@ const NewWorkorder = (props) => {
           <br />
 
           <section>
-            <p>Please select all applicable tags</p>
-
-            <button>Git</button>
-            <button>Javascript</button>
-            <button>React</button>
+            <p>Please specify which module you're working on:</p>  
+            <select value={value} onChange={handleChange}>
+              {module.map((option) => (
+              <option value={option.id}>{option.topic}</option>
+              ))}
+            </select> 
           </section>
 
           <br />
@@ -82,5 +114,3 @@ const NewWorkorder = (props) => {
     </main>
   );
 };
-
-export default NewWorkorder;
