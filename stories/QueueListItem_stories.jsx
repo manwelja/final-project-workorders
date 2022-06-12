@@ -131,6 +131,7 @@ storiesOf("queueListItem", module)
     studentFirstName= { workorders[0].student_first_name }
     studentLastName= { workorders[0].student_last_name }
     topic= { workorders[0].topic }
+    week= { workorders[0].week }
   />) 
 
   storiesOf("queueList", module)
