@@ -5,10 +5,9 @@ import axios from 'axios';
 export default function NewWorkorder(props){
  
   const [module, setModule] = useState([{}]);
-
-  const [value, setValue] = React.useState({
-    selectedModule: "",      
-  });
+  const [selectedModule, setSelectedModule] = React.useState({selectedModule: ""});
+  const [category, setCategory] = useState([{}]);
+  const [selectedCategory, setSelectedCategory] = React.useState({selectedCategory: ""});
 
   //populate the schedule when the application loads
   useEffect(() => {        
@@ -16,22 +15,32 @@ export default function NewWorkorder(props){
       
       //console.log("port", process.env.API_PORT);
       axios.get("http://localhost:8001/api/modules"),
-      //axios.get("/api/appointments"),
+      axios.get("http://localhost:8001/api/categories"),
       //axios.get("/api/interviewers")
     ]).then((all) => {    
-      //const modules = all[0].data.map((entry, idx) => [{label: entry.id, value: entry.topic}].flatten)
-      //console.log("modules",modules)
-      const modules = all[0].data;
-      console.log("modules", modules)
-      setModule(modules);     
-      
-      console.log("state modules", module)
+        //const modules = all[0].data.map((entry, idx) => [{label: entry.id, value: entry.topic}].flatten)
+        //console.log("modules",modules)
+        const modules = all[0].data;
+        const category = all[1].data;
+        console.log(category)
+        setModule(modules);     
+        setCategory(category);        
       })
     },[])
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
+  const handleModuleChange = (event) => {
+    setSelectedModule(event.target.value);
+    console.log(selectedModule)
   };
+  const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
+    console.log(selectedCategory)
+  };
+
+  useEffect(() => {        
+    console.log("selectedModule", selectedModule)    
+  }
+  ,[selectedModule])
 
   return (
     <main>
@@ -77,8 +86,17 @@ export default function NewWorkorder(props){
           <br />
 
           <section>
+            <p>Please specify the category</p>
+            <select value={selectedCategory} onChange={handleCategoryChange}>
+              {category.map((option) => (
+              <option value={option.id}>{option.description}</option>
+              ))}
+            </select> 
+          </section>
+
+          <section>
             <p>Please specify which module you're working on:</p>  
-            <select value={value} onChange={handleChange}>
+            <select value={selectedModule} onChange={handleModuleChange}>
               {module.map((option) => (
               <option value={option.id}>{option.topic}</option>
               ))}
