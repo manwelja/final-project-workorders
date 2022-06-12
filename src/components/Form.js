@@ -26,7 +26,7 @@ const Form = (props) => {
         <section>
           <ActiveTicket />
         </section>
-        <div class="d-flex flex-column">
+        <div class="d-flex flex-column gap-2">
           <OpenTicket total="15" />
           <TicketTime time="3" />
         </div>
@@ -68,9 +68,11 @@ const Form = (props) => {
           </section>
 
           <section>
-            <div class="d-sm-flex flex-column flex-wrap">
+            <div class="d-sm-flex flex-column">
               <h4>Module Name: <ModuleName name={props.data.topic} /></h4>
-              <h4>Tags: {tagItems}</h4>
+              <section>
+                <h4 class="d-flex gap-2">Tags: {tagItems}</h4>
+              </section>
             </div>
 
             <div>
@@ -83,7 +85,7 @@ const Form = (props) => {
       <br />
 
       <section>
-        <div class="d-flex justify-content-end">
+        <div class="d-flex justify-content-end gap-2">
           <button class="btn btn-secondary">View Ticket</button>
           <button class="btn btn-success">Pick Up Ticket</button>
         </div>

@@ -4,7 +4,7 @@ import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 
 import Form from "../src/components/Form";
-import { format, formatDistance } from "date-fns";
+import { formatDistance } from "date-fns";
 
 const workorder = [
   {

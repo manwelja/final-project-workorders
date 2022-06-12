@@ -2,6 +2,8 @@ import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Badge from 'react-bootstrap/Badge';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 const ActiveTicket = (props) => {
   return (
     <Badge bg="primary">
