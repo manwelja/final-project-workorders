@@ -1,6 +1,6 @@
 import QueueList from "components/QueueList";
 import QueueListItem from "components/QueueListItem";
-
+import 'bootstrap';
 import React, { Fragment } from "react";
 
 import { storiesOf } from "@storybook/react";
@@ -15,7 +15,7 @@ const workorders = [
   category_id: 2,
   module_id: 3,
   environment: "M1",
-  description: "Discussion",
+  description: "I'm pulling my hair out - blue screen of death!",
   screenshot: null,
   link_to_module: null,
   escalate: false,
@@ -30,6 +30,7 @@ const workorders = [
   student_last_name: "Doe",
   mentor_first_name: "Anne",
   mentor_last_name: "Smith",
+  category: "Discussion",
   week: 1,
   day: 1,
   topic: "Bootcamp Reference Guide"
@@ -42,7 +43,7 @@ const workorders = [
   category_id: 2,
   module_id: 3,
   environment: "M1",
-  description: "Discussion",
+  description: "request.body is coming through as empty when I do an api put call",
   screenshot: null,
   link_to_module: null,
   escalate: false,
@@ -57,6 +58,7 @@ const workorders = [
   student_last_name: "Doe",
   mentor_first_name: "Patricia",
   mentor_last_name: "Anderson",
+  category: "Discussion",
   week: 1,
   day: 1,
   topic: "Bootcamp Reference Guide"
@@ -69,7 +71,7 @@ const workorders = [
   category_id: 2,
   module_id: 3,
   environment: "WSL",
-  description: "Discussion",
+  description: "I'm getting errors when I try to install the LightBnB dependencies",
   screenshot: null,
   link_to_module: null,
   escalate: false,
@@ -84,6 +86,7 @@ const workorders = [
   student_last_name: "Doe",
   mentor_first_name: "Patricia",
   mentor_last_name: "Anderson",
+  category: "Discussion",
   week: 1,
   day: 1,
   topic: "Bootcamp Reference Guide"
@@ -96,7 +99,7 @@ const workorders = [
   category_id: 1,
   module_id: 3,
   environment: "M1",
-  description: "Code review",
+  description: "Code review please",
   screenshot: null,
   link_to_module: null,
   escalate: false,
@@ -111,6 +114,7 @@ const workorders = [
   student_last_name: "Doe",
   mentor_first_name: "Patricia",
   mentor_last_name: "Anderson",
+  category: "Code review",
   week: 1,
   day: 1,
   topic: "Bootcamp Reference Guide"
@@ -119,7 +123,15 @@ const workorders = [
 
 storiesOf("queueListItem", module)
   .add("Empty", () => <QueueListItem workorder="" />)
-  .add("DisplayWorkorder", () => <QueueListItem workorder={ workorders[0] }/>)
+  .add("DisplayWorkorder", () => <QueueListItem
+    key={ workorders[0].id }
+    environment={ workorders[0].environment } 
+    description={ workorders[0].description } 
+    dateCreated={ workorders[0].date_created }
+    studentFirstName= { workorders[0].student_first_name }
+    studentLastName= { workorders[0].student_last_name }
+    topic= { workorders[0].topic }
+  />) 
 
   storiesOf("queueList", module)
   .add("Empty", () => <QueueList workorders={[]} />)
