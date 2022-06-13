@@ -2,7 +2,7 @@
 import React from "react";
 import WorkorderListItem from "components/WorkorderListItem";
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import '../../public/styles/workorders-student.css';
 
 //Component that invokes a QueueListItem child for each workorder in the data set
 export default function WorkorderList(props) {
@@ -34,16 +34,16 @@ export default function WorkorderList(props) {
 
   const workorder = workorders.map((workorder) => {
     return (
-      <WorkorderListItem
+      <WorkorderListItem class="workorder-container"
         workorder_id={workorder.id}
         mentor_name={getMentorNameById(workorder.user_mentor_id)}
-        student_name={getStudentNameById(workorder.student_id)}
+        student_name={getStudentNameById(workorder.user_student_id)}
         ref_link={workorder.link_to_module}
         description={workorder.description}
         mentor_notes={workorder.mentor_notes}
         student_rating={workorder.student_rating}
         student_notes={workorder.student_notes}
-        date_closed={workorder.date_closed}
+        date_created={workorder.date_created}
         module={getModuleById(workorder.module_id)}
       />);
   });

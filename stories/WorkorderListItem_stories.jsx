@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 
-import WorkorderListItem from "components/WorkorderListItem";
+import WorkorderListItem from "../src/components/WorkorderListItem";
 import WorkorderList from "../src/components/WorkorderList";
 
 const users = [
@@ -172,7 +172,7 @@ storiesOf("WorkorderListItem", module)
     mentor_notes={workorders[0].mentor_notes}
     student_rating={workorders[0].student_rating}
     student_notes={workorders[0].student_notes}
-    date_closed={workorders[0].date_closed}
+    date_created={workorders[0].date_created}
     module={getModuleById(workorders[0].module_id)}
     status={workorders[0].status_id}
     />
