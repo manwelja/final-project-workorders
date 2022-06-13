@@ -41,7 +41,7 @@ body {
   transition: 0.3s;
 }
 
-workorder-item-header-right {
+.workorder-item-header-right {
   background:lightgrey;
   font-size: 18px;
   flex-direction: row;
