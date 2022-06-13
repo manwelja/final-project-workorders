@@ -2,12 +2,7 @@
 import React, { useState, useEffect, Fragment } from "react";
 import axios from 'axios';
 import Button from "../Button"
-import cloudinary from 'cloudinary-core'
-//import "https://upload-widget.cloudinary.com/global/all.js"
-//import CloudinaryUploadWidget from "./CloudinaryUploadWidget";
 import useScript from '../../hooks/useScript';
-import {AdvancedImage} from '@cloudinary/react';
-import {Cloudinary} from "@cloudinary/url-gen";
 
 //Environment variables
 const PORT = process.env.API_PORT;
@@ -20,12 +15,16 @@ const API_CLOUD_PRESET = process.env.API_CLOUD_PRESET;
 export default function NewWorkorder(props){
   useScript('https://upload-widget.cloudinary.com/global/all.js');
 
-  const [module, setModule] = useState([{}]);
-  const [selectedModule, setSelectedModule] = React.useState({selectedModule: ""});
-  const [category, setCategory] = useState([{}]);
-  const [selectedCategory, setSelectedCategory] = React.useState({selectedCategory: ""});
-  const [fileUpload, setfileUpload] = useState([{}]);
-  const [selectedFileUpload, setSelectedFileUpload] = React.useState({selectedFileUpload: ""});
+  const [state, setState] = useState({
+    modules: [{}],
+    selectedModule: "",
+    categories: [{}],
+    selectedCategory: "",
+    selectedFileUpload: "",
+  });
+  const [description, setDescription] = useState("");
+  const [link_to_module, setLinkToModule] = useState("");
+
   
   //populate the schedule when the application loads
   useEffect(() => {        
@@ -33,30 +32,31 @@ export default function NewWorkorder(props){
       axios.get(`http://${BASE_URL}/api/modules`),
       axios.get(`http://${BASE_URL}/api/categories`),
     ]).then((all) => {    
-        const modules = all[0].data;
-        const category = all[1].data;
-        setModule(modules);     
-        setCategory(category);        
+        setState(prev => ({...prev, modules: all[0].data, categories: all[1].data}));      
       })
     },[])
 
   const handleModuleChange = (event) => {
-    setSelectedModule(event.target.value);
+    setState(prev => ({...prev, selectedModule: event.target.value}));    
   };
   const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value);
+    setState(prev => ({...prev, selectedCategory: event.target.value}));    
   };
 
   const handleFileChange = (event) => {
-    setSelectedFileUpload(event.target.files[0]);
+    setState(prev => ({...prev, selectedFileUpload: event.target.files[0]}));        
   };
 
   function saveData() {
+    state.selectedFileUpload ? uploadToCloudifyData() : postToDatabase()
+  }
+
+  function uploadToCloudifyData() {
     const url = `https://api.cloudinary.com/v1_1/${API_CLOUD_ID}/upload`;
     const fd = new FormData();
     fd.append("upload_preset", API_CLOUD_PRESET);
     fd.append("tags", "workorder_system_upload"); // Optional - add tag for image admin in Cloudinary
-    fd.append("file", selectedFileUpload);
+    fd.append("file", state.selectedFileUpload);
     const config = {
       headers: { "X-Requested-With": "XMLHttpRequest" },
     };
@@ -66,13 +66,12 @@ export default function NewWorkorder(props){
     }).catch((err) => console.log(err));    
   }
  
-  const postToDatabase = (filePath) => {
-    return axios.put(`http://localhost:8001/api/workorders`, {user_student_id: 1, status_id: 1, category_id: parseInt(selectedCategory), module_id: parseInt(selectedModule), environment: "M1", Description: "Test", screenshot_url: filePath})
+  const postToDatabase = (filePath = "") => {
+    console.log("description:", state.description);
+    return axios.put(`http://localhost:8001/api/workorders`, {user_student_id: 1, status_id: 1, category_id: parseInt(state.selectedCategory), module_id: parseInt(state.selectedModule), environment: "M1", description: description, link_to_module: link_to_module, screenshot_url: filePath})
     .then((res) => {
-    console.log(res)
       return;
     })
-
   }  
   
   return (
@@ -82,24 +81,30 @@ export default function NewWorkorder(props){
           <section>
             <h1>New Help Request</h1>
               <section>
-                <label>Link to instructions</label>
+                <label>Link to module</label>
                 <br />
                 <input
-                  name="link"
+                  name="module-link"
                   type="text"
                   placeholder="Enter URL here"
-                  style={{ width: "500px" }}
+                  value={ link_to_module }
+                  onChange={(event) => { 
+                    setLinkToModule(event.target.value);
+                  }}
                 />
               </section>
 
               <section>
                 <label>Please describe your issue</label>
-                <input
+                <input                  
                   name="description"
                   type="text"
-                  placeholder="Tell us what's up"
-                  style={{ width: "500px", height: "200px" }}
-                />
+                  placeholder="What's up?"
+                  value={ description }
+                  onChange={(event) => { 
+                    setDescription(event.target.value);
+                  }}        
+                />  
               </section>           
             <section>
               <p>Please specify your computer environment</p>
@@ -110,8 +115,8 @@ export default function NewWorkorder(props){
 
             <section>
               <p>Please specify the category</p>
-              <select value={selectedCategory} onChange={handleCategoryChange}>
-                {category.map((option) => (
+              <select value={state.selectedCategory} onChange={handleCategoryChange}>
+                {state.categories.map((option) => (
                 <option key={option.id} value={option.id}>{option.description}</option>
                 ))}
               </select> 
@@ -119,8 +124,8 @@ export default function NewWorkorder(props){
 
             <section>
               <p>Please specify which module you're working on:</p>  
-              <select value={selectedModule} onChange={handleModuleChange}>
-                {module.map((option) => (
+              <select value={state.selectedModule} onChange={handleModuleChange}>
+                {state.modules.map((option) => (
                 <option key={option.id} value={option.id}>{option.topic}</option>
                 ))}
               </select> 
