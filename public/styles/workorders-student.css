@@ -5,7 +5,7 @@ body {
   background-color: rgb(245,245,245);
 }
 
-.queue-container {
+.workorder-container {
   width: 90%;
   height: 100vh;
   display: flex;
@@ -14,7 +14,7 @@ body {
   margin-top: 140px;
 }
 
-.queue-workorder-box {
+.workorder-item-container {
     background: white;
     width: 90%;
     height: auto;
@@ -29,7 +29,7 @@ body {
     transition: 0.3s;
 }
 
-.queue-workorder-header {
+.workorder-item-header {
   background:lightgrey;
   font-size: 18px;
   width: 100%;
@@ -41,7 +41,14 @@ body {
   transition: 0.3s;
 }
 
-.queue-workorder-body {
+.workorder-item-header-right {
+  background:lightgrey;
+  font-size: 18px;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.workorder-item-body {
   background: white;
   width: 100%;
   height: auto;
@@ -54,15 +61,15 @@ body {
   border: 1px black;
 }
 
-.queue-workorder-body-left {
+.workorder-item-body-left {
   border: 1px black;
 }
 
-.queue-workorder-body-right {
+.workorder-item-body-right {
   border: 1px black;
 }
 
-.queue-workorder-text {
+.workorder-item-text {
   width: 100%;
   font-size: 14px;
   height: auto;
@@ -72,14 +79,14 @@ body {
   align-items: left;
  }
 
-.description-container {
+.workorder-item-description-container {
   display: flex;
   justify-content: flex-start;
   align-items: left;
   padding: 1rem;
 }
 
-.queue-workorder-footer {
+.workorder-item-footer {
   display: flex;
   flex-wrap: nowrap;
   justify-content: flex-end;
@@ -104,3 +111,4 @@ body {
 #workorder-created {
   font-size: 14px;
 }
+
