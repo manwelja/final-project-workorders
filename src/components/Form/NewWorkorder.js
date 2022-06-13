@@ -27,7 +27,7 @@ export default function NewWorkorder(props){
   const [environment, setEnvironment] = useState("");
 
   
-  //populate the schedule when the application loads
+  //populate the workorder when the application loads
   useEffect(() => {        
     Promise.all([                       
       axios.get(`http://${BASE_URL}/api/modules`),
@@ -59,11 +59,7 @@ export default function NewWorkorder(props){
 
   function resetFormState() {
     console.log('reset')
-    setState({
-      selectedModule: "",
-      selectedCategory: "",
-      selectedFileUpload: "",
-    });
+    setState(prev => ({...prev, selectedModule: "", selectedCategory: "", selectedFileUpload: ""}));
     setDescription("");
     setLinkToModule("");
     setEnvironment("");    
@@ -172,9 +168,8 @@ export default function NewWorkorder(props){
               </div>     
             </div>  
             <div class="wo-form-footer">
-              <div><button class="btn btn-outline-danger" onClick={resetFormState}>Cancel</button></div>
+              <div><Button className="button--danger" danger onClick={ () => { resetFormState() }}>Cancel</Button></div>
               <div><Button className="button--confirm" confirm onClick={ () => { saveData() }}>Save Me</Button></div>
-              <div><button class="btn btn-outline-success" onClick={() => saveData()}>Save Me NonReact</button></div>
             </div>
         </section> 
         </form> 
