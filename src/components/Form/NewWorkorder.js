@@ -44,49 +44,40 @@ console.log(cl)
   };
 
   const handleFileChange = (event) => {
-    //setSelectedFileUpload(event.target.files[0]);
-    onFileSelected(event);
+    setSelectedFileUpload(event.target.files[0]);
   };
 
-  function onFileSelected(event) {
+  function saveData() {
+    console.log("selected Fiel", selectedFileUpload);
     const url = `https://api.cloudinary.com/v1_1/derw4ael5/upload`;
     const fd = new FormData();
     fd.append("upload_preset", "iin70vuj");
     fd.append("tags", "workorder_system_upload"); // Optional - add tag for image admin in Cloudinary
-    fd.append("file", event.target.files[0]);
+    fd.append("file", selectedFileUpload);
     const config = {
       headers: { "X-Requested-With": "XMLHttpRequest" },
     };
-     axios.post(url, fd, config)
+    return axios.post(url, fd, config)
         .then((res) => {
-          console.log(res.data.secure_url)
-           return;
-    }).catch((err) => console.log(err));
+            postToDatabase(res.data.secure_url);
+    }).catch((err) => console.log(err));    
   }
+ 
+  const postToDatabase = (filePath) => {
+    return axios.put(`http://localhost:8001/api/workorders`, {user_student_id: 1, status_id: 1, category_id: parseInt(selectedCategory), module_id: parseInt(selectedModule), environment: "M1", Description: "Test", student_notes: filePath})
+    .then((res) => {
+    console.log(res)
+      return;
+    })
 
-  const validate = () => {
-    console.log('here', selectedFileUpload)
-     return axios.put(`http://localhost:8001/api/workorders`, {user_student_id: 1, status_id: 1, category_id: parseInt(selectedCategory), module_id: parseInt(selectedModule), environment: "M1", Description: "Test", screenshot: selectedFileUpload})
-       .then((res) => {
-       console.log(res)
-         return;
-       })
-     }
-
-     useEffect(() => {        
-    console.log("selectedModule", selectedModule)    
-  }
-  ,[selectedModule])
-
+  }  
+  
   return (
-    <>
-    <head><script src="https://media-library.cloudinary.com/global/all.js"></script></head>
     <main>
       <article>
         <form autoComplete="off" onSubmit={event => event.preventDefault()}>
           <section>
             <h1>New Help Request</h1>
-            <form>
               <section>
                 <label>Link to instructions</label>
                 <br />
@@ -98,31 +89,21 @@ console.log(cl)
                 />
               </section>
 
-              <br />
-
               <section>
                 <label>Please describe your issue</label>
-                <br />
                 <input
                   name="description"
                   type="text"
                   placeholder="Tell us what's up"
                   style={{ width: "500px", height: "200px" }}
                 />
-              </section>
-            </form>
-          </section>
-
-          <section>
+              </section>           
             <section>
               <p>Please specify your computer environment</p>
-              <p></p>
               <button>M1</button>
               <button>Vagrant (Mac)</button>
               <button>Windows</button>
             </section>
-
-            <br />
 
             <section>
               <p>Please specify the category</p>
@@ -140,30 +121,15 @@ console.log(cl)
                 <option key={option.id} value={option.id}>{option.topic}</option>
                 ))}
               </select> 
-            </section>
-
-            <br />
-            <br />
-            <div class="my_article" contenteditable>aaa</div>
+              <input type="file" accept="image/png, image/jpeg" onChange={handleFileChange}></input>
+            </section>       
             <section>
-              <form>
-                <label>Optional: Upload screenshot(s)</label>
-                <br />
-                <button id="upload_widget">Upload files</button>
-                <br />
-                <br />
-              </form>
-            </section>
+            <button>Cancel</button>
+            <Button confirm onClick={ () => { saveData() }}>Save Me</Button>
           </section>
-          <br />
-          <input type="file" accept="image/png, image/jpeg" onChange={handleFileChange}></input>
-        </form>
-        <section>
-          <button>Cancel</button>
-          <Button confirm onClick={ () => { validate() }}>Save Me</Button>
-        </section>
+        </section> 
+        </form> 
       </article>
     </main>
-    </>  
   );
 };
