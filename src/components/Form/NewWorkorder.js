@@ -9,6 +9,14 @@ import useScript from '../../hooks/useScript';
 import {AdvancedImage} from '@cloudinary/react';
 import {Cloudinary} from "@cloudinary/url-gen";
 
+//Environment variables
+const PORT = process.env.API_PORT;
+const HOST = process.env.API_HOST;
+const BASE_URL = HOST + ":" + PORT;
+const API_CLOUD_ID = process.env.API_CLOUD_ID;
+const API_CLOUD_PRESET = process.env.API_CLOUD_PRESET;
+  
+
 export default function NewWorkorder(props){
   useScript('https://upload-widget.cloudinary.com/global/all.js');
 
@@ -18,11 +26,7 @@ export default function NewWorkorder(props){
   const [selectedCategory, setSelectedCategory] = React.useState({selectedCategory: ""});
   const [fileUpload, setfileUpload] = useState([{}]);
   const [selectedFileUpload, setSelectedFileUpload] = React.useState({selectedFileUpload: ""});
-  const PORT = process.env.API_PORT;
-  const HOST = process.env.API_HOST;
-  const BASE_URL = HOST + ":" + PORT;
-  var cl = new cloudinary.Cloudinary({cloud_name: "derw4ael5", secure: true});
-console.log(cl)
+  
   //populate the schedule when the application loads
   useEffect(() => {        
     Promise.all([                       
@@ -48,10 +52,9 @@ console.log(cl)
   };
 
   function saveData() {
-    console.log("selected Fiel", selectedFileUpload);
-    const url = `https://api.cloudinary.com/v1_1/derw4ael5/upload`;
+    const url = `https://api.cloudinary.com/v1_1/${API_CLOUD_ID}/upload`;
     const fd = new FormData();
-    fd.append("upload_preset", "iin70vuj");
+    fd.append("upload_preset", API_CLOUD_PRESET);
     fd.append("tags", "workorder_system_upload"); // Optional - add tag for image admin in Cloudinary
     fd.append("file", selectedFileUpload);
     const config = {
@@ -64,7 +67,7 @@ console.log(cl)
   }
  
   const postToDatabase = (filePath) => {
-    return axios.put(`http://localhost:8001/api/workorders`, {user_student_id: 1, status_id: 1, category_id: parseInt(selectedCategory), module_id: parseInt(selectedModule), environment: "M1", Description: "Test", student_notes: filePath})
+    return axios.put(`http://localhost:8001/api/workorders`, {user_student_id: 1, status_id: 1, category_id: parseInt(selectedCategory), module_id: parseInt(selectedModule), environment: "M1", Description: "Test", screenshot_url: filePath})
     .then((res) => {
     console.log(res)
       return;
