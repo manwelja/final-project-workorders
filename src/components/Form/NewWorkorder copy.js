@@ -6,8 +6,6 @@ import cloudinary from 'cloudinary-core'
 //import "https://upload-widget.cloudinary.com/global/all.js"
 //import CloudinaryUploadWidget from "./CloudinaryUploadWidget";
 import useScript from '../../hooks/useScript';
-import {AdvancedImage} from '@cloudinary/react';
-import {Cloudinary} from "@cloudinary/url-gen";
 
 export default function NewWorkorder(props){
   useScript('https://upload-widget.cloudinary.com/global/all.js');
@@ -28,7 +26,10 @@ console.log(cl)
     Promise.all([                       
       axios.get(`http://${BASE_URL}/api/modules`),
       axios.get(`http://${BASE_URL}/api/categories`),
+      //axios.get("/api/interviewers")
     ]).then((all) => {    
+        //const modules = all[0].data.map((entry, idx) => [{label: entry.id, value: entry.topic}].flatten)
+        //console.log("modules",modules)
         const modules = all[0].data;
         const category = all[1].data;
         setModule(modules);     
@@ -44,31 +45,19 @@ console.log(cl)
   };
 
   const handleFileChange = (event) => {
-    //setSelectedFileUpload(event.target.files[0]);
-    onFileSelected(event);
+    setSelectedFileUpload(event.target.files[0]);
+    // const fileUpload = event.target.files[0];
+    // console.log(Object.keys(fileUpload))
+    // return axios.put(`https://api.cloudinary.com/v1_1/derw4ael5/image/upload`, {file: fileUpload, upload_preset: "iin70vuj"})
+    // .then((res) => {
+    //   return;
+    // }).catch((err) => console.log(err));
   };
-
-  function onFileSelected(event) {
-    const url = `https://api.cloudinary.com/v1_1/derw4ael5/upload`;
-    const fd = new FormData();
-    fd.append("upload_preset", "iin70vuj");
-    fd.append("tags", "workorder_system_upload"); // Optional - add tag for image admin in Cloudinary
-    fd.append("file", event.target.files[0]);
-    const config = {
-      headers: { "X-Requested-With": "XMLHttpRequest" },
-    };
-     axios.post(url, fd, config)
-        .then((res) => {
-          console.log(res.data.secure_url)
-           return;
-    }).catch((err) => console.log(err));
-  }
 
   const validate = () => {
     console.log('here', selectedFileUpload)
-     return axios.put(`http://localhost:8001/api/workorders`, {user_student_id: 1, status_id: 1, category_id: parseInt(selectedCategory), module_id: parseInt(selectedModule), environment: "M1", Description: "Test", screenshot: selectedFileUpload})
+     return axios.put(`http://localhost:8001/api/workorders`, {user_student_id: 1, status_id: 1, category_id: selectedCategory, module_id: selectedModule, environment: "M1", Description: "Test"})
        .then((res) => {
-       console.log(res)
          return;
        })
      }
@@ -77,6 +66,34 @@ console.log(cl)
     console.log("selectedModule", selectedModule)    
   }
   ,[selectedModule])
+
+  const uploadFile = () => {    
+
+    // console.log("upload")
+    // return axios.put(`https://api.cloudinary.com/v1_1/derw4ael5/upload`, {file: "test.png", upload_preset: "iin70vuj"})
+    //    .then((res) => {
+    //      return;
+    //    }).catch((err) => console.log(err));
+    // cl.upload("sample_file.jpg",
+    // { use_filename: true, 
+    // unique_filename: false },
+    // function(error, result) { console.log(result, error); });
+   
+    // let myWidget = cloudinary.createUploadWidget({
+    //   cloudName: 'derw4ael5'}, (error, result) => { 
+    //     if (!error && result && result.event === "success") { 
+    //       console.log('Done! Here is the image info: ', result.info); 
+    //     } else {
+    //       console.log("Cloudinary Error",  error)
+    //     }
+    //   }
+    
+   // )
+    //myWidget.open()
+    // document.getElementById("upload_widget").addEventListener("click", function(){
+    // myWidget.open();
+    // }, false);
+    }
 
   return (
     <>
@@ -144,7 +161,7 @@ console.log(cl)
 
             <br />
             <br />
-            <div class="my_article" contenteditable>aaa</div>
+
             <section>
               <form>
                 <label>Optional: Upload screenshot(s)</label>
@@ -156,7 +173,10 @@ console.log(cl)
             </section>
           </section>
           <br />
-          <input type="file" accept="image/png, image/jpeg" onChange={handleFileChange}></input>
+          <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" class="cloudinary_fileupload" onChange={handleFileChange}></input>
+          <button id="upload_widget" class="cloudinary-button" onClick={uploadFile}>Upload files</button>
+          <input name="file" type="file" class="cloudinary-fileupload" data-cloudinary-field="image_id" 
+   data-form-data=" ... upload options as html-escaped JSON data ... " onChange={handleFileChange}></input>
         </form>
         <section>
           <button>Cancel</button>
@@ -167,3 +187,5 @@ console.log(cl)
     </>  
   );
 };
+
+<script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>

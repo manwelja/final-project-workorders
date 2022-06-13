@@ -44,23 +44,47 @@ console.log(cl)
   };
 
   const handleFileChange = (event) => {
-    //setSelectedFileUpload(event.target.files[0]);
-    onFileSelected(event);
+    setSelectedFileUpload(event.target.files[0]);
   };
 
   function onFileSelected(event) {
-    const url = `https://api.cloudinary.com/v1_1/derw4ael5/upload`;
-    const fd = new FormData();
-    fd.append("upload_preset", "iin70vuj");
-    fd.append("tags", "workorder_system_upload"); // Optional - add tag for image admin in Cloudinary
-    fd.append("file", event.target.files[0]);
-    const config = {
-      headers: { "X-Requested-With": "XMLHttpRequest" },
+    console.log('here')
+    var selectedFile = event.target.files[0];
+    var reader = new FileReader();
+    let imgtag = {};
+    //var imgtag = document.getElementById("myimage");
+    imgtag.title = selectedFile.name;
+  
+    reader.onload = function(event) {
+      imgtag.src = event.target.result;
     };
-     axios.post(url, fd, config)
-        .then((res) => {
-          console.log(res.data.secure_url)
-           return;
+  
+    //reader.readAsDataURL(selectedFile);
+    const upload = reader.readAsDataURL(selectedFile);
+
+  //   var url = `https://api.cloudinary.com/v1_1/${cloudName}/upload`;
+  // var fd = new FormData();
+  // fd.append("upload_preset", unsignedUploadPreset);
+  // fd.append("tags", "browser_upload"); // Optional - add tag for image admin in Cloudinary
+  // fd.append("file", file);
+  // const config = {
+  //   headers: { "X-Requested-With": "XMLHttpRequest" },
+  //   onUploadProgress: function(progressEvent) {
+  //     // Do whatever you want with the native progress event
+  //     // console.log('progressEvent', progressEvent);
+  //     var progress = Math.round((progressEvent.loaded * 100.0) / progressEvent.total);
+  //     document.getElementById('progress').style.width = progress + "%";
+
+  //     console.log(`onUploadProgress progressEvent.loaded: ${progressEvent.loaded},
+  //   progressEvent.total: ${progressEvent.total}`);
+  //   }
+  // };
+  // axios.post(url, fd, config)
+
+
+    return axios.post(`https://api.cloudinary.com/v1_1/derw4ael5/image/upload`, {file: selectedFile, upload_preset: "iin70vuj"})
+    .then((res) => {
+      return;
     }).catch((err) => console.log(err));
   }
 
@@ -157,6 +181,8 @@ console.log(cl)
           </section>
           <br />
           <input type="file" accept="image/png, image/jpeg" onChange={handleFileChange}></input>
+
+        <input type="file" onChange={onFileSelected}></input>
         </form>
         <section>
           <button>Cancel</button>
