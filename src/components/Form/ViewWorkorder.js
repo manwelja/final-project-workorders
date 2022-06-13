@@ -16,6 +16,7 @@ const API_CLOUD_PRESET = process.env.API_CLOUD_PRESET;
 
 export default function ViewWorkorder(props){
   const [state, setState] = useState({
+
     id: "",
     user_student_id: "",
     user_mentor_id: "",
@@ -24,8 +25,8 @@ export default function ViewWorkorder(props){
     module_id: "",
     environment: "",
     description: "",
-    screenshot_url: "",
-    link_to_module: "",
+    screenshot_url: null,
+    link_to_module: null,
     escalate: "",
     mentor_notes: "",
     student_notes: "",
@@ -33,27 +34,28 @@ export default function ViewWorkorder(props){
     student_rating: "",
     date_created: "",
     date_pickup: "",
-    date_closed: ""
+    date_closed: "",
+    student_first_name: "",
+    student_last_name: "",
+    mentor_first_name: "",
+    mentor_last_name: "",
+    category: "",
+    week: "",
+    day: "",
+    topic: ""
   });
   
-  const workorderId = parseInt(props.workorderId);
+  const workorderId = 27; //parseInt(props.workorderId);
   //populate the schedule when the application loads
   useEffect(() => {        
     Promise.all([                       
       axios.get(`http://${BASE_URL}/api/workorders/${workorderId}`),
     ]).then((all) => {    
-        //format modules for select box
-        
-        console.log(all[0].data[0])
-        const keys = Object.keys(all[0].data[0]);
-        const values = Object.values(all[0].data[0]);
-        console.log(keys)
-        setState({[keys] : values});      
-        console.log("state", state)
+        const newState = all[0].data[0];
+        setState({...state, ...newState})
       })
     },[])
-
-  
+   
   return (
     <main>
       <article>
@@ -62,49 +64,52 @@ export default function ViewWorkorder(props){
             <div class="wo-form-header"><h1>Display Help Request</h1></div>
             <div class="wo-form-label-data">
               <div class="wo-form-label"><label>Student Name:</label></div>
-              <div class="wo-form-data">{props.student_name}</div>
+              <div class="wo-form-data">{state.student_first_name + " " + state.student_last_name}</div>
             </div>
             <div class="wo-form-label-data">
               <div class="wo-form-label"><label>Link to module</label></div>
               <div class="wo-form-data">
-      
-                
+                {state.link_to_module}                
               </div>
             </div>
             <div class="wo-form-label-data">
               <div class="wo-form-label"><label>Please describe your issue</label></div>
                 <div class="wo-form-data">
-
+                {state.description}
               </div>
             </div>                      
             <div class="wo-form-label-data">
             <div class="wo-form-label"><label>Please specify your computer environment</label></div>
               <div class="wo-form-data">
-     
+                {state.environment}
               </div>  
             </div>
             <div class="wo-form-label-data">
               <div class="wo-form-label"><label>Please specify the category</label></div>
                 <div class="wo-form-data">
-            
+                  {state.category}
                 </div>  
-              </div>
+            </div>
 
             <div class="wo-form-label-data">
               <div class="wo-form-label"><label>Please specify which module you're working on:</label></div>
               <div class="wo-form-data">  
-         
+                {state.topic}
               </div>  
             </div>
             <div class="wo-form-label-data">
-              <div class="wo-form-label"><label>Please provide a screenshot if applicable:</label></div>
-              <div class="wo-form-data">       
-               
+              <div class="wo-form-label"><label>Screenshot:</label></div><div></div>
+               <div class="wo-form-label">       
+                <a href={state.screenshot_url}>
+                  <img src={state.screenshot_url} alt="Error Screenshot" />
+                </a>
               </div>     
+              <div class="wo-form-label"></div>
             </div>  
             <div class="wo-form-footer">
               <div><Button className="button--danger" danger onClick={ () => {  }}>Cancel</Button></div>
-  
+              <div><Button className="button--confirm" confirm onClick={ () => {  }}>See History</Button></div>
+              <div><Button className="button--confirm" confirm onClick={ () => {  }}>Pick Up Ticket</Button></div>
             </div>
         </section> 
         </form> 
