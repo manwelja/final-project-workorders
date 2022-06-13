@@ -4,6 +4,7 @@ import axios from 'axios';
 import Button from "../Button"
 import useScript from '../../hooks/useScript';
 import '../../../public/styles/newWorkOrder.css';
+import Select from 'react-select';
 
 //Environment variables
 const PORT = process.env.API_PORT;
@@ -32,15 +33,18 @@ export default function NewWorkorder(props){
       axios.get(`http://${BASE_URL}/api/modules`),
       axios.get(`http://${BASE_URL}/api/categories`),
     ]).then((all) => {    
-        setState(prev => ({...prev, modules: all[0].data, categories: all[1].data}));      
+        //format modules for select box
+        const formattedModules = all[0].data.map((itm) => ({value:itm.id, label:itm.topic}))
+        const formattedCategories = all[1].data.map((itm) => ({value:itm.id, label:itm.description}))
+        setState(prev => ({...prev, modules: formattedModules, categories: formattedCategories}));      
       })
     },[])
 
   const handleModuleChange = (event) => {
-    setState(prev => ({...prev, selectedModule: event.target.value}));    
+    setState(prev => ({...prev, selectedModule: event.value}));    
   };
   const handleCategoryChange = (event) => {
-    setState(prev => ({...prev, selectedCategory: event.target.value}));    
+    setState(prev => ({...prev, selectedCategory: event.value}));    
   };
 
   const handleFileChange = (event) => {
@@ -50,6 +54,19 @@ export default function NewWorkorder(props){
   function saveData() {
     //need validation
     state.selectedFileUpload ? uploadToCloudifyData() : postToDatabase()
+   // resetFormState()
+  }
+
+  function resetFormState() {
+    console.log('reset')
+    setState({
+      selectedModule: "",
+      selectedCategory: "",
+      selectedFileUpload: "",
+    });
+    setDescription("");
+    setLinkToModule("");
+    setEnvironment("");    
   }
 
   function uploadToCloudifyData() {
@@ -66,7 +83,6 @@ export default function NewWorkorder(props){
             postToDatabase(res.data.secure_url);
     }).catch((err) => console.log(err));    
   }
- 
   //Status id should be set to 1 initially - 
   const postToDatabase = (filePath = "") => {
     return axios.put(`http://${BASE_URL}/api/workorders`, {user_student_id: props.student_id, category_id: parseInt(state.selectedCategory), module_id: parseInt(state.selectedModule), environment: environment, description: description, link_to_module: link_to_module, screenshot_url: filePath})
@@ -133,22 +149,20 @@ export default function NewWorkorder(props){
             <div class="wo-form-label-data">
               <div class="wo-form-label"><label>Please specify the category</label></div>
                 <div class="wo-form-data">
-                  <select class="wo-form-text-box" value={state.selectedCategory} default="...Select" onChange={handleCategoryChange}>
-                    {state.categories.map((option) => (
-                    <option key={option.id} value={option.id}>{option.description}</option>
-                    ))}
-                  </select> 
+                <Select 
+                 options={state.categories}
+                 onChange={handleCategoryChange}
+                /> 
                 </div>  
               </div>
 
             <div class="wo-form-label-data">
               <div class="wo-form-label"><label>Please specify which module you're working on:</label></div>
               <div class="wo-form-data">  
-                <select class="wo-form-text-box" value={state.selectedModule} onChange={handleModuleChange}>
-                  {state.modules.map((option) => (
-                  <option key={option.id} value={option.id}>{option.topic}</option>
-                  ))}
-                </select> 
+                <Select 
+                  options={state.modules}
+                  onChange={handleModuleChange}
+                /> 
               </div>  
             </div>
             <div class="wo-form-label-data">
@@ -158,9 +172,9 @@ export default function NewWorkorder(props){
               </div>     
             </div>  
             <div class="wo-form-footer">
-              <div><button class="btn btn-outline-danger">Cancel</button></div>
+              <div><button class="btn btn-outline-danger" onClick={resetFormState}>Cancel</button></div>
               <div><Button className="button--confirm" confirm onClick={ () => { saveData() }}>Save Me</Button></div>
-              <div><button class="btn btn-outline-success" onClick={saveData}>Save Me NonReact</button></div>
+              <div><button class="btn btn-outline-success" onClick={() => saveData()}>Save Me NonReact</button></div>
             </div>
         </section> 
         </form> 
