@@ -3,6 +3,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import axios from 'axios';
 import Button from "../Button"
 import useScript from '../../hooks/useScript';
+import '../../../public/styles/newWorkOrder.css';
 
 //Environment variables
 const PORT = process.env.API_PORT;
@@ -13,8 +14,6 @@ const API_CLOUD_PRESET = process.env.API_CLOUD_PRESET;
   
 
 export default function NewWorkorder(props){
-  useScript('https://upload-widget.cloudinary.com/global/all.js');
-
   const [state, setState] = useState({
     modules: [{}],
     selectedModule: "",
@@ -24,6 +23,7 @@ export default function NewWorkorder(props){
   });
   const [description, setDescription] = useState("");
   const [link_to_module, setLinkToModule] = useState("");
+  const [environment, setEnvironment] = useState("");
 
   
   //populate the schedule when the application loads
@@ -48,6 +48,7 @@ export default function NewWorkorder(props){
   };
 
   function saveData() {
+    //need validation
     state.selectedFileUpload ? uploadToCloudifyData() : postToDatabase()
   }
 
@@ -66,24 +67,29 @@ export default function NewWorkorder(props){
     }).catch((err) => console.log(err));    
   }
  
+  //Status id should be set to 1 initially - 
   const postToDatabase = (filePath = "") => {
-    console.log("description:", state.description);
-    return axios.put(`http://localhost:8001/api/workorders`, {user_student_id: 1, status_id: 1, category_id: parseInt(state.selectedCategory), module_id: parseInt(state.selectedModule), environment: "M1", description: description, link_to_module: link_to_module, screenshot_url: filePath})
+    return axios.put(`http://${BASE_URL}/api/workorders`, {user_student_id: props.student_id, category_id: parseInt(state.selectedCategory), module_id: parseInt(state.selectedModule), environment: environment, description: description, link_to_module: link_to_module, screenshot_url: filePath})
     .then((res) => {
       return;
-    })
+    }).catch((err) => console.log("error - should show screen"))
   }  
   
   return (
     <main>
       <article>
         <form autoComplete="off" onSubmit={event => event.preventDefault()}>
-          <section>
-            <h1>New Help Request</h1>
-              <section>
-                <label>Link to module</label>
-                <br />
+          <section class="wo-form-container">
+            <div class="wo-form-header"><h1>New Help Request</h1></div>
+            <div class="wo-form-label-data">
+              <div class="wo-form-label"><label>Student Name:</label></div>
+              <div class="wo-form-data">{props.student_name}</div>
+            </div>
+            <div class="wo-form-label-data">
+              <div class="wo-form-label"><label>Link to module</label></div>
+              <div class="wo-form-data">
                 <input
+                  class="wo-form-text-box"
                   name="module-link"
                   type="text"
                   placeholder="Enter URL here"
@@ -92,11 +98,13 @@ export default function NewWorkorder(props){
                     setLinkToModule(event.target.value);
                   }}
                 />
-              </section>
-
-              <section>
-                <label>Please describe your issue</label>
-                <input                  
+              </div>
+            </div>
+            <div class="wo-form-label-data">
+              <div class="wo-form-label"><label>Please describe your issue</label></div>
+                <div class="wo-form-data">
+                  <input         
+                  class="wo-form-text-box"         
                   name="description"
                   type="text"
                   placeholder="What's up?"
@@ -104,37 +112,56 @@ export default function NewWorkorder(props){
                   onChange={(event) => { 
                     setDescription(event.target.value);
                   }}        
-                />  
-              </section>           
-            <section>
-              <p>Please specify your computer environment</p>
-              <button>M1</button>
-              <button>Vagrant (Mac)</button>
-              <button>Windows</button>
-            </section>
+                 />  
+              </div>
+            </div>                      
+            <div class="wo-form-label-data">
+            <div class="wo-form-label"><label>Please specify your computer environment</label></div>
+              <div class="wo-form-data">
+                <input      
+                class="wo-form-text-box"            
+                    name="environment"
+                    type="text"
+                    placeholder="e.g. M1, Vagrant, Windows?"
+                    value={ environment }
+                    onChange={(event) => { 
+                      setEnvironment(event.target.value);
+                    }}        
+                  />  
+              </div>  
+            </div>
+            <div class="wo-form-label-data">
+              <div class="wo-form-label"><label>Please specify the category</label></div>
+                <div class="wo-form-data">
+                  <select class="wo-form-text-box" value={state.selectedCategory} default="...Select" onChange={handleCategoryChange}>
+                    {state.categories.map((option) => (
+                    <option key={option.id} value={option.id}>{option.description}</option>
+                    ))}
+                  </select> 
+                </div>  
+              </div>
 
-            <section>
-              <p>Please specify the category</p>
-              <select value={state.selectedCategory} onChange={handleCategoryChange}>
-                {state.categories.map((option) => (
-                <option key={option.id} value={option.id}>{option.description}</option>
-                ))}
-              </select> 
-            </section>
-
-            <section>
-              <p>Please specify which module you're working on:</p>  
-              <select value={state.selectedModule} onChange={handleModuleChange}>
-                {state.modules.map((option) => (
-                <option key={option.id} value={option.id}>{option.topic}</option>
-                ))}
-              </select> 
-              <input type="file" accept="image/png, image/jpeg" onChange={handleFileChange}></input>
-            </section>       
-            <section>
-            <button>Cancel</button>
-            <Button confirm onClick={ () => { saveData() }}>Save Me</Button>
-          </section>
+            <div class="wo-form-label-data">
+              <div class="wo-form-label"><label>Please specify which module you're working on:</label></div>
+              <div class="wo-form-data">  
+                <select class="wo-form-text-box" value={state.selectedModule} onChange={handleModuleChange}>
+                  {state.modules.map((option) => (
+                  <option key={option.id} value={option.id}>{option.topic}</option>
+                  ))}
+                </select> 
+              </div>  
+            </div>
+            <div class="wo-form-label-data">
+              <div class="wo-form-label"><label>Please provide a screenshot if applicable:</label></div>
+              <div class="wo-form-data">       
+                <input type="file" accept="image/png, image/jpeg" onChange={handleFileChange}></input>
+              </div>     
+            </div>  
+            <div class="wo-form-footer">
+              <div><button class="btn btn-outline-danger">Cancel</button></div>
+              <div><Button className="button--confirm" confirm onClick={ () => { saveData() }}>Save Me</Button></div>
+              <div><button class="btn btn-outline-success" onClick={saveData}>Save Me NonReact</button></div>
+            </div>
         </section> 
         </form> 
       </article>
