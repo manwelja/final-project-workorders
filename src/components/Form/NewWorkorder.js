@@ -79,20 +79,14 @@ export default function NewWorkorder(props){
     }).catch((err) => console.log(err));    
   }
   //Status id should be set to 1 initially - 
-<<<<<<< HEAD
   const postToDatabase = (filePath = "") => {
       return axios.put(`http://${BASE_URL}/api/workorders`, {user_student_id: props.student_id, category_id: parseInt(state.selectedCategory), module_id: parseInt(state.selectedModule), environment: environment, description: description, link_to_module: link_to_module, screenshot_url: filePath})
-=======
-  const postToDatabase = (filePath = "") => {    
-    return axios.put(`http://${BASE_URL}/api/workorders`, {user_student_id: props.student_id, category_id: parseInt(state.selectedCategory), module_id: parseInt(state.selectedModule), environment: environment, description: description, link_to_module: link_to_module, screenshot_url: filePath})
->>>>>>> features/viewWorkorderForm
     .then((res) => {
       console.log(res);
       return;
     }).catch((err) => console.log("error - should show screen"))
     
-  }  
-  
+  }    
   return (
     <main>
       <article>
