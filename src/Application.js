@@ -1,7 +1,6 @@
 import React from "react";
 
-import NewWorkOrder from "./Form/NewWorkorder";
-import WorkOrderList from "./WOrkOrderList";
+import Login from "./Login";
 
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 
@@ -40,10 +39,10 @@ componentDidMount();
 //Main component that is responsible for invoking children to display workorder system content
 export default function Application(props) {
   //declare the functions that are being exported in the useApplicationData hook
+  //Display the login component - the login will determine what the user will ultimately see
   return (
     <main className="layout">
-     <WorkOrderList  />  
-     <NewWorkOrder  />     
+     <Login  />      
     </main>
   );
 }
