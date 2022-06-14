@@ -1,5 +1,6 @@
 // student view --> giving feedback to mentor
 import React, { useState, useEffect } from "react";
+import { Rating } from "react-simple-star-rating";
 import axios from "axios";
 
 //environment variables
@@ -25,8 +26,16 @@ const StudentFeedbackForm = (props) => {
       .catch(error => {
         console.error(error);
       });
-
   }, []);
+
+  const handleRating = (rate) => {
+    setRating(rate / 20);
+    console.log(rating);
+  };
+
+  const resetDescription = () => {
+    setDescription("");
+  };
 
   const saveData = () => {
     const newState = { ...state, "student_notes": description };
@@ -36,8 +45,10 @@ const StudentFeedbackForm = (props) => {
         //confirming update here
         console.log("Feedback submitted");
         setState(newState);
+        resetDescription();
       });
   };
+
 
   return (
     <article>
@@ -54,7 +65,13 @@ const StudentFeedbackForm = (props) => {
           How would you rate this interaction in terms of ability to resolve your issue,
           respectful communication, and overall attitude?
         </p>
-        <p>[put some stars here]</p>
+        <Rating
+          onClick={handleRating}
+          initialValue={0}
+          ratingValue={rating / 20}
+          showTooltip
+          tooltipArray={['Terrible', 'Bad', 'Average', 'Great', 'Incredible!']}
+        />
       </section>
 
       <section>
@@ -77,4 +94,4 @@ const StudentFeedbackForm = (props) => {
   );
 };
 
-export default StudentFeedbackForm;;
+export default StudentFeedbackForm;
