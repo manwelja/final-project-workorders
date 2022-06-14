@@ -15,11 +15,12 @@ function isValidEmail(userEmail) {
   return false;
 }
 
+
 // validate that a user enters the email and pw that matches the db -- unencrypted for now bc of our seed data, fix later
 // may want to migrate this to backend in the future? 
 
 function loginUser(userEmail, userPassword) {
-  const cleanEmail = userEmail.trim(); // consider case sensitivity later -> to lowercase + make SQL query case insensitive possibly
+  const cleanEmail = userEmail.trim();
   if (isValidEmail(cleanEmail)) {
     axios.get(`http://localhost:8001/api/login/${cleanEmail}`)
       .then((response) => {
@@ -35,7 +36,6 @@ function loginUser(userEmail, userPassword) {
             console.log('have password to set cookie');
             return;
             // set cookie --> save it in state...?
-            // render the appropriate page based on the user's role
             // set states needed at the root of the app -> if App needs state variables from successful login
           }
         }
