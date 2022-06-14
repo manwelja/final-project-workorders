@@ -7,11 +7,11 @@ import '../../../public/styles/newWorkOrder.css';
 import Select from 'react-select';
 
 //Environment variables
-const PORT = process.env.API_PORT;
-const HOST = process.env.API_HOST;
+const PORT = process.env.REACT_API_PORT;
+const HOST = process.env.REACT_API_HOST;
 const BASE_URL = HOST + ":" + PORT;
-const API_CLOUD_ID = process.env.API_CLOUD_ID;
-const API_CLOUD_PRESET = process.env.API_CLOUD_PRESET;
+const API_CLOUD_ID = process.env.REACT_API_CLOUD_ID;
+const API_CLOUD_PRESET = process.env.REACT_API_CLOUD_PRESET;
   
 
 export default function NewWorkorder(props){
@@ -58,7 +58,6 @@ export default function NewWorkorder(props){
   }
 
   function resetFormState() {
-    console.log('reset')
     setState(prev => ({...prev, selectedModule: "", selectedCategory: "", selectedFileUpload: ""}));
     setDescription("");
     setLinkToModule("");
@@ -81,10 +80,11 @@ export default function NewWorkorder(props){
   }
   //Status id should be set to 1 initially - 
   const postToDatabase = (filePath = "") => {
-    return axios.put(`http://${BASE_URL}/api/workorders`, {user_student_id: props.student_id, category_id: parseInt(state.selectedCategory), module_id: parseInt(state.selectedModule), environment: environment, description: description, link_to_module: link_to_module, screenshot_url: filePath})
+      return axios.put(`http://${BASE_URL}/api/workorders`, {user_student_id: props.student_id, category_id: parseInt(state.selectedCategory), module_id: parseInt(state.selectedModule), environment: environment, description: description, link_to_module: link_to_module, screenshot_url: filePath})
     .then((res) => {
       return;
     }).catch((err) => console.log("error - should show screen"))
+    
   }  
   
   return (
