@@ -44,7 +44,7 @@ export default function Application(props) {
   //declare the functions that are being exported in the useApplicationData hook
   return (
     <main className="layout">
-     <NewWorkOrder  />  
+     <WorkOrderList  />  
      <NewWorkOrder  />     
     </main>
   );
