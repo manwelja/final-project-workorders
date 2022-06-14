@@ -7,6 +7,6 @@ import ViewWorkorder from "components/Form/ViewWorkorder";
 
 storiesOf("ViewWorkorder", module)
   .add("ViewWorkorder", () => (<ViewWorkorder 
-    workorderId={"1"}    
+    workorderId={1}    
   />))
 

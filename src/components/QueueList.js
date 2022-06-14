@@ -16,7 +16,9 @@ export default function QueueList(props) {
         studentLastName={workOrderData.student_last_name}
         topic={workOrderData.topic}
         week={workOrderData.week}
-      />);
+        screenshot_url={workOrderData.screenshot_url}
+      />
+    ); 
   });
 
   return (
