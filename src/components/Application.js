@@ -1,16 +1,13 @@
 import React from "react";
-
 import Login from "./Login";
+import NewWorkorder from "./Form/NewWorkorder";
 
 import { w3cwebsocket as W3CWebSocket } from "websocket";
-
 //Environment variables
-const PORT = process.env.REACT_API_PORT;
-const HOST = process.env.REACT_API_HOST;
+const PORT = process.env.REACT_APP_API_PORT;
+const HOST = process.env.REACT_APP_API_HOST;
 const BASE_URL = HOST + ":" + PORT;
-
 const client = new W3CWebSocket(`ws://${BASE_URL}`);
-console.log("loading ")
 
 //Set up websocket client connection
 const componentDidMount = function () {
@@ -41,8 +38,9 @@ export default function Application(props) {
   //declare the functions that are being exported in the useApplicationData hook
   //Display the login component - the login will determine what the user will ultimately see
   return (
-    <main className="layout">
-     <Login  />      
-    </main>
+    <>
+    <Login  />   
+    <NewWorkorder  />    
+    </>
   );
 }

@@ -4,7 +4,7 @@
 import classNames from "classnames";
 import React, { Fragment } from "react";
 import 'bootstrap/dist/css/bootstrap.css';
-import '../../public/styles/workorders-student.css';
+import './workorders-student.css';
 
 export default function WorkorderListItem(props) {
   const {

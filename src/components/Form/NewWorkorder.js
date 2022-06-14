@@ -3,15 +3,15 @@ import React, { useState, useEffect, Fragment } from "react";
 import axios from 'axios';
 import Button from "../Button"
 import useScript from '../../hooks/useScript';
-import '../../../public/styles/workorderForm.css';
+import './workorderForm.css';
 import Select from 'react-select';
 
 //Environment variables
-const PORT = process.env.REACT_API_PORT;
-const HOST = process.env.REACT_API_HOST;
+const PORT = process.env.REACT_APP_API_PORT;
+const HOST = process.env.REACT_APP_API_HOST;
 const BASE_URL = HOST + ":" + PORT;
-const API_CLOUD_ID = process.env.REACT_API_CLOUD_ID;
-const API_CLOUD_PRESET = process.env.REACT_API_CLOUD_PRESET;
+const API_CLOUD_ID = process.env.REACT_APP_API_CLOUD_ID;
+const API_CLOUD_PRESET = process.env.REACT_APP_API_CLOUD_PRESET;
   
 
 export default function NewWorkorder(props){

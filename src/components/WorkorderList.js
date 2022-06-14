@@ -2,7 +2,7 @@
 import React from "react";
 import WorkorderListItem from "components/WorkorderListItem";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../../public/styles/workorders-student.css';
+import './workorders-student.css';
 
 //Component that invokes a QueueListItem child for each workorder in the data set
 export default function WorkorderList(props) {

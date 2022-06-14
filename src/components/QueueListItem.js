@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../../public/styles/queue.css';
+import './queue.css';
 
 //Component that displays individual interviewer data
 export default function QueueListItem(props) {

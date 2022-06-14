@@ -1,11 +1,11 @@
 import { React, useState, useEffect } from "react";
-import '../../public/styles/login.css';
+import './login.css';
 import axios from "axios";
 
 
 //Environment variables
-const PORT = process.env.API_PORT;
-const HOST = process.env.API_HOST;
+const PORT = process.env.REACT_APP_API_PORT;
+const HOST = process.env.REACT_APP_API_HOST;
 const BASE_URL = HOST + ":" + PORT;
 
 function isValidEmail(userEmail) {
@@ -49,7 +49,7 @@ function loginUser(userEmail, userPassword) {
 }
 
 
-export default function Login(props) {
+export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
