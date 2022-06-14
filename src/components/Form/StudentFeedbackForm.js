@@ -24,7 +24,6 @@ const StudentFeedbackForm = (props) => {
   };
 
   const saveData = () => {
-
     // this object is just for organizing the data to be sent to the database
     const newData = { fname: "student_notes", description: description, rating: rating };
 
