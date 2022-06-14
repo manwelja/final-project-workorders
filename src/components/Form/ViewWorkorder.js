@@ -3,7 +3,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import axios from 'axios';
 import Button from "../Button"
 import useScript from '../../hooks/useScript';
-import '../../../public/styles/newWorkOrder.css';
+import '../../../public/styles/workorderForm.css';
 import Select from 'react-select';
 
 //Environment variables
@@ -58,62 +58,58 @@ export default function ViewWorkorder(props){
    
   return (
     <main>
-      <article>
-        <form autoComplete="off" onSubmit={event => event.preventDefault()}>
-          <section class="wo-form-container">
-            <div class="wo-form-header"><h1>Display Help Request</h1></div>
-            <div class="wo-form-label-data">
-              <div class="wo-form-label"><label>Student Name:</label></div>
-              <div class="wo-form-data">{state.student_first_name + " " + state.student_last_name}</div>
+    <article>
+      <form autoComplete="off" onSubmit={event => event.preventDefault()}>
+        <section class="wo-form-container">
+          <div class="wo-form-header"><h1>View Help Request</h1></div>
+          <div class="wo-form-label-data">
+            <div class="wo-form-label"><label>Student Name:</label></div>
+            <div class="wo-form-data">{props.student_name}</div>
+          </div>
+          <div class="wo-form-label-data">
+            <div class="wo-form-label"><label>Link to module</label></div>
+            <div class="wo-form-data">
+            {state.link_to_module}    
             </div>
-            <div class="wo-form-label-data">
-              <div class="wo-form-label"><label>Link to module</label></div>
+          </div>
+          <div class="wo-form-label-data">
+            <div class="wo-form-label"><label>Please describe your issue</label></div>
               <div class="wo-form-data">
-                {state.link_to_module}                
-              </div>
+              {state.description}
             </div>
-            <div class="wo-form-label-data">
-              <div class="wo-form-label"><label>Please describe your issue</label></div>
-                <div class="wo-form-data">
-                {state.description}
-              </div>
-            </div>                      
-            <div class="wo-form-label-data">
-            <div class="wo-form-label"><label>Please specify your computer environment</label></div>
+          </div>                      
+          <div class="wo-form-label-data">
+          <div class="wo-form-label"><label>Please specify your computer environment</label></div>
+            <div class="wo-form-data">
+            {state.environment}
+            </div>  
+          </div>
+          <div class="wo-form-label-data">
+            <div class="wo-form-label"><label>Please specify the category</label></div>
               <div class="wo-form-data">
-                {state.environment}
+              {state.category}
               </div>  
-            </div>
-            <div class="wo-form-label-data">
-              <div class="wo-form-label"><label>Please specify the category</label></div>
-                <div class="wo-form-data">
-                  {state.category}
-                </div>  
             </div>
 
-            <div class="wo-form-label-data">
-              <div class="wo-form-label"><label>Please specify which module you're working on:</label></div>
-              <div class="wo-form-data">  
-                {state.topic}
-              </div>  
-            </div>
-            <div class="wo-form-label-data">
-              <div class="wo-form-label"><label>Screenshot:</label></div><div></div>
-               <div class="wo-form-label">       
+          <div class="wo-form-label-data">
+            <div class="wo-form-label"><label>Please specify which module you're working on:</label></div>
+            <div class="wo-form-data">  
+             {state.topic}
+            </div>  
+          </div>
+          <div class="wo-form-screenshot">       
                 <a href={state.screenshot_url}>
                   <img src={state.screenshot_url} alt="Error Screenshot" />
                 </a>
-              </div>     
-              <div class="wo-form-label"></div>
-            </div>  
-            <div class="wo-form-footer">
+              </div>   
+              <div class="wo-form-footer">
               <div><Button className="button--danger" danger onClick={ () => {  }}>Cancel</Button></div>
               <div><Button className="button--confirm" confirm onClick={ () => {  }}>See History</Button></div>
-              <div><Button className="button--confirm" confirm onClick={ () => {  }}>Pick Up Ticket</Button></div>
+              <div><Button className="button--confirm" confirm onClick={ () => {  }}>Pick Up</Button></div>
             </div>
-        </section> 
-        </form> 
-      </article>
-    </main>
+      </section> 
+      </form> 
+    </article>
+  </main>
   );
 };

@@ -3,7 +3,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import axios from 'axios';
 import Button from "../Button"
 import useScript from '../../hooks/useScript';
-import '../../../public/styles/newWorkOrder.css';
+import '../../../public/styles/workorderForm.css';
 import Select from 'react-select';
 
 //Environment variables
