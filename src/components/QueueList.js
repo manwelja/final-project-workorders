@@ -17,7 +17,8 @@ export default function QueueList(props) {
         topic={workOrderData.topic}
         week={workOrderData.week}
         screenshot_url={workOrderData.screenshot_url}
-      />);
+      />
+    ); 
   });
 
   return (

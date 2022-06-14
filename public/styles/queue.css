@@ -3,6 +3,8 @@ body {
   margin: 0;
   font-family: "Roboto Flex", sans-serif;
   background-color: rgb(245,245,245);
+  display: flex;
+  flex-flow: row wrap;
 }
 
 .queue-container {
@@ -16,11 +18,11 @@ body {
 
 .queue-workorder-box {
     background: white;
-    width: 90%;
+    width: 45%;
     height: auto;
     margin: 1rem 1rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;   
     border: 1px solid rgba(0,0,0 ,0.15);
     flex-direction: column;
     box-shadow: 3px 3px 10px rgb(0 0 0 / 5%);
