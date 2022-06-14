@@ -35,7 +35,7 @@ function loginUser(userEmail, userPassword) {
             console.log('have password to set cookie');
             return;
             // set cookie --> save it in state...?
-            // redirect to the appropriate page based on the user's role
+            // render the appropriate page based on the user's role
             // set states needed at the root of the app -> if App needs state variables from successful login
           }
         }
