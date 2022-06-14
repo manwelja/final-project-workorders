@@ -2,35 +2,41 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const StudentFeedbackForm = (props) => {
-  const BASE_URL = 'http://localhost:8001';
-  const [rating, setRating] = useState(0);
-  const [workorder, setWorkorder] = useState([{}]);
-  const [notes, setNotes] = useState("");
+//environment variables
+const PORT = process.env.API_PORT;
+const HOST = process.env.API_HOST;
+const BASE_URL = HOST + ":" + PORT;
 
+const StudentFeedbackForm = (props) => {
+  const [state, setState] = useState({}); //probably won't need this in the future
+  const [rating, setRating] = useState(0);
+  const [description, setDescription] = useState("");
+
+
+  //lines 16-39 should be moved up a level and passed in as props to this component
   useEffect(() => {
     Promise.all([
-      axios.get(`${BASE_URL}/api/workorders/1`),
-      axios.get(`${BASE_URL}/api/users`)
+      axios.get(`http://${BASE_URL}/api/workorders/1`),
+      axios.get(`http://${BASE_URL}/api/users`)
     ])
       .then((all) => {
-        console.log('in get req.');
-        console.log(all[0].data[0]);
-        setWorkorder(all[0].data);
+        setState(prev => ({ ...prev, ...all[0].data[0] }));
       })
       .catch(error => {
         console.error(error);
       });
+
   }, []);
 
   const saveData = () => {
-    console.log(`save data call:`);
-    console.log(workorder);
-    setWorkorder([{ ...workorder, "student_notes": notes }]);
+    const newState = { ...state, "student_notes": description };
 
-    //use put using update in route .../api/update/workorders/1
-    //sql: 
-    // axios.patch(`${BASE_URL}/api/workorders/1`,);
+    axios.patch(`http://${BASE_URL}/api/update/workorder/1`, { value: description, fieldname: "student_notes" })
+      .then(() => {
+        //confirming update here
+        console.log("Feedback submitted");
+        setState(newState);
+      });
   };
 
   return (
@@ -59,8 +65,8 @@ const StudentFeedbackForm = (props) => {
             type="text"
             name="student_notes"
             placeholder="Tell us how we did"
-            value={notes}
-            onChange={event => { setNotes(event.target.value); }}
+            value={description}
+            onChange={event => { setDescription(event.target.value); }}
           />
           <br />
           <button onClick={() => saveData()}>Submit Feedback</button>
