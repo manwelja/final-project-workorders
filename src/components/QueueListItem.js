@@ -13,6 +13,10 @@ export default function QueueListItem(props) {
   const formattedTime = new Date(dateCreated).toLocaleTimeString('en-US');
   const formattedDateTime = formattedDate + " - " + formattedTime;
 
+  const imageClass = classNames("queue-workorder-screenshot", 
+  { " hidden": !screenshot_url }
+);
+
 
   return (
     <div class="queue-workorder-box">
@@ -33,7 +37,7 @@ export default function QueueListItem(props) {
         <p class="queue-workorder-text"><span class="category-name">Description: </span>{description}</p> 
       </div>
 
-      <div class="queue-workorder-screenshot">
+      <div className={ imageClass }>
             <a href={screenshot_url}>
               <img src={screenshot_url} alt="Error Screenshot" />
             </a>         
