@@ -36,10 +36,8 @@ const componentDidMount = function () {
     //}
   };
 }
-
-//componentDidMount();
-// <UserList users={state.users} />
-//Maain component that is responsible for invoking children to display navigation and schedule content
+componentDidMount();
+//Main component that is responsible for invoking children to display workorder system content
 export default function Application(props) {
   //declare the functions that are being exported in the useApplicationData hook
   return (
