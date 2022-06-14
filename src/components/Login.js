@@ -4,34 +4,54 @@ import axios from "axios";
 
 
 //Environment variables
-// const PORT = process.env.API_PORT;
-// const HOST = process.env.API_HOST;
-// const BASE_URL = HOST + ":" + PORT;
-// route: /login
+const PORT = process.env.API_PORT;
+const HOST = process.env.API_HOST;
+const BASE_URL = HOST + ":" + PORT;
+
+function isValidEmail(userEmail) {
+  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(userEmail)) {
+    return true;
+  }
+  return false;
+}
+
+
+// validate that a user enters the email and pw that matches the db -- unencrypted for now bc of our seed data, fix later
+// may want to migrate this to backend in the future? 
+
+function loginUser(userEmail, userPassword) {
+  const cleanEmail = userEmail.trim();
+  if (isValidEmail(cleanEmail)) {
+    axios.get(`http://localhost:8001/api/login/${cleanEmail}`)
+      .then((response) => {
+        console.log(response.data[0]);
+        if (response.data.length === 0) {
+          alert('The user was not found.');
+        }
+        else if (response.data.length > 1) { // bad situation, should also alert internally that there is a problem // make sure our db covers for this
+          alert('Internal server error');
+        } else {
+          // validate password here
+          if (userPassword === response.data[0].password) { // TO DO: ENCRYPT
+            console.log('have password to set cookie');
+            return;
+            // set cookie --> save it in state...?
+            // set states needed at the root of the app -> if App needs state variables from successful login
+          }
+        }
+      })
+      .catch((err) => {
+        alert(`There is a database error. Please try again!`);
+      });
+  } else { // if email is not valid (e.g. it doesn't have an @ sign or is code, etc)
+    alert('Your email is invalid'); // may want to use different method than alert, such as toast notification
+  }
+}
+
 
 export default function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  //onchange 
-
-  const BASE_URL = 'http://localhost:8001';
-
-  // function validateLogin () {
-  // const user = findUserByEmail(request.body.email, users);
-
-  // query the database for the user object with that email
-  // axios.get(`http://${BASE_URL}/api/users`;
-  // if the email doesn't exist, catch the error and return a message
-  // if email exists, check to see that the password is an exact match at the key value
-  // search the users array of objects, and look within the object key.
-
-  const findUserbyEmail = (emailadd) => {
-    axios.get(`${BASE_URL}/api/users`)
-      .then((data) => {
-        console.log(data);
-        data.find((user) => user.email === emailadd);
-      });
-  };
 
   return (
     <main>
@@ -61,12 +81,9 @@ export default function Login(props) {
             />
             <button
               type="submit"
-              onClick={() => validate()}
+              onClick={() => loginUser(email, password)}
               name="confirm-login"
               class="btn btn-primary">Submit
-            </button>
-            <button
-              onClick={() => findUserbyEmail('janedoe@gmail.com')}>TryLogin
             </button>
           </div>
 
@@ -78,26 +95,3 @@ export default function Login(props) {
   );
 };
 
-
-  // finduserbyEmail
-    // finds user id for email
-    // array.find()
-
-    // const findUserByEmail = () => {
-    //   axios.get(`http://${BASE_URL}/api/users`)
-    //     .then(() => {
-
-    //     }
-    //     );
-    // };
-
-    // function validate() {
-
-    //   // query the database for the user object with that email
-    //   // axios.get(`http://${BASE_URL}/api/users`;
-
-
-    //   // if the email doesn't exist, catch the error and return a message
-
-
-    //   // if email exists, check to see that the password is an exact match at the key value
