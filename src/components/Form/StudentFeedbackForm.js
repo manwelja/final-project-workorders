@@ -4,8 +4,8 @@ import { Rating } from "react-simple-star-rating";
 import axios from "axios";
 
 //environment variables
-const PORT = process.env.API_PORT;
-const HOST = process.env.API_HOST;
+const PORT = process.env.REACT_APP_API_PORT;
+const HOST = process.env.REACT_APP_API_HOST;
 const BASE_URL = HOST + ":" + PORT;
 
 const StudentFeedbackForm = (props) => {
@@ -25,9 +25,9 @@ const StudentFeedbackForm = (props) => {
 
   const saveData = () => {
     // this object is just for organizing the data to be sent to the database
-    const newData = { fname: "student_notes", description: description, rating: rating };
+    const newData = { description: description, rating: rating };
 
-    axios.patch(`http://${BASE_URL}/api/update/workorder/${props.id}`, newData)
+    axios.patch(`http://${BASE_URL}/api/update/workorder/studentfeedback/${props.id}`, newData)
       .then(() => {
         setDescription("");
       })

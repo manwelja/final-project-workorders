@@ -3,7 +3,8 @@ import React from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 
-import StudentFeedbackForm from "components/Form/StudentFeedbackForm";
+import StudentFeedbackForm from "../src/components/Form/StudentFeedbackForm";
+import MentorFeedbackForm from "../src/components/Form/MentorFeedbackForm";
 
 const workorder = [
   {
@@ -106,15 +107,24 @@ const users = [
 
 const id = workorder[0].id;
 const studentID = workorder[0].user_student_id;
+const studentName= users[studentID].first_name + " " + users[studentID].last_name
 const mentorID = workorder[0].user_mentor_id;
 const mentorName = users[mentorID].first_name + " " + users[mentorID].last_name
 
 storiesOf("Feedback", module)
   .add("StudentFeedbackForm", () => (
     <StudentFeedbackForm
-    id={id}
-    studentID={studentID}
-    mentorID={mentorID}
-    mentorName={mentorName}
+      id={id}
+      studentID={studentID}
+      mentorID={mentorID}
+      mentorName={mentorName}
+    />
+  ))
+  .add("MentorFeedbackForm", () => (
+    <MentorFeedbackForm
+      id={id}
+      studentID={studentID}
+      mentorID={mentorID}
+      studentName={studentName}
     />
   ))
