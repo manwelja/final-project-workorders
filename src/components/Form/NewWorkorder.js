@@ -7,11 +7,11 @@ import '../../../public/styles/workorderForm.css';
 import Select from 'react-select';
 
 //Environment variables
-const PORT = process.env.API_PORT;
-const HOST = process.env.API_HOST;
+const PORT = process.env.REACT_API_PORT;
+const HOST = process.env.REACT_API_HOST;
 const BASE_URL = HOST + ":" + PORT;
-const API_CLOUD_ID = process.env.API_CLOUD_ID;
-const API_CLOUD_PRESET = process.env.API_CLOUD_PRESET;
+const API_CLOUD_ID = process.env.REACT_API_CLOUD_ID;
+const API_CLOUD_PRESET = process.env.REACT_API_CLOUD_PRESET;
   
 
 export default function NewWorkorder(props){

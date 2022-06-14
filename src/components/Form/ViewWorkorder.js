@@ -7,11 +7,10 @@ import '../../../public/styles/workorderForm.css';
 import Select from 'react-select';
 
 //Environment variables
-const PORT = process.env.API_PORT;
-const HOST = process.env.API_HOST;
+const PORT = process.env.REACT_API_PORT;
+const HOST = process.env.REACT_API_HOST;
 const BASE_URL = HOST + ":" + PORT;
-const API_CLOUD_ID = process.env.API_CLOUD_ID;
-const API_CLOUD_PRESET = process.env.API_CLOUD_PRESET;
+
   
 
 export default function ViewWorkorder(props){
@@ -45,11 +44,11 @@ export default function ViewWorkorder(props){
     topic: ""
   });
   
-  const workorderId = 27; //parseInt(props.workorderId);
+  const workorderId = parseInt(props.workorderId);
   //populate the schedule when the application loads
   useEffect(() => {        
     Promise.all([                       
-      axios.get(`http://${BASE_URL}/api/workorders/${workorderId}`),
+      axios.get(`http://${BASE_URL}/api/workorders/${parseInt(workorderId)}`),
     ]).then((all) => {    
         const newState = all[0].data[0];
         setState({...state, ...newState})
@@ -64,7 +63,7 @@ export default function ViewWorkorder(props){
           <div class="wo-form-header"><h1>View Help Request</h1></div>
           <div class="wo-form-label-data">
             <div class="wo-form-label"><label>Student Name:</label></div>
-            <div class="wo-form-data">{props.student_name}</div>
+            <div class="wo-form-data">{state.student_first_name + " " + state.student_last_name}</div>
           </div>
           <div class="wo-form-label-data">
             <div class="wo-form-label"><label>Link to module</label></div>
