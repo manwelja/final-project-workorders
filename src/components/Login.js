@@ -16,56 +16,42 @@ function isValidEmail(userEmail) {
 }
 
 // validate that a user enters the email and pw that matches the db -- unencrypted for now bc of our seed data, fix later
-// may want to migrate this to backend in the future 
+// may want to migrate this to backend in the future? 
+
 function loginUser(userEmail, userPassword) {
   const cleanEmail = userEmail.trim(); // consider case sensitivity later -> to lowercase + make SQL query case insensitive possibly
   if (isValidEmail(cleanEmail)) {
-    axios.get(`http://${BASE_URL}/api/${cleanEmail}`)
+    axios.get(`http://localhost:8001/api/login/${cleanEmail}`)
       .then((response) => {
-        if (response.rows.length === 0) {
+        console.log(response.data[0]);
+        if (response.data.length === 0) {
           alert('The user was not found.');
         }
-        else if (response.rows.length > 1) { // bad situation, should alert internally that there is a problem
+        else if (response.data.length > 1) { // bad situation, should also alert internally that there is a problem // make sure our db covers for this
           alert('Internal server error');
         } else {
-          // want to validate password here
-          if (userPassword === response.rows[0].password) { // TO DO: ENCRYPT
-            // set cookie
+          // validate password here
+          if (userPassword === response.data[0].password) { // TO DO: ENCRYPT
+            console.log('have password to set cookie');
+            return;
+            // set cookie --> save it in state...?
+            // redirect to the appropriate page based on the user's role
             // set states needed at the root of the app -> if App needs state variables from successful login
           }
         }
-        // either empty array, 1 result, or multip;e results
       })
-      .catch((_err) => {
-        alert('There is a database error. Please try again!');
+      .catch((err) => {
+        alert(`There is a database error. Please try again!`);
       });
-  } else {
-    alert('Your email is invalid'); // may want to use different method than alert, such as toast notification?
+  } else { // if email is not valid (e.g. it doesn't have an @ sign or is code, etc)
+    alert('Your email is invalid'); // may want to use different method than alert, such as toast notification
   }
 }
-
-
 
 
 export default function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-
-
-  // axios.get(`http://${BASE_URL}/api/:user`)
-
-  // query the database for the user object with that email
-  //   // axios.get(`http://${BASE_URL}/api/users`;
-
-
-  //   // if the email doesn't exist, catch the error and return a message
-
-
-  //   // if email exists, check to see that the password is an exact match at the key value
-
-
-
 
   return (
     <main>
@@ -95,7 +81,7 @@ export default function Login(props) {
             />
             <button
               type="submit"
-              onClick={() => loginUser(email)}
+              onClick={() => loginUser(email, password)}
               name="confirm-login"
               class="btn btn-primary">Submit
             </button>
@@ -109,35 +95,3 @@ export default function Login(props) {
   );
 };
 
-
-  // finduserbyEmail
-    // finds user id for email
-    // array.find()
-
-    // const findUserByEmail = () => {
-    //   axios.get(`http://${BASE_URL}/api/users`)
-    //     .then(() => {
-
-    //     }
-    //     );
-    // };
-
-    // function validate() {
-
-    //   // query the database for the user object with that email
-    //   // axios.get(`http://${BASE_URL}/api/users`;
-
-
-    //   // if the email doesn't exist, catch the error and return a message
-
-
-    //   // if email exists, check to see that the password is an exact match at the key value
-
-
-      // const findUserbyEmail = (emailadd) => {
-  //   axios.get(`${BASE_URL}/api/users`)
-  //     .then((data) => {
-  //       console.log(data);
-  //       data.find((user) => user.email === emailadd);
-  //     });
-  // };
