@@ -38,9 +38,11 @@ const StudentFeedbackForm = (props) => {
   };
 
   const saveData = () => {
-    const newState = { ...state, "student_notes": description };
+    const newState = { ...state, "student_notes": description, "mentor_rating": rating };
 
-    axios.patch(`http://${BASE_URL}/api/update/workorder/1`, { value: description, fieldname: "student_notes" })
+    const newData = { fname: "student_notes", description: description, rating: rating };
+
+    axios.patch(`http://${BASE_URL}/api/update/workorder/1`, newData)
       .then(() => {
         //confirming update here
         console.log("Feedback submitted");
