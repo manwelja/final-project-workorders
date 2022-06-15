@@ -74,21 +74,28 @@ export default function Application(props) {
   // need users: mentor, student, unknown for the different views
 
 
-    //declare the functions that are being exported in the useApplicationData hook
-    const {
-      state,
-      setState,
-      getQueueListByStatus, 
-      getQueueListByMentor, 
-      getWorkorderListByStudent, 
-      getWorkordersByMentorID 
-    } = useApplicationData();
-    
-  
-    //return appointment components for each appoiontment that exists for the currently selected day
-    // const queueOpen = getQueueListByStatus(1);
-    // const queueInProgress = getQueueListByStatus(2);
-    // const queueClosed = getQueueListByStatus(3);
+  //declare the functions that are being exported in the useApplicationData hook
+  const {
+    state,
+    setState,
+    getQueueListByStatus,
+    getQueueListByMentor,
+    getWorkorderListByStudent,
+    getWorkordersByStudentID,
+    getWorkordersByMentorID
+  } = useApplicationData();
+
+  //potentially used to store userID on login
+  const getUserID = (id) => {
+    setState(prev => ({ ...prev, userID: id }));
+  };
+
+  console.log("user", user);
+  console.log("mode", mode);
+  //return appointment components for each appoiontment that exists for the currently selected day
+  // const queueOpen = getQueueListByStatus(1);
+  // const queueInProgress = getQueueListByStatus(2);
+  // const queueClosed = getQueueListByStatus(3);
   return (
     <Fragment>
       {
@@ -100,7 +107,6 @@ export default function Application(props) {
           onSuccessMentor={() => {
             transitionView(SHOW_QUEUE);
             transitionUser(SHOW_USER_MENTOR);
-            getWorkordersByMentorID(4)
           }}
         />)
       }
@@ -108,38 +114,30 @@ export default function Application(props) {
       {user === SHOW_USER_STUDENT && (
         <Fragment>
           <NavigationStudent
-            onView={() => transitionView(SHOW_EXISTING_WO)}
+            onView={() => transitionView(SHOW_WO_LIST)}
             onNew={() => transitionView(SHOW_NEW_WO)}
             onLogout={() => transitionView(SHOW_LOGIN)}
           />
 
-            {mode === SHOW_WO_LIST && (
-              <WorkorderList
-                workorders={workorders}
-                users={users}
-                modules={modules}
-              />)}
+          {mode === SHOW_WO_LIST && (
+            <WorkorderList
+              workorders={state.myWorkordersStudent}
+            />)}
 
-            {mode === SHOW_NEW_WO && (
-              <NewWorkorder
-                onCancel={() => { transitionView(SHOW_WO_LIST); }}
-                onSave={() => { transitionView(SHOW_EXISTING_WO); }}
-              />)}
-
-            {mode === SHOW_EXISTING_WO && (
-              <WorkorderList
-                workorders={workorders}
-                users={users}
-                modules={modules}
-                onCancel={() => { transitionView(SHOW_WO_LIST); }}
-              />)}
-            {mode === SHOW_NEW_WO && (
+          {mode === SHOW_NEW_WO && (
             <NewWorkorder
               onCancel={() => { transitionView(SHOW_WO_LIST); }}
               onSave={() => { transitionView(SHOW_EXISTING_WO); }}
             />)}
 
-      
+          {mode === SHOW_EXISTING_WO && (
+            <WorkorderList
+              workorders={workorders}
+              users={users}
+              modules={modules}
+              onCancel={() => { transitionView(SHOW_WO_LIST); }}
+            />)}
+
         </Fragment>)}
 
 
@@ -149,7 +147,7 @@ export default function Application(props) {
             onShowNew={() => transitionView(SHOW_QUEUE)}
             onShowInProgress={() => transitionView(SHOW_IN_PROG)}
             onShowClosed={() => transitionView(SHOW_CLOSED)}
-            onShowMy={() => { transitionView(SHOW_MY_WO)}}
+            onShowMy={() => { transitionView(SHOW_MY_WO); }}
             onLogout={() => transitionView(SHOW_LOGIN)}
           />
 
@@ -159,19 +157,19 @@ export default function Application(props) {
             />
           )}
 
-          {( mode === SHOW_IN_PROG ) && (
+          {(mode === SHOW_IN_PROG) && (
             < QueueList
               workorders={state.workordersIP}
             />
           )}
-          {( mode === SHOW_CLOSED) && (
+          {(mode === SHOW_CLOSED) && (
             < QueueList
               workorders={state.workordersClosed}
             />
           )}
           {mode === SHOW_MY_WO && (
             < QueueList
-              workorders={state.myWorkorders}
+              workorders={state.myWorkordersMentor}
             />
           )}
         </Fragment>)}

@@ -19,6 +19,7 @@ function isValidEmail(userEmail) {
 export default function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userID, setUserID] = useState("");
   const [cookies, setCookie] = useCookies([""]);
 
   const { onSuccessStudent, onSuccessMentor } = props;
@@ -38,9 +39,8 @@ export default function Login(props) {
           } else {
             // validate password here
             if (userPassword === response.data[0].password) { // TO DO: ENCRYPT
-              //console.log('have password to set cookie');
-              // set cookie --> save it in state...?
               setCookie("user", userEmail, { path: "/" });
+              setUserID(response.data[0].id);
               response.data[0].role.trim() === "mentor" ? onSuccessMentor() : onSuccessStudent();
             }
           }
