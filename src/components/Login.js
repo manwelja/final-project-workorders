@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import './login.css';
 import axios from "axios";
-
+import { useCookies } from "react-cookie";
 
 //Environment variables
 const PORT = process.env.REACT_APP_API_PORT;
@@ -15,43 +15,43 @@ function isValidEmail(userEmail) {
   return false;
 }
 
-
 // validate that a user enters the email and pw that matches the db -- unencrypted for now bc of our seed data, fix later
 // may want to migrate this to backend in the future? 
-
-function loginUser(userEmail, userPassword) {
-  const cleanEmail = userEmail.trim();
-  if (isValidEmail(cleanEmail)) {
-    axios.get(`http://localhost:8001/api/login/${cleanEmail}`)
-      .then((response) => {
-        console.log(response.data[0]);
-        if (response.data.length === 0) {
-          alert('The user was not found.');
-        }
-        else if (response.data.length > 1) { // bad situation, should also alert internally that there is a problem // make sure our db covers for this
-          alert('Internal server error');
-        } else {
-          // validate password here
-          if (userPassword === response.data[0].password) { // TO DO: ENCRYPT
-            console.log('have password to set cookie');
-            return;
-            // set cookie --> save it in state...?
-            // set states needed at the root of the app -> if App needs state variables from successful login
-          }
-        }
-      })
-      .catch((err) => {
-        alert(`There is a database error. Please try again!`);
-      });
-  } else { // if email is not valid (e.g. it doesn't have an @ sign or is code, etc)
-    alert('Your email is invalid'); // may want to use different method than alert, such as toast notification
-  }
-}
-
-
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [cookies, setCookie] = useCookies([""]);
+
+  function loginUser(userEmail, userPassword) {
+
+    const cleanEmail = userEmail.trim();
+    if (isValidEmail(cleanEmail)) {
+      axios.get(`http://${BASE_URL}/api/login/${cleanEmail}`)
+        .then((response) => {
+          if (response.data.length === 0) {
+            alert('The user was not found.');
+          }
+          else if (response.data.length > 1) {
+            alert('Internal server error');
+          } else {
+            // validate password here
+            if (userPassword === response.data[0].password) { // TO DO: ENCRYPT
+              console.log('have password to set cookie');
+              // set cookie --> save it in state...?
+              setCookie("user", userEmail, { path: "/" });
+              // set states needed at the root of the app -> if App needs state variables from successful login
+              console.log(cookies);
+              return;
+            }
+          }
+        })
+        .catch((err) => {
+          alert(`There is a database error. Please try again!`);
+        });
+    } else { // if email is not valid (e.g. it doesn't have an @ sign or is code, etc)
+      alert('Your email is invalid'); // may want to use different method than alert, such as toast notification
+    }
+  }
 
   return (
     <main>
