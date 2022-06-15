@@ -1,13 +1,14 @@
 // Emma - my workorders --> Just need it to link to them
 import React from "react";
-import WorkorderListItem from "components/WorkorderListItem";
+import WorkorderListItem from "./WorkorderListItem";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './workorders-student.css';
 
 //Component that invokes a QueueListItem child for each workorder in the data set
 export default function WorkorderList(props) {
   const { workorders, users, modules } = props;
-
+  
+console.log("workorder list props", props)
   const getModuleById = moduleId => {
     for (const module of modules) {
       if (module.id === moduleId) {
