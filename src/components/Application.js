@@ -8,6 +8,7 @@ import WorkorderList from "./WorkorderList";
 import QueueList from "./QueueList";
 import useVisualMode from "../hooks/useVisualMode";
 import useUserMode from "../hooks/useUserMode";
+import useApplicationData from "../hooks/useApplicationData";
 
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 //Environment variables
@@ -192,6 +193,23 @@ export default function Application(props) {
   const { user, transitionUser } = useUserMode('');
   // need users: mentor, student, unknown for the different views
 
+
+    //declare the functions that are being exported in the useApplicationData hook
+    const {
+      state,
+      setState,
+      getQueueListByStatus, 
+      getQueueListByMentor, 
+      getWorkorderListByStudent, 
+      getWorkorderByID
+    } = useApplicationData();
+    
+  
+    //return appointment components for each appoiontment that exists for the currently selected day
+    // const queueOpen = getQueueListByStatus(1);
+    // const queueInProgress = getQueueListByStatus(2);
+    // const queueClosed = getQueueListByStatus(3);
+     console.log(state.workordersIP)
   return (
     <Fragment>
       {
@@ -248,12 +266,22 @@ export default function Application(props) {
             onLogout={() => transitionView(SHOW_LOGIN)}
           />
 
-          {(mode === SHOW_QUEUE || mode === SHOW_IN_PROG || mode === SHOW_CLOSED) && (
+          {(mode === SHOW_QUEUE) && (
             < QueueList
-              workorders={workorders}
+              workorders={state.workordersOpen}
             />
           )}
 
+          {( mode === SHOW_IN_PROG ) && (
+            < QueueList
+              workorders={state.workordersIP}
+            />
+          )}
+          {( mode === SHOW_CLOSED) && (
+            < QueueList
+              workorders={state.workordersClosed}
+            />
+          )}
           {mode === SHOW_MY_WO && (
             < QueueList
               workorders={workorders}
