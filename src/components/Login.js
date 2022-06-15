@@ -21,10 +21,10 @@ export default function Login(props) {
   const [password, setPassword] = useState("");
   const [cookies, setCookie] = useCookies([""]);
 
-  const { onSuccess } = props;
+  const { onSuccessStudent, onSuccessMentor } = props;
 
- 
-  function loginUser(userEmail, userPassword, onSuccess) {
+
+  function loginUser(userEmail, userPassword, onSuccessStudent, onSuccessMentor) {
 
     const cleanEmail = userEmail.trim();
     if (isValidEmail(cleanEmail)) {
@@ -38,13 +38,13 @@ export default function Login(props) {
           } else {
             // validate password here
             if (userPassword === response.data[0].password) { // TO DO: ENCRYPT
-              console.log('have password to set cookie');
+              //console.log('have password to set cookie');
               // set cookie --> save it in state...?
+              console.log("who is ya", "***" + response.data[0].role.trim() + "***");
+              if (response.data[0].role.trim() === "mentor") { console.log("you're a mentor"); }
+              if (response.data[0].role.trim() === "student") { console.log("you're a student"); }
               setCookie("user", userEmail, { path: "/" });
-              // set states needed at the root of the app -> if App needs state variables from successful login
-              console.log(cookies);
-              onSuccess();
-              //return onSuccess;
+              response.data[0].role.trim() === "mentor" ? onSuccessMentor() : onSuccessStudent();
             }
           }
         })
@@ -55,7 +55,6 @@ export default function Login(props) {
       alert('Your email is invalid'); // may want to use different method than alert, such as toast notification
     }
   }
-
   return (
     <main>
       <title>SOAR Login</title>
@@ -84,7 +83,7 @@ export default function Login(props) {
             />
             <button
               type="submit"
-              onClick={loginUser(email, password, onSuccess)}              
+              onClick={() => loginUser(email, password, onSuccessStudent, onSuccessMentor)}
               name="confirm-login"
               class="btn btn-primary">Submit
             </button>
@@ -97,7 +96,3 @@ export default function Login(props) {
     </main>
   );
 };
-
-// onClick={() => loginUser(email, password)}
-//onSuccess = {onSuccess}
-

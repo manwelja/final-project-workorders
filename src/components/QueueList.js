@@ -1,5 +1,5 @@
 import React from "react";
-import QueueListItem from "components/QueueListItem";
+import QueueListItem from "./QueueListItem";
 
 //Component that invokes a QueueListItem child for each workorder in the data set
 export default function QueueList(props) {
@@ -18,7 +18,7 @@ export default function QueueList(props) {
         week={workOrderData.week}
         screenshot_url={workOrderData.screenshot_url}
       />
-    ); 
+    );
   });
 
   return (
