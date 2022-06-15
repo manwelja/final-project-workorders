@@ -32,130 +32,10 @@ const SHOW_QUEUE = "SHOW_QUEUE";
 const SHOW_IN_PROG = "SHOW_IN_PROG";
 const SHOW_CLOSED = "SHOW_CLOSED";
 const SHOW_MY_WO = "SHOW_MY_WO";
-/*TESTING PROPS********************************************************************** */
 
-const users = [
-  {
-    id: 8,
-    first_name: "John",
-    last_name: "Doe",
-    email: "johndoe@gmail.com",
-    cohort_id: 7,
-    handle: "jndoe",
-    avatar: "",
-    role: "student",
-    password: "password",
-    active: true,
-    join_date: "2018-03-14T13:00:00.000Z"
-  },
-  {
-    id: 4,
-    first_name: "Mentor",
-    last_name: "Doe",
-    email: "mentorndoe@gmail.com",
-    cohort_id: 2,
-    handle: "mentordoe",
-    avatar: "",
-    role: "mentor",
-    password: "password",
-    active: true,
-    join_date: "2015-03-14T13:00:00.000Z"
-  }];
-
-const modules = [
-  {
-    id: 1,
-    week: 1,
-    day: 1,
-    topic: "Organizing Our Code",
-    archive: false
-  },
-  {
-    id: 3,
-    week: 2,
-    day: 4,
-    topic: "Harder Topic",
-    archive: false
-  }
-];
-
-const workorders = [
-  {
-    id: 4,
-    user_student_id: 8,
-    user_mentor_id: 4,
-    status_id: 1,
-    category_id: 1,
-    module_id: 3,
-    environment: "M1",
-    description: "Code review please",
-    screenshot: "https://res.cloudinary.com/derw4ael5/image/upload/v1655305553/nitjdpqd83nu8cgrhyyv.png",
-    link_to_module: "www.google.com",
-    escalate: false,
-    mentor_notes: "Not bad coding style, but there were some arries that could be more 'DRY'. Recommended helper functions",
-    student_notes: "Meh",
-    mentor_rating: 5,
-    student_rating: 3,
-    date_created: "2018-03-14T12:00:00.000Z",
-    date_pickup: "2018-03-14T12:03:00.000Z",
-    date_closed: "2018-03-14T13:00:00.000Z"
-  },
-  {
-    id: 3,
-    user_student_id: 2,
-    user_mentor_id: 4,
-    status_id: 1,
-    category_id: 2,
-    module_id: 3,
-    environment: "WSL",
-    description: "Discussion",
-    screenshot: null,
-    link_to_module: null,
-    escalate: false,
-    mentor_notes: "M1 issue - needed to change package.json as per Francis' recommendation ",
-    student_notes: "Mentor fixed problem super quick",
-    mentor_rating: 1,
-    student_rating: 1,
-    date_created: "2018-03-13T12:00:00.000Z",
-    date_pickup: "2018-03-13T12:03:00.000Z",
-    date_closed: "2018-03-13T13:00:00.000Z",
-    student_first_name: "Jane",
-    student_last_name: "Doe",
-    mentor_first_name: "Patricia",
-    mentor_last_name: "Anderson",
-    week: 1,
-    day: 1,
-    topic: "Bootcamp Reference Guide"
-  },
-  {
-    id: 12,
-    user_student_id: 1,
-    user_mentor_id: 19,
-    status_id: 1,
-    category_id: 1,
-    module_id: 3,
-    environment: "M1",
-    description: "Code review",
-    screenshot: null,
-    link_to_module: null,
-    escalate: false,
-    mentor_notes: "Not bad coding style, but there were some arries that could be more 'DRY'. Recommended helper functions",
-    student_notes: "Meh",
-    mentor_rating: 5,
-    student_rating: 3,
-    date_created: "2018-03-14T12:00:00.000Z",
-    date_pickup: "2018-03-14T12:03:00.000Z",
-    date_closed: "2018-03-14T13:00:00.000Z",
-    student_first_name: "John",
-    student_last_name: "Doe",
-    mentor_first_name: "Patricia",
-    mentor_last_name: "Anderson",
-    week: 1,
-    day: 1,
-    topic: "Bootcamp Reference Guide"
-  }
-];
-
+const users = [];
+const modules = [];
+const workorders = [];
 /********************************************************************** */
 //Set up websocket client connection
 const componentDidMount = function() {
@@ -201,7 +81,7 @@ export default function Application(props) {
       getQueueListByStatus, 
       getQueueListByMentor, 
       getWorkorderListByStudent, 
-      getWorkorderByID
+      getWorkordersByMentorID 
     } = useApplicationData();
     
   
@@ -209,7 +89,6 @@ export default function Application(props) {
     // const queueOpen = getQueueListByStatus(1);
     // const queueInProgress = getQueueListByStatus(2);
     // const queueClosed = getQueueListByStatus(3);
-     console.log(state.workordersIP)
   return (
     <Fragment>
       {
@@ -221,6 +100,7 @@ export default function Application(props) {
           onSuccessMentor={() => {
             transitionView(SHOW_QUEUE);
             transitionUser(SHOW_USER_MENTOR);
+            getWorkordersByMentorID(4)
           }}
         />)
       }
@@ -233,26 +113,33 @@ export default function Application(props) {
             onLogout={() => transitionView(SHOW_LOGIN)}
           />
 
-          {mode === SHOW_WO_LIST && (
-            <WorkorderList
-              workorders={workorders}
-              users={users}
-              modules={modules}
-            />)}
+            {mode === SHOW_WO_LIST && (
+              <WorkorderList
+                workorders={workorders}
+                users={users}
+                modules={modules}
+              />)}
 
-          {mode === SHOW_NEW_WO && (
+            {mode === SHOW_NEW_WO && (
+              <NewWorkorder
+                onCancel={() => { transitionView(SHOW_WO_LIST); }}
+                onSave={() => { transitionView(SHOW_EXISTING_WO); }}
+              />)}
+
+            {mode === SHOW_EXISTING_WO && (
+              <WorkorderList
+                workorders={workorders}
+                users={users}
+                modules={modules}
+                onCancel={() => { transitionView(SHOW_WO_LIST); }}
+              />)}
+            {mode === SHOW_NEW_WO && (
             <NewWorkorder
               onCancel={() => { transitionView(SHOW_WO_LIST); }}
               onSave={() => { transitionView(SHOW_EXISTING_WO); }}
             />)}
 
-          {mode === SHOW_EXISTING_WO && (
-            <WorkorderList
-              workorders={workorders}
-              users={users}
-              modules={modules}
-              onCancel={() => { transitionView(SHOW_WO_LIST); }}
-            />)}
+      
         </Fragment>)}
 
 
@@ -262,7 +149,7 @@ export default function Application(props) {
             onShowNew={() => transitionView(SHOW_QUEUE)}
             onShowInProgress={() => transitionView(SHOW_IN_PROG)}
             onShowClosed={() => transitionView(SHOW_CLOSED)}
-            onShowMy={() => transitionView(SHOW_MY_WO)}
+            onShowMy={() => { transitionView(SHOW_MY_WO)}}
             onLogout={() => transitionView(SHOW_LOGIN)}
           />
 
@@ -284,7 +171,7 @@ export default function Application(props) {
           )}
           {mode === SHOW_MY_WO && (
             < QueueList
-              workorders={workorders}
+              workorders={state.myWorkorders}
             />
           )}
         </Fragment>)}
@@ -293,3 +180,4 @@ export default function Application(props) {
     </Fragment>
   );
 }
+

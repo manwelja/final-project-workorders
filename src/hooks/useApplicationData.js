@@ -8,6 +8,7 @@ export default function useApplicationData() {
     workordersOpen: [],
     workordersIP: [],
     workordersClosed: [],
+    myWorkorders: [],
     workorder: {}    
   });
 
@@ -15,8 +16,8 @@ export default function useApplicationData() {
     useEffect(() => {        
       Promise.all([      
         axios.get(`/api/queue/1`),
-        axios.get("/api/queue/1"),
-        axios.get("/api/queue/1")
+        axios.get("/api/queue/2"),
+        axios.get("/api/queue/3")
       ]).then((all) => {          
         setState(prev => ({...prev, workordersOpen:all[0].data, workordersIP:all[1].data, workordersClosed: all[2].data}));
       })
@@ -41,9 +42,14 @@ export default function useApplicationData() {
 
   }
   
-  const getWorkorderByID = function(workorderID) {
-
+  const getWorkordersByMentorID = (mentorID) => {   
+    console.log("mentor id", mentorID) 
+    return axios.get(`api/workorders/mentor/${mentorID}`)
+      .then((res) => {
+         setState(prev => ({...prev, myWorkorders: res.data }))    
+         return;
+  }).catch((err) => console.log("axios error", err))
 
   }
-  return { state, getQueueListByStatus, getQueueListByMentor, getWorkorderListByStudent, getWorkorderByID };
+  return { state, getQueueListByStatus, getQueueListByMentor, getWorkorderListByStudent, getWorkordersByMentorID };
 }

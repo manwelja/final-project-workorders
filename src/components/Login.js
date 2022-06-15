@@ -40,9 +40,6 @@ export default function Login(props) {
             if (userPassword === response.data[0].password) { // TO DO: ENCRYPT
               //console.log('have password to set cookie');
               // set cookie --> save it in state...?
-              console.log("who is ya", "***" + response.data[0].role.trim() + "***");
-              if (response.data[0].role.trim() === "mentor") { console.log("you're a mentor"); }
-              if (response.data[0].role.trim() === "student") { console.log("you're a student"); }
               setCookie("user", userEmail, { path: "/" });
               response.data[0].role.trim() === "mentor" ? onSuccessMentor() : onSuccessStudent();
             }
