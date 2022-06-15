@@ -17,12 +17,9 @@ function isValidEmail(userEmail) {
 
 // validate that a user enters the email and pw that matches the db -- unencrypted for now bc of our seed data, fix later
 // may want to migrate this to backend in the future? 
-
-
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [cookies, setCookie] = useCookies([""]);
 
   function loginUser(userEmail, userPassword) {
