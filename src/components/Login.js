@@ -14,15 +14,17 @@ function isValidEmail(userEmail) {
   }
   return false;
 }
-
 // validate that a user enters the email and pw that matches the db -- unencrypted for now bc of our seed data, fix later
 // may want to migrate this to backend in the future? 
-export default function Login() {
+export default function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [cookies, setCookie] = useCookies([""]);
 
-  function loginUser(userEmail, userPassword) {
+  const { onSuccess } = props;
+
+ 
+  function loginUser(userEmail, userPassword, onSuccess) {
 
     const cleanEmail = userEmail.trim();
     if (isValidEmail(cleanEmail)) {
@@ -41,7 +43,8 @@ export default function Login() {
               setCookie("user", userEmail, { path: "/" });
               // set states needed at the root of the app -> if App needs state variables from successful login
               console.log(cookies);
-              return;
+              onSuccess();
+              //return onSuccess;
             }
           }
         })
@@ -81,7 +84,7 @@ export default function Login() {
             />
             <button
               type="submit"
-              onClick={() => loginUser(email, password)}
+              onClick={loginUser(email, password, onSuccess)}              
               name="confirm-login"
               class="btn btn-primary">Submit
             </button>
@@ -94,4 +97,7 @@ export default function Login() {
     </main>
   );
 };
+
+// onClick={() => loginUser(email, password)}
+//onSuccess = {onSuccess}
 
