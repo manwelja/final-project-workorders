@@ -18,9 +18,8 @@ const MentorFeedbackForm = (props) => {
   const [rating, setRating] = useState(0);
   const [description, setDescription] = useState("");
 
-  const handleRating = (rate) => {
-    setRating(rate / 20);
-    console.log(rating);
+  const handleRating = (rating) => {
+    setRating(rating);
   };
 
   const resetForm = () => {
@@ -30,7 +29,7 @@ const MentorFeedbackForm = (props) => {
 
   const saveData = () => {
     // this object is just for organizing the data to be sent to the database
-    const newData = { description: description, rating: rating };
+    const newData = { description: description, rating: rating / 20 };
 
     axios.patch(`http://${BASE_URL}/api/update/workorder/mentorfeedback/${props.id}`, newData)
       .then(() => {
@@ -58,11 +57,16 @@ const MentorFeedbackForm = (props) => {
         </p>
 
         <Rating
-          onClick={handleRating}
-          initialValue={0}
-          ratingValue={rating / 20}
-          showTooltip
-          tooltipArray={['Terrible', 'Bad', 'Average', 'Great', 'Incredible!']}
+          onChange={handleRating}
+          ratingValue={rating}
+          size={50}
+          fillColorArray={[
+            '#f17a45',
+            '#f19745',
+            '#f1a545',
+            '#f1b345',
+            '#f1d045'
+          ]}
         />
       </section>
 
