@@ -19,7 +19,7 @@ export default function QueueListItem(props) {
   return (
     <div class="queue-workorder-box">
       <div class="queue-workorder-header">
-        <div id="workorder-title">Workorder #: {numInQueue}</div>
+        <div id="workorder-title">Queue Order #: {numInQueue}</div>
         <div id="workorder-created">Created {formattedDateTime}</div></div>
       <div class="queue-workorder-body">
         <div class="queue-workorder-body-left">

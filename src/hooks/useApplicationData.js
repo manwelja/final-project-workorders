@@ -10,42 +10,28 @@ export default function useApplicationData() {
   const [oneWorkorder, setOneWorkorder] = useState({});
 
   const [state, setState] = useState({
-    workordersOpen: [],
-    workordersIP: [],
-    workordersClosed: [],
-    myWorkordersStudent: [],
-    myWorkordersMentor: [],
-    workorder: {},
-
     workorderList: [],
     workorderItem: {}
   });
 
   //populate the queue list when the application loads
   useEffect(() => {
-    Promise.all([
-      axios.get(`/api/queue/1`),
-      axios.get("/api/queue/2"),
-      axios.get("/api/queue/3"),
-    ]).then((all) => {
-      setState(prev => ({
-        ...prev,
-        workorderList: all[0].data,
-      //  workordersOpen: all[0].data,
-        workordersIP: all[1].data,
-        workordersClosed: all[2].data,
-      }));
+
+    axios.get(`/api/queue/1`)
+    .then((res) => {
+      console.log(res.data)
+      setState(prev => ({...prev, workorderList: res.data}))
     });
   }, []);
 
-  //when a new user logs in, retrieve all of their workorders
-  useEffect(() => {
-    if (userRole.trim() === "mentor") {
-     // getWorkordersByMentorID(userID);
-    } else if (userRole.trim() === "student") {
-      getWorkordersByStudentID(userID);
-    }
-  }, [userID]);
+  // //when a new user logs in, retrieve all of their workorders
+  // useEffect(() => {
+  //   if (userRole.trim() === "mentor") {
+  //    // getWorkordersByMentorID(userID);
+  //   } else if (userRole.trim() === "student") {
+  //     getWorkordersByStudentID(userID);
+  //   }
+  // }, [userID]);
 
   //Update state data when the server sends new data
   const updateQueue = () => {
@@ -56,10 +42,7 @@ export default function useApplicationData() {
     ]).then((all) => {
       setState(prev => ({
         ...prev,
-        workorderList: all[0].data,
-       // workordersOpen: all[0].data,
-        workordersIP: all[1].data,
-        workordersClosed: all[2].data,
+        workorderList: all[0].data
       }));
     });
 
@@ -67,7 +50,7 @@ export default function useApplicationData() {
   const getWorkorderByID = (workorderID) => {
     return axios.get(`api/workorders/${workorderID}`)
       .then((res) => {
-        setState({ ...state, workorder: res.data[0], workorderItem: res.data[0] });
+        setState({ ...state, workorderItem: res.data[0] });
        // setOneWorkorder(res.data[0]);
         return;
       }).catch((err) => console.log("axios error", err));
@@ -75,20 +58,18 @@ export default function useApplicationData() {
   };
 
   const getWorkordersByStudentID = (studentID) => {
-    console.log("get workorders by student", studentID)
     return axios.get(`api/workorders/student/${studentID}`)
       .then((res) => {
-        setState(prev => ({ ...prev, myWorkordersStudent: res.data, workorderList: res.data }));
+        setState(prev => ({ ...prev, workorderList: res.data }));
         return;
       }).catch((err) => console.log("axios error", err));
 
   };
 
   const getWorkordersByMentorID = (mentorID) => {
-    console.log("get workorders mentor", mentorID)
-      return axios.get(`api/workorders/mentor/${mentorID}`)
+    return axios.get(`api/workorders/mentor/${mentorID}`)
       .then((res) => {
-        setState(prev => ({ ...prev, myWorkordersMentor: res.data, workorderList: res.data }));
+        setState(prev => ({ ...prev, workorderList: res.data }));
         return;
       }).catch((err) => console.log("axios error", err));
 
@@ -103,8 +84,7 @@ export default function useApplicationData() {
   };
 
   const changeWorkorderStatus = function(mentor_id, workorder_id) {
-    console.log("mentor id", mentor_id)
-      //Status id should be set to 1 initially - 
+    //Status id should be set to 1 initially - 
     return axios.put(`http://localhost:8001/api/update/workorder/${workorder_id}`, {user_mentor_id: mentor_id, status_id: 2})
     .then((res) => {
       return;

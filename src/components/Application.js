@@ -78,11 +78,11 @@ export default function Application(props) {
       if(userRole.trim() === "mentor") {
         getWorkordersByMentorID(userID) 
       } else if (userRole.trim() === "student") {
-        console.log("update student")
         getWorkordersByStudentID(userID) 
       }      
       if(mode === SHOW_EXISTING_WO) {
-        getWorkorderByID(state.workorder.id)
+        console.log("workorder item id", state.workorderItem.id)
+        getWorkorderByID(state.workorderItem.id)
       }  
 
       updateQueue();      
@@ -114,6 +114,7 @@ export default function Application(props) {
         break;
       case SHOW_MY_WO:
         //show workorders by mentor id
+        console.log("MENTOR", userID)
         getWorkordersByMentorID(userID)
         break;
       case SHOW_STUDENT_WO:
@@ -123,7 +124,6 @@ export default function Application(props) {
         break;
       case SHOW_WO_LIST:
         //show workorders by student id
-        console.log("student workorders")
         getWorkordersByStudentID(userID)
         break;
       default:
@@ -132,9 +132,8 @@ export default function Application(props) {
    } 
    return;
 }
+//console.log(state)
 useEffect(() => {
-  console.log("update mode", mode)
-  console.log(state)
   updateState();
   return;
 }, [mode]);
@@ -176,7 +175,7 @@ useEffect(() => {
     }  
     return;
   };
- console.log(state)
+ 
   return (
     <Fragment>
 
@@ -204,7 +203,7 @@ useEffect(() => {
 
           {mode === SHOW_EXISTING_WO && (
             <ViewWorkorder
-              workorder={state.workorder}
+              workorder={state.workorderItem}
               onCancel={() => { transitionView(SHOW_WO_LIST); }}
             />)}
 
@@ -255,7 +254,7 @@ useEffect(() => {
 
           {mode === SHOW_EXISTING_WO && (
             <ViewWorkorder
-              workorder={state.workorder}
+              workorder={state.workorderItem}
               onCancel={() => { transitionView(SHOW_QUEUE); }}
               onHistory={openUserHistory}
               onPickupTicket={markWorkorderInProgress}
