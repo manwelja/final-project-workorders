@@ -20,10 +20,11 @@ export default function WorkorderListItem(props) {
     module,
     topic,
     week,
-    status }
+    status,
+    onView }
     = props;
 
-  const options = { year: "numeric", month: "long", day: "numeric" };
+    const options = { year: "numeric", month: "long", day: "numeric" };
   const formattedDate = new Date(date_created).toLocaleDateString(undefined, options);
   const formattedTime = new Date(date_created).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   const formattedDateTime = `${formattedDate} ${formattedTime}`;
@@ -52,38 +53,9 @@ export default function WorkorderListItem(props) {
         <p class="workorder-item-text"><span class="category-name">Issue Description: </span>{description}</p>
       </div>
       <div class="workorder-item-footer">
-        <div><a href="#" class="btn-workorder-footer">View</a></div>
+        <div><a class="btn-workorder-footer" onClick={() => onView(workorder_id)}>View</a></div>
       </div>
 
     </div>
   );
 }
-
-// return (
-//   <main>
-
-//     <div className="workorder-view-container" class="card">
-
-//       <section className="top-workorder-container">
-//         <div class="list-group-item bg-primary mb-3">Workorder Number: {workorder_id} | Ticket Closed On: {formattedDateTime}</div>
-//       </section>
-
-//       <div className="meta-data"></div>
-//       <div class="card-body"> Status: {status}</div>
-//       <div class="card-body"> Module: {module.topic} (Week: {module.week} Day: {module.day}) </div>
-//       <div class="card-body"> Mentor Name: {mentor_name}</div>
-//       <div class="card-body"> Module Link: {ref_link}</div>
-//       <div class="card-body"> Issue Descripton: {description}</div>
-
-
-//       <section className="feedback-section">
-//         <div class="card-body"> Mentor Feedback Notes: {mentor_notes} </div>
-//         <div class="card-body"> Your Rating: {student_rating} </div>
-//         <div class="card-body"> Your Feedback: {student_notes} </div>
-
-//       </section>
-
-//     </div>
-//   </main>
-// );
-// }

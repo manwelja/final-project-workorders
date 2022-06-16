@@ -33,37 +33,6 @@ const SHOW_IN_PROG = "SHOW_IN_PROG";
 const SHOW_CLOSED = "SHOW_CLOSED";
 const SHOW_MY_WO = "SHOW_MY_WO";
 
-const users = [];
-const modules = [];
-const workorders = [];
-/********************************************************************** */
-//Set up websocket client connection
-// const componentDidMount = function() {
-//   client.onopen = () => {
-//   console.log('WebSocket Client Connected');
-//   };
-//   //Update the state to reflect the data sent from the server via websocket
-//   client.onmessage = (message) => {
-//     const dataFromServer = JSON.parse(message.data);
-//     //save this data to state to refresh screen
-//     console.log(dataFromServer.message);
-//     console.log("new data in mount function", dataFromServer.data)    
-//     //setState(prev => ({ ...prev, workordersOpen: dataFromServer.workOrder }));
-//     // if (dataFromServer.type === "message") {
-//     //   this.setState((state) =>
-//     //     ({
-//     //       messages: [...state.messages,
-//     //       {
-//     //         msg: dataFromServer.msg,
-//     //         user: dataFromServer.user
-//     //       }]
-//     //     })
-//     //   );
-//     //}
-//   };
-// };
-
-
 //Main component that is responsible for invoking children to display workorder system content
 export default function Application(props) {
   //declare the functions that are being exported in the useApplicationData hook
@@ -81,10 +50,12 @@ export default function Application(props) {
   const {
     state,
     setState,
+    oneWorkorder,
     verifyUserLogin,
     updateAllStates,
     getWorkordersByStudentID,
     getWorkordersByMentorID,
+    getWorkorderByID,
     userID,
     userRole,    
   } = useApplicationData();
@@ -99,25 +70,11 @@ export default function Application(props) {
       const dataFromServer = JSON.parse(message.data);
       //save this data to state to refresh screen
       console.log(dataFromServer.message);
-      console.log("new data in mount function", dataFromServer.data) 
       updateAllStates()   
-      //setState(prev => ({ ...prev, workordersOpen: dataFromServer.workOrder }));
-      // if (dataFromServer.type === "message") {
-      //   this.setState((state) =>
-      //     ({
-      //       messages: [...state.messages,
-      //       {
-      //         msg: dataFromServer.msg,
-      //         user: dataFromServer.user
-      //       }]
-      //     })
-      //   );
-      //}
     };
   };
   componentDidMount();
-  console.log("state after mount", state)
-  const loginUser = function(email, password){
+    const loginUser = function(email, password){
      verifyUserLogin(email, password);     
   };
 
@@ -134,6 +91,12 @@ export default function Application(props) {
     }
   }, [userRole]);
 
+  const openWorkOrder = function (workorder_id) {
+    console.log("getworkorder")
+    getWorkorderByID(workorder_id);    
+    transitionView(SHOW_EXISTING_WO);
+  }
+  
   return (
     <Fragment>
       {
@@ -153,6 +116,7 @@ export default function Application(props) {
           {mode === SHOW_WO_LIST && (
             <WorkorderList              
               workorders={state.myWorkordersStudent}
+              onView={openWorkOrder}
             />)}
 
           {mode === SHOW_NEW_WO && (
@@ -162,10 +126,8 @@ export default function Application(props) {
             />)}
 
           {mode === SHOW_EXISTING_WO && (
-            <WorkorderList
-              workorders={workorders}
-              users={users}
-              modules={modules}
+            <ViewWorkorder
+              workorder = {oneWorkorder}
               onCancel={() => { transitionView(SHOW_WO_LIST); }}
             />)}
 

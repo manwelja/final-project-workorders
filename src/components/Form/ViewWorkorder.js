@@ -14,47 +14,8 @@ const BASE_URL = HOST + ":" + PORT;
   
 
 export default function ViewWorkorder(props){
-  const [state, setState] = useState({
-
-    id: "",
-    user_student_id: "",
-    user_mentor_id: "",
-    status_id: "",
-    category_id: "",
-    module_id: "",
-    environment: "",
-    description: "",
-    screenshot_url: null,
-    link_to_module: null,
-    escalate: "",
-    mentor_notes: "",
-    student_notes: "",
-    mentor_rating: "",
-    student_rating: "",
-    date_created: "",
-    date_pickup: "",
-    date_closed: "",
-    student_first_name: "",
-    student_last_name: "",
-    mentor_first_name: "",
-    mentor_last_name: "",
-    category: "",
-    week: "",
-    day: "",
-    topic: ""
-  });
-  
-  const workorderId = parseInt(props.workorderId);
-  //populate the schedule when the application loads
-  useEffect(() => {        
-    Promise.all([                       
-      axios.get(`http://${BASE_URL}/api/workorders/${parseInt(workorderId)}`),
-    ]).then((all) => {    
-        const newState = all[0].data[0];
-        setState({...state, ...newState})
-      })
-    },[])
-   
+  console.log("single WO", props)
+  const {workorder, onCancel } = props
   return (
     <main>
     <article>
@@ -63,42 +24,42 @@ export default function ViewWorkorder(props){
           <div class="wo-form-header"><h1>View Help Request</h1></div>
           <div class="wo-form-label-data">
             <div class="wo-form-label"><label>Student Name:</label></div>
-            <div class="wo-form-data">{state.student_first_name + " " + state.student_last_name}</div>
+            <div class="wo-form-data">{workorder[0].student_first_name + " " + workorder[0].student_last_name}</div>
           </div>
           <div class="wo-form-label-data">
             <div class="wo-form-label"><label>Link to module</label></div>
             <div class="wo-form-data">
-            {state.link_to_module}    
+            {workorder[0].link_to_module}    
             </div>
           </div>
           <div class="wo-form-label-data">
             <div class="wo-form-label"><label>Please describe your issue</label></div>
               <div class="wo-form-data">
-              {state.description}
+              {workorder[0].description}
             </div>
           </div>                      
           <div class="wo-form-label-data">
           <div class="wo-form-label"><label>Please specify your computer environment</label></div>
             <div class="wo-form-data">
-            {state.environment}
+            {workorder.environment}
             </div>  
           </div>
           <div class="wo-form-label-data">
             <div class="wo-form-label"><label>Please specify the category</label></div>
               <div class="wo-form-data">
-              {state.category}
+              {workorder.category}
               </div>  
             </div>
 
           <div class="wo-form-label-data">
             <div class="wo-form-label"><label>Please specify which module you're working on:</label></div>
             <div class="wo-form-data">  
-             {state.topic}
+             {workorder.topic}
             </div>  
           </div>
           <div class="wo-form-screenshot">       
-                <a href={state.screenshot_url}>
-                  <img src={state.screenshot_url} alt="Error Screenshot" />
+                <a href={workorder.screenshot_url}>
+                  <img src={workorder.screenshot_url} alt="Error Screenshot" />
                 </a>
               </div>   
               <div class="wo-form-footer">

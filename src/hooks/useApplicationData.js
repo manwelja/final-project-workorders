@@ -7,8 +7,7 @@ export default function useApplicationData() {
   const [userID, setUserID] = useState("");
   const [userRole, setUserRole] = useState("");
   const [cookies, setCookie] = useCookies([""]);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [oneWorkorder, setOneWorkorder] = useState({});
 
   const [state, setState] = useState({
     workordersOpen: [],
@@ -16,11 +15,11 @@ export default function useApplicationData() {
     workordersClosed: [],
     myWorkordersStudent: [],
     myWorkordersMentor: [],
-    workorder: {},
+   // workorder: {},
     userID: null
   });
 
-  //populate the schedule when the application loads
+  //populate the queue list when the application loads
   useEffect(() => {
     Promise.all([
       axios.get(`/api/queue/1`),
@@ -35,6 +34,7 @@ export default function useApplicationData() {
       }));
     });
   }, []);
+
   //when a new user logs in, retrieve all of their workorders
   useEffect(() => {
       if(userRole.trim() === "mentor") {
@@ -44,9 +44,8 @@ export default function useApplicationData() {
       }
     }, [userID]);
 
-
+//Update state data when the server sends new data
     const updateAllStates = () => {
-      console.log("updateAll")
       Promise.all([
         axios.get(`/api/queue/1`),
         axios.get("/api/queue/2"),
@@ -61,7 +60,20 @@ export default function useApplicationData() {
       });
 
     }
-  const getWorkordersByStudentID = (studentID) => {
+    const getWorkorderByID = (workorderID) => {
+      return axios.get(`api/workorders/${workorderID}`)
+        .then((res) => {          
+          console.log("one workorder", res.data[0])
+          setOneWorkorder(res.data[0]);  
+          return;        
+        }).catch((err) => console.log("axios error", err));
+  
+    };
+    useEffect(() => {
+     console.log("workorder change", oneWorkorder)
+    }, [oneWorkorder]);
+
+    const getWorkordersByStudentID = (studentID) => {
     return axios.get(`api/workorders/student/${studentID}`)
       .then((res) => {
         setState(prev => ({ ...prev, myWorkordersStudent: res.data }));
@@ -115,5 +127,5 @@ function isValidEmail(userEmail) {
     }
   }
 
-  return { state, setState, getWorkordersByStudentID, getWorkordersByMentorID, updateAllStates, verifyUserLogin, userID, userRole };
+  return { state, setState, getWorkordersByStudentID, getWorkordersByMentorID, getWorkorderByID, updateAllStates, verifyUserLogin, userID, userRole, oneWorkorder };
 }
