@@ -10,26 +10,19 @@ export default function useApplicationData() {
   const [oneWorkorder, setOneWorkorder] = useState({});
 
   const [state, setState] = useState({
-    workordersOpen: [],
-    workordersIP: [],
-    workordersClosed: [],
-    myWorkordersStudent: [],
-    myWorkordersMentor: [],
-    workorder: {}
+    workorderList: [],
+    workorderItem: {}
   });
 
   //populate the queue list when the application loads
   useEffect(() => {
-    Promise.all([
-      axios.get(`/api/queue/1`),
-      axios.get("/api/queue/2"),
-      axios.get("/api/queue/3"),
-    ]).then((all) => {
+    console.log("loading state data")
+    return axios.get(`/api/queue/1`)
+    .then((all) => {
+      console.log("initial load", all[0].data)
       setState(prev => ({
         ...prev,
-        workordersOpen: all[0].data,
-        workordersIP: all[1].data,
-        workordersClosed: all[2].data,
+        workorderList: all[0].data,      
       }));
     });
   }, []);
@@ -45,19 +38,19 @@ export default function useApplicationData() {
 
   //Update state data when the server sends new data
   const updateQueue = () => {
-    Promise.all([
-      axios.get(`/api/queue/1`),
-      axios.get(`/api/queue/2`),
-      axios.get(`/api/queue/3`),
-    ]).then((all) => {
-      setState(prev => ({
-        ...prev,
-        workordersOpen: all[0].data,
-        workordersIP: all[1].data,
-        workordersClosed: all[2].data,
-      }));
-    });
+    return axios.get(`/api/queue/1`)
+    .then((res) => {
+      setState(prev => ({ ...prev, workorderList: res.data }));
+      return;
+    }).catch((err) => console.log("axios error", err));
+  };
 
+  const getWorkordersByStatus = (statusID) => {
+    return axios.get(`/api/queue/1`)
+    .then((res) => {
+      setState(prev => ({ ...prev, workorderList: res.data }));
+      return;
+    }).catch((err) => console.log("axios error", err));
   };
   const getWorkorderByID = (workorderID) => {
     return axios.get(`api/workorders/${workorderID}`)
@@ -72,23 +65,20 @@ export default function useApplicationData() {
   const getWorkordersByStudentID = (studentID) => {
     return axios.get(`api/workorders/student/${studentID}`)
       .then((res) => {
-        setState(prev => ({ ...prev, myWorkordersStudent: res.data }));
+        setState(prev => ({ ...prev, workorderList: res.data }));
         return;
       }).catch((err) => console.log("axios error", err));
 
   };
 
   const getWorkordersByMentorID = (mentorID) => {
-    console.log("get workorders mentor", mentorID)
       return axios.get(`api/workorders/mentor/${mentorID}`)
       .then((res) => {
-        setState(prev => ({ ...prev, myWorkordersMentor: res.data }));
+        setState(prev => ({ ...prev, workorderList: res.data }));
         return;
       }).catch((err) => console.log("axios error", err));
 
   };
-
-
   const changeWorkorderStatus = function(mentor_id, workorder_id) {
     console.log("mentor id", mentor_id)
       //Status id should be set to 1 initially - 
@@ -134,5 +124,5 @@ export default function useApplicationData() {
     }
   };
 
-  return { state, setState, getWorkordersByStudentID, getWorkordersByMentorID, getWorkorderByID, updateQueue, verifyUserLogin, changeWorkorderStatus, userID, userRole, oneWorkorder };
+  return { state, setState, getWorkordersByStudentID, getWorkordersByMentorID, getWorkorderByID, updateQueue, verifyUserLogin, changeWorkorderStatus, getWorkordersByStatus, userID, userRole, oneWorkorder };
 }

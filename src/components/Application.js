@@ -52,13 +52,12 @@ export default function Application(props) {
   //declare the functions that are being exported in the useApplicationData hook
   const {
     state,
-    setState,
-    oneWorkorder,
     verifyUserLogin,
     updateQueue,
     getWorkordersByStudentID,
     getWorkordersByMentorID,
     changeWorkorderStatus,
+    getWorkordersByStatus,
     getWorkorderByID,
     userRole,
     userID
@@ -77,8 +76,7 @@ export default function Application(props) {
       if(userRole.trim() === "mentor") {
         getWorkordersByMentorID(userID) 
       } else if (userRole.trim() === "student") {
-        console.log("update student")
-        getWorkordersByStudentID(userID) 
+          getWorkordersByStudentID(userID) 
       }      
       if(mode === SHOW_EXISTING_WO) {
         getWorkorderByID(state.workorder.id)
@@ -88,6 +86,54 @@ export default function Application(props) {
     };
   };
   componentDidMount();
+
+  const updateState = function () {
+      // if user is student
+      switch(mode) {
+        case SHOW_NEW_WO:
+          //don't need to load any data
+          break;
+        case SHOW_EXISTING_WO:
+          //load form data by workorder id
+          //getWorkorderByID();
+          break;        
+        case SHOW_QUEUE:
+          //load in new/open workorders
+          getWorkordersByStatus(1);
+          break;
+        case SHOW_IN_PROG:
+          //load in progress workorders
+          getWorkordersByStatus(2);
+          break;
+        case SHOW_CLOSED:
+          //show closed workorders
+          getWorkordersByStatus(3);
+          break;
+        case SHOW_MY_WO:
+          //show workorders by mentor id
+          break;
+        case SHOW_STUDENT_WO:
+          //show workorders by student id
+          break;
+        default:
+          break;
+
+     } 
+     return;
+  }
+  useEffect(() => {
+    console.log("update mode", mode)
+    console.log(state)
+   // updateState();
+    return;
+  }, []);
+
+  useEffect(() => {
+    console.log("update mode", mode)
+    console.log(state)
+   // updateState();
+    return;
+  }, [mode]);
 
   const loginUser = function(email, password) {
     verifyUserLogin(email, password);
@@ -125,7 +171,7 @@ export default function Application(props) {
     }  
     return;
   };
- console.log(state)
+ 
   return (
     <Fragment>
 
@@ -171,7 +217,7 @@ export default function Application(props) {
 
           {(mode === SHOW_QUEUE) && (
             < QueueList
-              workorders={state.workordersOpen}
+              workorders={state.workorderList}
               onView={openWorkOrder}
               onHistory={openUserHistory}
               onPickupTicket={markWorkorderInProgress}
@@ -180,7 +226,7 @@ export default function Application(props) {
 
           {(mode === SHOW_IN_PROG) && (
             < QueueList
-              workorders={state.workordersIP}
+              workorders={state.workorderList}
               onView={openWorkOrder}
               onHistory={openUserHistory}
 
@@ -189,7 +235,7 @@ export default function Application(props) {
 
           {(mode === SHOW_CLOSED) && (
             < QueueList
-              workorders={state.workordersClosed}
+              workorders={state.workorderList}
               onView={openWorkOrder}
               onHistory={openUserHistory}
             />
@@ -197,7 +243,10 @@ export default function Application(props) {
 
           {mode === SHOW_MY_WO && (
             < QueueList
-              workorders={state.myWorkordersMentor}
+              workorders={state.workorderList}
+              onView={openWorkOrder}
+              onHistory={openUserHistory}
+              onPickupTicket={markWorkorderInProgress}
             />
           )}
 
@@ -211,7 +260,7 @@ export default function Application(props) {
 
           {mode === SHOW_STUDENT_WO && (
             <WorkorderList
-              workorders={state.myWorkordersStudent}
+              workorders={state.workorderList}
               onView={openWorkOrder}
             />)}
 
