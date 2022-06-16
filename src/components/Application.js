@@ -82,16 +82,24 @@ export default function Application(props) {
     getQueueListByMentor,
     getWorkorderListByStudent,
     getWorkordersByStudentID,
-    getWorkordersByMentorID
+    getWorkordersByMentorID,
+    verifyUserLogin,
+    userID,
+    userRole,    
   } = useApplicationData();
 
   //potentially used to store userID on login
-  const getUserID = (id) => {
-    setState(prev => ({ ...prev, userID: id }));
-  };
+  // const getUserID = (id) => {
+  //   setState(prev => ({ ...prev, userID: id }));
+  // };
 
-  console.log("user", user);
-  console.log("mode", mode);
+  const loginUser = function(email, password){
+     verifyUserLogin(email, password);
+
+     //response.data[0].role.trim() === "mentor" ? onSuccessMentor() : onSuccessStudent();
+  };
+  console.log("uid", userID)
+  console.log("user role", userRole)
   //return appointment components for each appoiontment that exists for the currently selected day
   // const queueOpen = getQueueListByStatus(1);
   // const queueInProgress = getQueueListByStatus(2);
@@ -108,6 +116,7 @@ export default function Application(props) {
             transitionView(SHOW_QUEUE);
             transitionUser(SHOW_USER_MENTOR);
           }}
+          onLogin={loginUser}
         />)
       }
 
