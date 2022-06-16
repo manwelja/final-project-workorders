@@ -6,7 +6,6 @@ export default function useUserMode(initial) {
   const [user, setUser] = useState(initial);
 
   const transitionUser = (uMode) => {
-    console.log("transitioning user");
     setUser(uMode);
   };
 

@@ -26,44 +26,29 @@ export default function useApplicationData() {
       axios.get(`/api/queue/1`),
       axios.get("/api/queue/2"),
       axios.get("/api/queue/3"),
-      axios.get(`api/workorders/student/1`),
-      axios.get(`api/workorders/mentor/4`)
     ]).then((all) => {
       setState(prev => ({
         ...prev,
         workordersOpen: all[0].data,
         workordersIP: all[1].data,
         workordersClosed: all[2].data,
-        myWorkordersStudent: all[3].data,
-        myWorkordersMentor: all[4].data
       }));
     });
   }, []);
+  //when a new user logs in, retrieve all of their workorders
+  useEffect(() => {
+      if(userRole.trim() === "mentor") {
+        getWorkordersByMentorID(userID);
+      } else if (userRole.trim() === "student") {
+        getWorkordersByStudentID(userID);
+      }
+    }, [userID]);
 
-  const getQueueListByStatus = function(workorderStatus) {
-    //   //add the new interview to the scheduler api
-    //   //return the promise so we can update the schedule page AFTER the api is updated
-    //   return axios.get(`/api/workorders/${workorderStatus}`)
-    //     .then((res) => {
-    //        setState({...state, res});        
-    //        //return;
-    //     })
-  };
-
-
-  const getQueueListByMentor = function(mentorID) {
-
-  };
-
-  const getWorkorderListByStudent = function(studentID) {
-
-  };
 
   const getWorkordersByStudentID = (studentID) => {
-    console.log("student id", studentID);
     return axios.get(`api/workorders/student/${studentID}`)
       .then((res) => {
-        setState(prev => ({ ...prev, myWorkorders: res.data }));
+        setState(prev => ({ ...prev, myWorkordersStudent: res.data }));
         return;
       }).catch((err) => console.log("axios error", err));
 
@@ -73,7 +58,7 @@ export default function useApplicationData() {
     console.log("mentor id", mentorID);
     return axios.get(`api/workorders/mentor/${mentorID}`)
       .then((res) => {
-        setState(prev => ({ ...prev, myWorkorders: res.data }));
+        setState(prev => ({ ...prev, myWorkordersMentor: res.data }));
         return;
       }).catch((err) => console.log("axios error", err));
 
@@ -88,7 +73,6 @@ function isValidEmail(userEmail) {
 // validate that a user enters the email and pw that matches the db -- unencrypted for now bc of our seed data, fix later
 // may want to migrate this to backend in the future? 
   const verifyUserLogin = function(userEmail, userPassword) {
-    console.log("login user")
     const cleanEmail = userEmail.trim();
     if (isValidEmail(cleanEmail)) {
       axios.get(`/api/login/${cleanEmail}`)
@@ -115,5 +99,5 @@ function isValidEmail(userEmail) {
     }
   }
 
-  return { state, getQueueListByStatus, getQueueListByMentor, getWorkorderListByStudent, getWorkordersByStudentID, getWorkordersByMentorID, verifyUserLogin, userID, userRole };
+  return { state, getWorkordersByStudentID, getWorkordersByMentorID, verifyUserLogin, userID, userRole };
 }

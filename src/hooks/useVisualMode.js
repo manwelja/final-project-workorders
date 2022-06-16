@@ -5,7 +5,6 @@ export default function useVisualMode(initial) {
   const [mode, setMode] = useState(initial);
 
   const transitionView = (tMode) => {
-    console.log("transitioning");
     setMode(tMode);
   };
 

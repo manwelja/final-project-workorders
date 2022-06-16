@@ -77,32 +77,29 @@ export default function Application(props) {
   //declare the functions that are being exported in the useApplicationData hook
   const {
     state,
-    setState,
-    getQueueListByStatus,
-    getQueueListByMentor,
-    getWorkorderListByStudent,
+    verifyUserLogin,
     getWorkordersByStudentID,
     getWorkordersByMentorID,
-    verifyUserLogin,
     userID,
     userRole,    
   } = useApplicationData();
 
   const loginUser = function(email, password){
-     verifyUserLogin(email, password);
-     //response.data[0].role.trim() === "mentor" ? onSuccessMentor() : onSuccessStudent();
+     verifyUserLogin(email, password);     
   };
 
+  
    useEffect(() => {
     if(userRole.trim() === "mentor") {
       transitionView(SHOW_QUEUE);
       transitionUser(SHOW_USER_MENTOR);
+      //getWorkordersByMentorID(userID) 
     } else if(userRole.trim() === "student") {
       transitionView(SHOW_WO_LIST);
       transitionUser(SHOW_USER_STUDENT);
+      //getWorkordersByStudentID(userID) 
     }
   }, [userRole]);
-
 
   return (
     <Fragment>
@@ -121,7 +118,7 @@ export default function Application(props) {
           />
 
           {mode === SHOW_WO_LIST && (
-            <WorkorderList
+            <WorkorderList              
               workorders={state.myWorkordersStudent}
             />)}
 

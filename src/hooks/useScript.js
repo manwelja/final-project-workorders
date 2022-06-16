@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 
 const useScript = url => {
   useEffect(() => {
-    console.log("url", url)
     const script = document.createElement('script');
 
     script.src = url;

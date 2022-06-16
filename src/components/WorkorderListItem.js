@@ -18,6 +18,8 @@ export default function WorkorderListItem(props) {
     student_notes,
     date_created,
     module,
+    topic,
+    week,
     status }
     = props;
 
@@ -42,8 +44,8 @@ export default function WorkorderListItem(props) {
           <p class="workorder-item-text"><span class="category-name">Mentor Rating: </span>3 Stars</p>
         </div>
         <div class="workorder-item-body-right">
-          <p class="workorder-item-text"><span class="category-name"> Topic: </span>{module.topic}</p>
-          <p class="workorder-item-text"><span class="category-name">Week: </span>{module.week}</p>
+          <p class="workorder-item-text"><span class="category-name"> Topic: </span>{topic}</p>
+          <p class="workorder-item-text"><span class="category-name">Week: </span>{week}</p>
         </div>
       </div>
       <div class="workorder-item-description-container">

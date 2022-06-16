@@ -3,7 +3,6 @@ import QueueListItem from "./QueueListItem";
 
 //Component that invokes a QueueListItem child for each workorder in the data set
 export default function QueueList(props) {
-  console.log("state", props)
   const queueItem = props.workorders.map((workOrderData, idx) => {
     //return a populated Queuelist item for each workorder in the data set
     return (
