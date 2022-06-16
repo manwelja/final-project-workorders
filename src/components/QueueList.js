@@ -3,7 +3,9 @@ import QueueListItem from "./QueueListItem";
 
 //Component that invokes a QueueListItem child for each workorder in the data set
 export default function QueueList(props) {
-  const queueItem = props.workorders.map((workOrderData, idx) => {
+  const { onView, onHistory, workorders } = props;
+
+  const queueItem = workorders.map((workOrderData, idx) => {
     //return a populated Queuelist item for each workorder in the data set
     return (
       <QueueListItem class="queue-container"
@@ -17,6 +19,10 @@ export default function QueueList(props) {
         topic={workOrderData.topic}
         week={workOrderData.week}
         screenshot_url={workOrderData.screenshot_url}
+        onView={onView}
+        workorder_id={workOrderData.id}
+        student_id={workOrderData.user_student_id}
+        onHistory={onHistory}
       />
     );
   });

@@ -34,6 +34,7 @@ const SHOW_QUEUE = "SHOW_QUEUE";
 const SHOW_IN_PROG = "SHOW_IN_PROG";
 const SHOW_CLOSED = "SHOW_CLOSED";
 const SHOW_MY_WO = "SHOW_MY_WO";
+const SHOW_STUDENT_WO = "SHOW_STUDENT_WO";
 
 //Main component that is responsible for invoking children to display workorder system content
 export default function Application(props) {
@@ -115,6 +116,12 @@ export default function Application(props) {
     return;
   };
 
+  const openUserHistory = function(student_id) {
+    getWorkordersByStudentID(student_id);
+    transitionView(SHOW_STUDENT_WO);
+    return;
+  };
+
   return (
     <Fragment>
 
@@ -161,6 +168,8 @@ export default function Application(props) {
           {(mode === SHOW_QUEUE) && (
             < QueueList
               workorders={state.workordersOpen}
+              onView={openWorkOrder}
+              onHistory={openUserHistory}
             />
           )}
 
@@ -181,6 +190,19 @@ export default function Application(props) {
               workorders={state.myWorkordersMentor}
             />
           )}
+
+          {mode === SHOW_EXISTING_WO && (
+            <ViewWorkorder
+              workorder={state.workorder}
+              onCancel={() => { transitionView(SHOW_QUEUE); }}
+            />)}
+
+
+          {mode === SHOW_STUDENT_WO && (
+            <WorkorderList
+              workorders={state.myWorkordersStudent}
+              onView={openWorkOrder}
+            />)}
 
         </Fragment>)}
 
