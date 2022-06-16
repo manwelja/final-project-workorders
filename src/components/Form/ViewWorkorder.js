@@ -15,8 +15,7 @@ const BASE_URL = HOST + ":" + PORT;
 
 export default function ViewWorkorder(props){
 
-  const {workorder, onCancel } = props
-  console.log(workorder, props)
+  const {workorder, onCancel, onPickupTicket } = props
   return (
     <main>
     <article>
@@ -26,6 +25,12 @@ export default function ViewWorkorder(props){
           <div class="wo-form-label-data">
             <div class="wo-form-label"><label>Student Name:</label></div>
             <div class="wo-form-data">{workorder.student_first_name + " " + workorder.student_last_name}</div>
+          </div>
+          <div class="wo-form-label-data">
+          <div class="wo-form-label"><label>Status</label></div>
+            <div class="wo-form-data">
+            {workorder.status_id}
+            </div>  
           </div>
           <div class="wo-form-label-data">
             <div class="wo-form-label"><label>Link to module</label></div>
@@ -66,7 +71,7 @@ export default function ViewWorkorder(props){
               <div class="wo-form-footer">
               <div><Button className="button--danger" danger onClick={ () => {  }}>Cancel</Button></div>
               <div><Button className="button--confirm" confirm onClick={ () => {  }}>See History</Button></div>
-              <div><Button className="button--confirm" confirm onClick={ () => {  }}>Pick Up</Button></div>
+              <div><Button className="button--confirm" confirm onClick={ () => { onPickupTicket(workorder.id) }}>Pick Up</Button></div>
             </div>
       </section> 
       </form> 
