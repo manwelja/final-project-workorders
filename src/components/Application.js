@@ -9,6 +9,7 @@ import QueueList from "./QueueList";
 import useVisualMode from "../hooks/useVisualMode";
 import useUserMode from "../hooks/useUserMode";
 import useApplicationData from "../hooks/useApplicationData";
+import axios from "axios";
 
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 //Environment variables
@@ -59,6 +60,7 @@ export default function Application(props) {
     userID,
     userRole,    
   } = useApplicationData();
+  const [tw, setTw] = useState({});
 
   const componentDidMount = function() {
     client.onopen = () => {
@@ -92,9 +94,9 @@ export default function Application(props) {
   }, [userRole]);
 
   const openWorkOrder = function (workorder_id) {
-    console.log("getworkorder")
-    getWorkorderByID(workorder_id);    
+    getWorkorderByID(workorder_id);
     transitionView(SHOW_EXISTING_WO);
+    return;
   }
   
   return (
@@ -127,7 +129,7 @@ export default function Application(props) {
 
           {mode === SHOW_EXISTING_WO && (
             <ViewWorkorder
-              workorder = {oneWorkorder}
+              workorder = {state.workorder}
               onCancel={() => { transitionView(SHOW_WO_LIST); }}
             />)}
 

@@ -15,7 +15,7 @@ export default function useApplicationData() {
     workordersClosed: [],
     myWorkordersStudent: [],
     myWorkordersMentor: [],
-   // workorder: {},
+    workorder: {},
     userID: null
   });
 
@@ -64,6 +64,7 @@ export default function useApplicationData() {
       return axios.get(`api/workorders/${workorderID}`)
         .then((res) => {          
           console.log("one workorder", res.data[0])
+          setState({...state, workorder: res.data[0]})
           setOneWorkorder(res.data[0]);  
           return;        
         }).catch((err) => console.log("axios error", err));
@@ -72,6 +73,10 @@ export default function useApplicationData() {
     useEffect(() => {
      console.log("workorder change", oneWorkorder)
     }, [oneWorkorder]);
+
+    useEffect(() => {
+      console.log("state change", state)
+     }, [state]);
 
     const getWorkordersByStudentID = (studentID) => {
     return axios.get(`api/workorders/student/${studentID}`)

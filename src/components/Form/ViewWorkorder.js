@@ -14,8 +14,9 @@ const BASE_URL = HOST + ":" + PORT;
   
 
 export default function ViewWorkorder(props){
-  console.log("single WO", props)
+
   const {workorder, onCancel } = props
+  console.log(workorder, props)
   return (
     <main>
     <article>
@@ -24,18 +25,18 @@ export default function ViewWorkorder(props){
           <div class="wo-form-header"><h1>View Help Request</h1></div>
           <div class="wo-form-label-data">
             <div class="wo-form-label"><label>Student Name:</label></div>
-            <div class="wo-form-data">{workorder[0].student_first_name + " " + workorder[0].student_last_name}</div>
+            <div class="wo-form-data">{workorder.student_first_name + " " + workorder.student_last_name}</div>
           </div>
           <div class="wo-form-label-data">
             <div class="wo-form-label"><label>Link to module</label></div>
             <div class="wo-form-data">
-            {workorder[0].link_to_module}    
+            {workorder.link_to_module}    
             </div>
           </div>
           <div class="wo-form-label-data">
             <div class="wo-form-label"><label>Please describe your issue</label></div>
               <div class="wo-form-data">
-              {workorder[0].description}
+              {workorder.description}
             </div>
           </div>                      
           <div class="wo-form-label-data">
