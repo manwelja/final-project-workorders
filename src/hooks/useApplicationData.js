@@ -45,6 +45,22 @@ export default function useApplicationData() {
     }, [userID]);
 
 
+    const updateAllStates = () => {
+      console.log("updateAll")
+      Promise.all([
+        axios.get(`/api/queue/1`),
+        axios.get("/api/queue/2"),
+        axios.get("/api/queue/3"),
+      ]).then((all) => {
+        setState(prev => ({
+          ...prev,
+          workordersOpen: all[0].data,
+          workordersIP: all[1].data,
+          workordersClosed: all[2].data,
+        }));
+      });
+
+    }
   const getWorkordersByStudentID = (studentID) => {
     return axios.get(`api/workorders/student/${studentID}`)
       .then((res) => {
@@ -99,5 +115,5 @@ function isValidEmail(userEmail) {
     }
   }
 
-  return { state, getWorkordersByStudentID, getWorkordersByMentorID, verifyUserLogin, userID, userRole };
+  return { state, setState, getWorkordersByStudentID, getWorkordersByMentorID, updateAllStates, verifyUserLogin, userID, userRole };
 }

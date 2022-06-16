@@ -38,29 +38,32 @@ const modules = [];
 const workorders = [];
 /********************************************************************** */
 //Set up websocket client connection
-const componentDidMount = function() {
-  client.onopen = () => {
-    console.log('WebSocket Client Connected');
-  };
-  //Update the state to reflect the data sent from the server via websocket
-  client.onmessage = (message) => {
-    const dataFromServer = JSON.parse(message.data);
-    //save this data to state to refresh screen
-    console.log(dataFromServer);
-    // if (dataFromServer.type === "message") {
-    //   this.setState((state) =>
-    //     ({
-    //       messages: [...state.messages,
-    //       {
-    //         msg: dataFromServer.msg,
-    //         user: dataFromServer.user
-    //       }]
-    //     })
-    //   );
-    //}
-  };
-};
-componentDidMount();
+// const componentDidMount = function() {
+//   client.onopen = () => {
+//   console.log('WebSocket Client Connected');
+//   };
+//   //Update the state to reflect the data sent from the server via websocket
+//   client.onmessage = (message) => {
+//     const dataFromServer = JSON.parse(message.data);
+//     //save this data to state to refresh screen
+//     console.log(dataFromServer.message);
+//     console.log("new data in mount function", dataFromServer.data)    
+//     //setState(prev => ({ ...prev, workordersOpen: dataFromServer.workOrder }));
+//     // if (dataFromServer.type === "message") {
+//     //   this.setState((state) =>
+//     //     ({
+//     //       messages: [...state.messages,
+//     //       {
+//     //         msg: dataFromServer.msg,
+//     //         user: dataFromServer.user
+//     //       }]
+//     //     })
+//     //   );
+//     //}
+//   };
+// };
+
+
 //Main component that is responsible for invoking children to display workorder system content
 export default function Application(props) {
   //declare the functions that are being exported in the useApplicationData hook
@@ -77,13 +80,43 @@ export default function Application(props) {
   //declare the functions that are being exported in the useApplicationData hook
   const {
     state,
+    setState,
     verifyUserLogin,
+    updateAllStates,
     getWorkordersByStudentID,
     getWorkordersByMentorID,
     userID,
     userRole,    
   } = useApplicationData();
 
+  const componentDidMount = function() {
+    client.onopen = () => {
+    console.log('WebSocket Client Connected');
+    };
+
+    //Update the state to reflect the data sent from the server via websocket
+    client.onmessage = (message) => {
+      const dataFromServer = JSON.parse(message.data);
+      //save this data to state to refresh screen
+      console.log(dataFromServer.message);
+      console.log("new data in mount function", dataFromServer.data) 
+      updateAllStates()   
+      //setState(prev => ({ ...prev, workordersOpen: dataFromServer.workOrder }));
+      // if (dataFromServer.type === "message") {
+      //   this.setState((state) =>
+      //     ({
+      //       messages: [...state.messages,
+      //       {
+      //         msg: dataFromServer.msg,
+      //         user: dataFromServer.user
+      //       }]
+      //     })
+      //   );
+      //}
+    };
+  };
+  componentDidMount();
+  console.log("state after mount", state)
   const loginUser = function(email, password){
      verifyUserLogin(email, password);     
   };
