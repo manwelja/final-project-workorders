@@ -31,12 +31,12 @@ export default function Login(props) {
               type="password"
               name="password"
               placeholder="Enter Your Password"
-              value={ password }
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
             <button
               type="submit"
-              onClick={() => onLogin(email, password)}
+              onClick={(e) => { e.preventDefault(); onLogin(email, password); }}
               name="confirm-login"
               class="btn btn-primary">Submit
             </button>

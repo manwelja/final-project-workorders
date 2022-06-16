@@ -15,8 +15,7 @@ export default function useApplicationData() {
     workordersClosed: [],
     myWorkordersStudent: [],
     myWorkordersMentor: [],
-    workorder: {},
-    userID: null
+    workorder: {}
   });
 
   //populate the queue list when the application loads
@@ -37,48 +36,48 @@ export default function useApplicationData() {
 
   //when a new user logs in, retrieve all of their workorders
   useEffect(() => {
-      if(userRole.trim() === "mentor") {
-        getWorkordersByMentorID(userID);
-      } else if (userRole.trim() === "student") {
-        getWorkordersByStudentID(userID);
-      }
-    }, [userID]);
-
-//Update state data when the server sends new data
-    const updateAllStates = () => {
-      Promise.all([
-        axios.get(`/api/queue/1`),
-        axios.get("/api/queue/2"),
-        axios.get("/api/queue/3"),
-      ]).then((all) => {
-        setState(prev => ({
-          ...prev,
-          workordersOpen: all[0].data,
-          workordersIP: all[1].data,
-          workordersClosed: all[2].data,
-        }));
-      });
-
+    if (userRole.trim() === "mentor") {
+      getWorkordersByMentorID(userID);
+    } else if (userRole.trim() === "student") {
+      getWorkordersByStudentID(userID);
     }
-    const getWorkorderByID = (workorderID) => {
-      return axios.get(`api/workorders/${workorderID}`)
-        .then((res) => {          
-          console.log("one workorder", res.data[0])
-          setState({...state, workorder: res.data[0]})
-          setOneWorkorder(res.data[0]);  
-          return;        
-        }).catch((err) => console.log("axios error", err));
-  
-    };
-    useEffect(() => {
-     console.log("workorder change", oneWorkorder)
-    }, [oneWorkorder]);
+  }, [userID]);
 
-    useEffect(() => {
-      console.log("state change", state)
-     }, [state]);
+  //Update state data when the server sends new data
+  const updateAllStates = () => {
+    Promise.all([
+      axios.get(`/api/queue/1`),
+      axios.get("/api/queue/2"),
+      axios.get("/api/queue/3"),
+    ]).then((all) => {
+      setState(prev => ({
+        ...prev,
+        workordersOpen: all[0].data,
+        workordersIP: all[1].data,
+        workordersClosed: all[2].data,
+      }));
+    });
 
-    const getWorkordersByStudentID = (studentID) => {
+  };
+  const getWorkorderByID = (workorderID) => {
+    return axios.get(`api/workorders/${workorderID}`)
+      .then((res) => {
+        console.log("one workorder", res.data[0]);
+        setState({ ...state, workorder: res.data[0] });
+        setOneWorkorder(res.data[0]);
+        return;
+      }).catch((err) => console.log("axios error", err));
+
+  };
+  useEffect(() => {
+    console.log("workorder change", oneWorkorder);
+  }, [oneWorkorder]);
+
+  useEffect(() => {
+    console.log("state change", state);
+  }, [state]);
+
+  const getWorkordersByStudentID = (studentID) => {
     return axios.get(`api/workorders/student/${studentID}`)
       .then((res) => {
         setState(prev => ({ ...prev, myWorkordersStudent: res.data }));
@@ -97,18 +96,17 @@ export default function useApplicationData() {
 
   };
 
-function isValidEmail(userEmail) {
-  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(userEmail)) {
-    return true;
+  function isValidEmail(userEmail) {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(userEmail)) {
+      return true;
+    }
+    return false;
   }
-  return false;
-}
-// validate that a user enters the email and pw that matches the db -- unencrypted for now bc of our seed data, fix later
-// may want to migrate this to backend in the future? 
+  // validate that a user enters the email and pw that matches the db -- unencrypted for now bc of our seed data, fix later
   const verifyUserLogin = function(userEmail, userPassword) {
     const cleanEmail = userEmail.trim();
     if (isValidEmail(cleanEmail)) {
-      axios.get(`/api/login/${cleanEmail}`)
+      return axios.get(`/api/login/${cleanEmail}`)
         .then((response) => {
           if (response.data.length === 0) {
             alert('The user was not found.');
@@ -119,8 +117,9 @@ function isValidEmail(userEmail) {
             // validate password here
             if (userPassword === response.data[0].password) { // TO DO: ENCRYPT
               setCookie("user", userEmail, { path: "/" });
-              setUserID(response.data[0].id);  
-              setUserRole(response.data[0].role);              
+              setUserID(response.data[0].id);
+              setUserRole(response.data[0].role);
+              return;
             }
           }
         })
@@ -130,7 +129,7 @@ function isValidEmail(userEmail) {
     } else { // if email is not valid (e.g. it doesn't have an @ sign or is code, etc)
       alert('Your email is invalid'); // may want to use different method than alert, such as toast notification
     }
-  }
+  };
 
   return { state, setState, getWorkordersByStudentID, getWorkordersByMentorID, getWorkorderByID, updateAllStates, verifyUserLogin, userID, userRole, oneWorkorder };
 }

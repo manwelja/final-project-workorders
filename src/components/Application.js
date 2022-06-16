@@ -27,6 +27,7 @@ const SHOW_NEW_WO = "SHOW_NEW_WO";
 const SHOW_EXISTING_WO = "SHOW_EXISTING_WO";
 const SHOW_USER_STUDENT = "SHOW_USER_STUDENT";
 const SHOW_USER_MENTOR = "SHOW_USER_MENTOR";
+const SHOW_USER_UNDEFINED = "SHOW_USER_UNDEFINED";
 
 // if user is mentor
 const SHOW_QUEUE = "SHOW_QUEUE";
@@ -43,7 +44,7 @@ export default function Application(props) {
     SHOW_LOGIN
   );
 
-  const { user, transitionUser } = useUserMode('');
+  const { user, transitionUser } = useUserMode(SHOW_USER_UNDEFINED);
   // need users: mentor, student, unknown for the different views
 
 
@@ -57,14 +58,12 @@ export default function Application(props) {
     getWorkordersByStudentID,
     getWorkordersByMentorID,
     getWorkorderByID,
-    userID,
-    userRole,    
+    userRole
   } = useApplicationData();
-  const [tw, setTw] = useState({});
 
   const componentDidMount = function() {
     client.onopen = () => {
-    console.log('WebSocket Client Connected');
+      console.log('WebSocket Client Connected');
     };
 
     //Update the state to reflect the data sent from the server via websocket
@@ -72,51 +71,64 @@ export default function Application(props) {
       const dataFromServer = JSON.parse(message.data);
       //save this data to state to refresh screen
       console.log(dataFromServer.message);
-      updateAllStates()   
+      updateAllStates();
     };
   };
   componentDidMount();
-    const loginUser = function(email, password){
-     verifyUserLogin(email, password);     
-  };
 
-  
-   useEffect(() => {
-    if(userRole.trim() === "mentor") {
+  const loginUser = function(email, password) {
+    verifyUserLogin(email, password);
+    setUserView();
+    // return;
+  };
+  const setUserView = function() {
+    console.log(userRole.trim());
+    if (userRole.trim() === "mentor") {
       transitionView(SHOW_QUEUE);
       transitionUser(SHOW_USER_MENTOR);
       //getWorkordersByMentorID(userID) 
-    } else if(userRole.trim() === "student") {
+    } else if (userRole.trim() === "student") {
       transitionView(SHOW_WO_LIST);
       transitionUser(SHOW_USER_STUDENT);
       //getWorkordersByStudentID(userID) 
     }
-  }, [userRole]);
+    //return;
+  };
 
-  const openWorkOrder = function (workorder_id) {
+  // useEffect(() => {
+  //   console.log("chaneg user");
+  //   if (userRole.trim() === "mentor") {
+  //     transitionView(SHOW_QUEUE);
+  //     transitionUser(SHOW_USER_MENTOR);
+  //     //getWorkordersByMentorID(userID) 
+  //   } else if (userRole.trim() === "student") {
+  //     transitionView(SHOW_WO_LIST);
+  //     transitionUser(SHOW_USER_STUDENT);
+  //     //getWorkordersByStudentID(userID) 
+  //   }
+  //   return;
+  // }, [userRole]);
+
+  const openWorkOrder = function(workorder_id) {
     getWorkorderByID(workorder_id);
     transitionView(SHOW_EXISTING_WO);
     return;
-  }
-  
+  };
+
   return (
     <Fragment>
-      {
-        mode === SHOW_LOGIN && (<Login
-           onLogin={loginUser}
-        />)
-      }
+
 
       {user === SHOW_USER_STUDENT && (
         <Fragment>
           <NavigationStudent
             onView={() => transitionView(SHOW_WO_LIST)}
             onNew={() => transitionView(SHOW_NEW_WO)}
-            onLogout={() => transitionView(SHOW_LOGIN)}
+            onLogout={() => { transitionUser(SHOW_USER_UNDEFINED); transitionView(SHOW_LOGIN); }}
           />
 
           {mode === SHOW_WO_LIST && (
-            <WorkorderList              
+            <WorkorderList
               workorders={state.myWorkordersStudent}
               onView={openWorkOrder}
             />)}
@@ -129,7 +141,7 @@ export default function Application(props) {
 
           {mode === SHOW_EXISTING_WO && (
             <ViewWorkorder
-              workorder = {state.workorder}
+              workorder={state.workorder}
               onCancel={() => { transitionView(SHOW_WO_LIST); }}
             />)}
 
@@ -143,7 +155,7 @@ export default function Application(props) {
             onShowInProgress={() => transitionView(SHOW_IN_PROG)}
             onShowClosed={() => transitionView(SHOW_CLOSED)}
             onShowMy={() => { transitionView(SHOW_MY_WO); }}
-            onLogout={() => transitionView(SHOW_LOGIN)}
+            onLogout={() => { transitionUser(SHOW_USER_UNDEFINED); transitionView(SHOW_LOGIN); }}
           />
 
           {(mode === SHOW_QUEUE) && (
@@ -157,18 +169,26 @@ export default function Application(props) {
               workorders={state.workordersIP}
             />
           )}
+
           {(mode === SHOW_CLOSED) && (
             < QueueList
               workorders={state.workordersClosed}
             />
           )}
+
           {mode === SHOW_MY_WO && (
             < QueueList
               workorders={state.myWorkordersMentor}
             />
           )}
+
         </Fragment>)}
 
+      {mode === SHOW_LOGIN && (
+        < Login
+          onLogin={loginUser}
+        />
+      )}
 
     </Fragment>
   );
