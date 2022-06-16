@@ -59,6 +59,7 @@ export default function Application(props) {
     getWorkordersByStudentID,
     getWorkordersByMentorID,
     changeWorkorderStatus,
+    getWorkordersByStatus,
     getWorkorderByID,
     userRole,
     userID
@@ -89,6 +90,55 @@ export default function Application(props) {
   };
   componentDidMount();
 
+  const updateState = function () {
+    // if user is student
+    switch(mode) {
+      case SHOW_NEW_WO:
+        //don't need to load any data
+        break;
+      case SHOW_EXISTING_WO:
+        //load form data by workorder id
+        //getWorkorderByID();
+        break;        
+      case SHOW_QUEUE:
+        //load in new/open workorders
+        getWorkordersByStatus(1);
+        break;
+      case SHOW_IN_PROG:
+        //load in progress workorders
+        getWorkordersByStatus(2);
+        break;
+      case SHOW_CLOSED:
+        //show closed workorders
+        getWorkordersByStatus(3);
+        break;
+      case SHOW_MY_WO:
+        //show workorders by mentor id
+        getWorkordersByMentorID(userID)
+        break;
+      case SHOW_STUDENT_WO:
+        //show workorders by student id
+       // console.log("wo item", state.workorderItem)
+       // getWorkordersByStudentID()
+        break;
+      case SHOW_WO_LIST:
+        //show workorders by student id
+        console.log("student workorders")
+        getWorkordersByStudentID(userID)
+        break;
+      default:
+        break;
+
+   } 
+   return;
+}
+useEffect(() => {
+  console.log("update mode", mode)
+  console.log(state)
+  updateState();
+  return;
+}, [mode]);
+
   const loginUser = function(email, password) {
     verifyUserLogin(email, password);
     setUserView();
@@ -114,6 +164,7 @@ export default function Application(props) {
   };
 
   const openUserHistory = function(student_id) {
+    console.log("open history", student_id)
     getWorkordersByStudentID(student_id);
     transitionView(SHOW_STUDENT_WO);
     return;
@@ -140,12 +191,13 @@ export default function Application(props) {
 
           {mode === SHOW_WO_LIST && (
             <WorkorderList
-              workorders={state.myWorkordersStudent}
+              workorders={state.workorderList}
               onView={openWorkOrder}
             />)}
 
           {mode === SHOW_NEW_WO && (
             <NewWorkorder
+              student_id = {userID}
               onCancel={() => { transitionView(SHOW_WO_LIST); }}
               onSave={() => { transitionView(SHOW_EXISTING_WO); }}
             />)}
@@ -171,7 +223,7 @@ export default function Application(props) {
 
           {(mode === SHOW_QUEUE) && (
             < QueueList
-              workorders={state.workordersOpen}
+              workorders={state.workorderList}
               onView={openWorkOrder}
               onHistory={openUserHistory}
               onPickupTicket={markWorkorderInProgress}
@@ -180,16 +232,15 @@ export default function Application(props) {
 
           {(mode === SHOW_IN_PROG) && (
             < QueueList
-              workorders={state.workordersIP}
+              workorders={state.workorderList}
               onView={openWorkOrder}
               onHistory={openUserHistory}
-
             />
           )}
 
           {(mode === SHOW_CLOSED) && (
             < QueueList
-              workorders={state.workordersClosed}
+              workorders={state.workorderList}
               onView={openWorkOrder}
               onHistory={openUserHistory}
             />
@@ -197,7 +248,8 @@ export default function Application(props) {
 
           {mode === SHOW_MY_WO && (
             < QueueList
-              workorders={state.myWorkordersMentor}
+              workorders={state.workorderList}
+              onView={openWorkOrder}
             />
           )}
 
@@ -205,14 +257,15 @@ export default function Application(props) {
             <ViewWorkorder
               workorder={state.workorder}
               onCancel={() => { transitionView(SHOW_QUEUE); }}
+              onHistory={openUserHistory}
               onPickupTicket={markWorkorderInProgress}
             />)}
 
 
           {mode === SHOW_STUDENT_WO && (
             <WorkorderList
-              workorders={state.myWorkordersStudent}
-              onView={openWorkOrder}
+              workorders={state.workorderList}
+              onView={openWorkOrder}              
             />)}
 
         </Fragment>)}

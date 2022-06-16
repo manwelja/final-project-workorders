@@ -15,7 +15,8 @@ const BASE_URL = HOST + ":" + PORT;
 
 export default function ViewWorkorder(props){
 
-  const {workorder, onCancel, onPickupTicket } = props
+  const {workorder, onCancel, onHistory, onPickupTicket } = props
+  
   return (
     <main>
     <article>
@@ -70,7 +71,7 @@ export default function ViewWorkorder(props){
               </div>   
               <div class="wo-form-footer">
               <div><Button className="button--danger" danger onClick={ () => {  }}>Cancel</Button></div>
-              <div><Button className="button--confirm" confirm onClick={ () => {  }}>See History</Button></div>
+              <div><Button className="button--confirm" confirm onClick={(e) => {e.preventDefault(); onHistory(workorder.user_student_id)}}>See History</Button></div>
               <div><Button className="button--confirm" confirm onClick={ () => { onPickupTicket(workorder.id) }}>Pick Up</Button></div>
             </div>
       </section> 

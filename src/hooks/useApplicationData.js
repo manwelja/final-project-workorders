@@ -15,7 +15,10 @@ export default function useApplicationData() {
     workordersClosed: [],
     myWorkordersStudent: [],
     myWorkordersMentor: [],
-    workorder: {}
+    workorder: {},
+
+    workorderList: [],
+    workorderItem: {}
   });
 
   //populate the queue list when the application loads
@@ -27,7 +30,8 @@ export default function useApplicationData() {
     ]).then((all) => {
       setState(prev => ({
         ...prev,
-        workordersOpen: all[0].data,
+        workorderList: all[0].data,
+      //  workordersOpen: all[0].data,
         workordersIP: all[1].data,
         workordersClosed: all[2].data,
       }));
@@ -37,7 +41,7 @@ export default function useApplicationData() {
   //when a new user logs in, retrieve all of their workorders
   useEffect(() => {
     if (userRole.trim() === "mentor") {
-      getWorkordersByMentorID(userID);
+     // getWorkordersByMentorID(userID);
     } else if (userRole.trim() === "student") {
       getWorkordersByStudentID(userID);
     }
@@ -52,7 +56,8 @@ export default function useApplicationData() {
     ]).then((all) => {
       setState(prev => ({
         ...prev,
-        workordersOpen: all[0].data,
+        workorderList: all[0].data,
+       // workordersOpen: all[0].data,
         workordersIP: all[1].data,
         workordersClosed: all[2].data,
       }));
@@ -62,7 +67,7 @@ export default function useApplicationData() {
   const getWorkorderByID = (workorderID) => {
     return axios.get(`api/workorders/${workorderID}`)
       .then((res) => {
-        setState({ ...state, workorder: res.data[0] });
+        setState({ ...state, workorder: res.data[0], workorderItem: res.data[0] });
        // setOneWorkorder(res.data[0]);
         return;
       }).catch((err) => console.log("axios error", err));
@@ -70,9 +75,10 @@ export default function useApplicationData() {
   };
 
   const getWorkordersByStudentID = (studentID) => {
+    console.log("get workorders by student", studentID)
     return axios.get(`api/workorders/student/${studentID}`)
       .then((res) => {
-        setState(prev => ({ ...prev, myWorkordersStudent: res.data }));
+        setState(prev => ({ ...prev, myWorkordersStudent: res.data, workorderList: res.data }));
         return;
       }).catch((err) => console.log("axios error", err));
 
@@ -82,12 +88,19 @@ export default function useApplicationData() {
     console.log("get workorders mentor", mentorID)
       return axios.get(`api/workorders/mentor/${mentorID}`)
       .then((res) => {
-        setState(prev => ({ ...prev, myWorkordersMentor: res.data }));
+        setState(prev => ({ ...prev, myWorkordersMentor: res.data, workorderList: res.data }));
         return;
       }).catch((err) => console.log("axios error", err));
 
   };
 
+  const getWorkordersByStatus = (statusID) => {
+    return axios.get(`/api/queue/${statusID}`)
+    .then((res) => {
+      setState(prev => ({ ...prev, workorderList: res.data }));
+      return;
+    }).catch((err) => console.log("axios error", err));
+  };
 
   const changeWorkorderStatus = function(mentor_id, workorder_id) {
     console.log("mentor id", mentor_id)
@@ -134,5 +147,5 @@ export default function useApplicationData() {
     }
   };
 
-  return { state, setState, getWorkordersByStudentID, getWorkordersByMentorID, getWorkorderByID, updateQueue, verifyUserLogin, changeWorkorderStatus, userID, userRole, oneWorkorder };
+  return { state, setState, getWorkordersByStudentID, getWorkordersByMentorID, getWorkorderByID, updateQueue, verifyUserLogin, changeWorkorderStatus, getWorkordersByStatus, userID, userRole, oneWorkorder };
 }
