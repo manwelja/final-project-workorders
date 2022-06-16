@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import { React, useState, useEffect, Fragment } from "react";
 import Login from "./Login";
 import NavigationStudent from "./NavigationStudent";
 import NavigationMentor from "./NavigationMentor";
@@ -88,35 +88,27 @@ export default function Application(props) {
     userRole,    
   } = useApplicationData();
 
-  //potentially used to store userID on login
-  // const getUserID = (id) => {
-  //   setState(prev => ({ ...prev, userID: id }));
-  // };
-
   const loginUser = function(email, password){
      verifyUserLogin(email, password);
-
      //response.data[0].role.trim() === "mentor" ? onSuccessMentor() : onSuccessStudent();
   };
-  console.log("uid", userID)
-  console.log("user role", userRole)
-  //return appointment components for each appoiontment that exists for the currently selected day
-  // const queueOpen = getQueueListByStatus(1);
-  // const queueInProgress = getQueueListByStatus(2);
-  // const queueClosed = getQueueListByStatus(3);
+
+   useEffect(() => {
+    if(userRole.trim() === "mentor") {
+      transitionView(SHOW_QUEUE);
+      transitionUser(SHOW_USER_MENTOR);
+    } else if(userRole.trim() === "student") {
+      transitionView(SHOW_WO_LIST);
+      transitionUser(SHOW_USER_STUDENT);
+    }
+  }, [userRole]);
+
+
   return (
     <Fragment>
       {
         mode === SHOW_LOGIN && (<Login
-          onSuccessStudent={() => {
-            transitionView(SHOW_WO_LIST);
-            transitionUser(SHOW_USER_STUDENT);
-          }}
-          onSuccessMentor={() => {
-            transitionView(SHOW_QUEUE);
-            transitionUser(SHOW_USER_MENTOR);
-          }}
-          onLogin={loginUser}
+           onLogin={loginUser}
         />)
       }
 
