@@ -55,11 +55,13 @@ export default function Application(props) {
     setState,
     oneWorkorder,
     verifyUserLogin,
-    updateAllStates,
+    updateQueue,
     getWorkordersByStudentID,
     getWorkordersByMentorID,
+    changeWorkorderStatus,
     getWorkorderByID,
-    userRole
+    userRole,
+    userID
   } = useApplicationData();
 
   const componentDidMount = function() {
@@ -71,8 +73,19 @@ export default function Application(props) {
     client.onmessage = (message) => {
       const dataFromServer = JSON.parse(message.data);
       //save this data to state to refresh screen
-      console.log(dataFromServer.message);
-      updateAllStates();
+      console.log("RECEIVED server data ", userRole);
+      if(userRole.trim() === "mentor") {
+        getWorkordersByMentorID(userID) 
+      }else if (userRole.trim() === "student") {
+        console.log("update student")
+        getWorkordersByStudentID(userID) 
+      }      
+      if(mode === SHOW_EXISTING_WO) {
+        getWorkorderByID(state.workorder.id)
+      }
+      
+
+      updateQueue();      
     };
   };
   componentDidMount();
@@ -83,7 +96,6 @@ export default function Application(props) {
     // return;
   };
   const setUserView = function() {
-    console.log(userRole.trim());
     if (userRole.trim() === "mentor") {
       transitionView(SHOW_QUEUE);
       transitionUser(SHOW_USER_MENTOR);
@@ -95,20 +107,6 @@ export default function Application(props) {
     }
     //return;
   };
-
-  // useEffect(() => {
-  //   console.log("chaneg user");
-  //   if (userRole.trim() === "mentor") {
-  //     transitionView(SHOW_QUEUE);
-  //     transitionUser(SHOW_USER_MENTOR);
-  //     //getWorkordersByMentorID(userID) 
-  //   } else if (userRole.trim() === "student") {
-  //     transitionView(SHOW_WO_LIST);
-  //     transitionUser(SHOW_USER_STUDENT);
-  //     //getWorkordersByStudentID(userID) 
-  //   }
-  //   return;
-  // }, [userRole]);
 
   const openWorkOrder = function(workorder_id) {
     getWorkorderByID(workorder_id);
@@ -122,6 +120,13 @@ export default function Application(props) {
     return;
   };
 
+  const markWorkorderInProgress= function(workorder_id) {
+    if (userRole.trim() === "mentor") {
+      changeWorkorderStatus(userID, workorder_id);
+    }  
+    return;
+  };
+ console.log(state)
   return (
     <Fragment>
 
@@ -170,18 +175,24 @@ export default function Application(props) {
               workorders={state.workordersOpen}
               onView={openWorkOrder}
               onHistory={openUserHistory}
+              onPickupTicket={markWorkorderInProgress}
             />
           )}
 
           {(mode === SHOW_IN_PROG) && (
             < QueueList
               workorders={state.workordersIP}
+              onView={openWorkOrder}
+              onHistory={openUserHistory}
+
             />
           )}
 
           {(mode === SHOW_CLOSED) && (
             < QueueList
               workorders={state.workordersClosed}
+              onView={openWorkOrder}
+              onHistory={openUserHistory}
             />
           )}
 
@@ -195,6 +206,7 @@ export default function Application(props) {
             <ViewWorkorder
               workorder={state.workorder}
               onCancel={() => { transitionView(SHOW_QUEUE); }}
+              onPickupTicket={markWorkorderInProgress}
             />)}
 
 

@@ -5,13 +5,12 @@ import './queue.css';
 
 //Component that displays individual interviewer data
 export default function QueueListItem(props) {
-  const { date_created, student_first_name, student_last_name, environment, description, numInQueue, week, topic, screenshot_url, onView, workorder_id, student_id, onHistory } = props;
+  const { date_created, student_first_name, student_last_name, environment, description, numInQueue, week, topic, screenshot_url, onView, workorder_id, student_id, onHistory, onPickupTicket } = props;
   //return an item for each workorder passed in as a prop
   const options = { year: "numeric", month: "long", day: "numeric" };
   const formattedDate = new Date(date_created).toLocaleDateString(undefined, options);
   const formattedTime = new Date(date_created).toLocaleTimeString('en-US');
   const formattedDateTime = formattedDate + " - " + formattedTime;
-  console.log();
   const imageClass = classNames("queue-workorder-screenshot",
     { " hidden": !screenshot_url }
   );
@@ -44,7 +43,7 @@ export default function QueueListItem(props) {
       <div class="queue-workorder-footer">
         <div><a class="btn-workorder-footer" onClick={() => onHistory(student_id)}>See user History</a></div>
         <div><a class="btn-workorder-footer" onClick={() => onView(workorder_id)}>View</a></div>
-        <div><a href="#" class="btn-workorder-footer">Pick Up Ticket</a></div>
+        <div><a  class="btn-workorder-footer" onClick={() => onPickupTicket(workorder_id)}>Pick Up Ticket</a></div>
       </div>
     </div >
   );

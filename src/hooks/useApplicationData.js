@@ -44,11 +44,11 @@ export default function useApplicationData() {
   }, [userID]);
 
   //Update state data when the server sends new data
-  const updateAllStates = () => {
+  const updateQueue = () => {
     Promise.all([
       axios.get(`/api/queue/1`),
-      axios.get("/api/queue/2"),
-      axios.get("/api/queue/3"),
+      axios.get(`/api/queue/2`),
+      axios.get(`/api/queue/3`),
     ]).then((all) => {
       setState(prev => ({
         ...prev,
@@ -62,20 +62,12 @@ export default function useApplicationData() {
   const getWorkorderByID = (workorderID) => {
     return axios.get(`api/workorders/${workorderID}`)
       .then((res) => {
-        console.log("one workorder", res.data[0]);
         setState({ ...state, workorder: res.data[0] });
         setOneWorkorder(res.data[0]);
         return;
       }).catch((err) => console.log("axios error", err));
 
   };
-  useEffect(() => {
-    console.log("workorder change", oneWorkorder);
-  }, [oneWorkorder]);
-
-  useEffect(() => {
-    console.log("state change", state);
-  }, [state]);
 
   const getWorkordersByStudentID = (studentID) => {
     return axios.get(`api/workorders/student/${studentID}`)
@@ -87,13 +79,24 @@ export default function useApplicationData() {
   };
 
   const getWorkordersByMentorID = (mentorID) => {
-    console.log("mentor id", mentorID);
-    return axios.get(`api/workorders/mentor/${mentorID}`)
+    console.log("get workorders mentor", mentorID)
+      return axios.get(`api/workorders/mentor/${mentorID}`)
       .then((res) => {
         setState(prev => ({ ...prev, myWorkordersMentor: res.data }));
         return;
       }).catch((err) => console.log("axios error", err));
 
+  };
+
+
+  const changeWorkorderStatus = function(mentor_id, workorder_id) {
+    console.log("mentor id", mentor_id)
+      //Status id should be set to 1 initially - 
+    return axios.put(`http://localhost:8001/api/update/workorder/${workorder_id}`, {user_mentor_id: mentor_id, status_id: 2})
+    .then((res) => {
+      return;
+    }).catch((err) => console.log("error - should show screen"))
+      return;
   };
 
   function isValidEmail(userEmail) {
@@ -131,5 +134,5 @@ export default function useApplicationData() {
     }
   };
 
-  return { state, setState, getWorkordersByStudentID, getWorkordersByMentorID, getWorkorderByID, updateAllStates, verifyUserLogin, userID, userRole, oneWorkorder };
+  return { state, setState, getWorkordersByStudentID, getWorkordersByMentorID, getWorkorderByID, updateQueue, verifyUserLogin, changeWorkorderStatus, userID, userRole, oneWorkorder };
 }
