@@ -12,8 +12,7 @@ import Select from 'react-select';
 const PORT = process.env.REACT_APP_API_PORT;
 const HOST = process.env.REACT_APP_API_HOST;
 const BASE_URL = HOST + ":" + PORT;
-
-  
+ 
 
 export default function ViewWorkorder(props){
 
@@ -87,8 +86,8 @@ export default function ViewWorkorder(props){
 
 <div class="wo-form-label-data">
     <div class="wo-form-data">  
-    {userRole === "student" && workorder.status_id === 3 && <StudentFeedbackForm id={workorder.mentor_id} mentorName={workorder.mentor_first_name + " " + workorder.mentor_last_name} />}
-    {userRole === "mentor" && workorder.status_id === 3 && <MentorFeedbackForm id={workorder.student_id} studentName={workorder.student_first_name + " " + workorder.student_last_name}/>}
+    {userRole === "student" && workorder.status_id === 3 && <StudentFeedbackForm id={workorder.id} mentorName={workorder.mentor_first_name + " " + workorder.mentor_last_name} />}
+    {userRole === "mentor" && workorder.status_id === 3 && <MentorFeedbackForm id={workorder.id} studentName={workorder.student_first_name + " " + workorder.student_last_name}/>}
     </div>  
 </div> 
 </>
