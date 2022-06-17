@@ -52,8 +52,6 @@ export default function Application(props) {
   //declare the functions that are being exported in the useApplicationData hook
   const {
     state,
-    setState,
-    oneWorkorder,
     verifyUserLogin,
     updateQueue,
     getWorkordersByStudentID,
@@ -61,6 +59,7 @@ export default function Application(props) {
     changeWorkorderStatus,
     getWorkordersByStatus,
     getWorkorderByID,
+    deleteLoginCookie,
     userRole,
     userID
   } = useApplicationData();
@@ -176,6 +175,15 @@ useEffect(() => {
     return;
   };
  
+
+  const logout = function() {
+    console.log("log me out")
+    deleteLoginCookie();
+    transitionUser(SHOW_USER_UNDEFINED); 
+    transitionView(SHOW_LOGIN);
+    return;
+  };
+ 
   return (
     <Fragment>
 
@@ -185,7 +193,7 @@ useEffect(() => {
           <NavigationStudent
             onView={() => transitionView(SHOW_WO_LIST)}
             onNew={() => transitionView(SHOW_NEW_WO)}
-            onLogout={() => { transitionUser(SHOW_USER_UNDEFINED); transitionView(SHOW_LOGIN); }}
+            onLogout={logout}
           />
 
           {mode === SHOW_WO_LIST && (

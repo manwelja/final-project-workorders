@@ -6,7 +6,7 @@ import { useCookies } from "react-cookie";
 export default function useApplicationData() {
   const [userID, setUserID] = useState("");
   const [userRole, setUserRole] = useState("");
-  const [cookies, setCookie] = useCookies([""]);
+  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
   const [oneWorkorder, setOneWorkorder] = useState({});
 
   const [state, setState] = useState({
@@ -14,6 +14,10 @@ export default function useApplicationData() {
     workorderItem: {}
   });
 
+  const deleteLoginCookie = () => {
+    console.log("cookie name", cookies.valueName)
+    removeCookie('user')
+  }
   //populate the queue list when the application loads
   useEffect(() => {
 
@@ -127,5 +131,5 @@ export default function useApplicationData() {
     }
   };
 
-  return { state, setState, getWorkordersByStudentID, getWorkordersByMentorID, getWorkorderByID, updateQueue, verifyUserLogin, changeWorkorderStatus, getWorkordersByStatus, userID, userRole, oneWorkorder };
+  return { state, setState, getWorkordersByStudentID, getWorkordersByMentorID, getWorkorderByID, updateQueue, verifyUserLogin, changeWorkorderStatus, getWorkordersByStatus, deleteLoginCookie, userID, userRole, oneWorkorder };
 }
