@@ -1,5 +1,6 @@
 import { React, useState, useEffect, Fragment } from "react";
 import Login from "./Login";
+import NavigationLogin from "./NavigationLogin";
 import NavigationStudent from "./NavigationStudent";
 import NavigationMentor from "./NavigationMentor";
 import NewWorkorder from "./Form/NewWorkorder";
@@ -291,10 +292,14 @@ export default function Application(props) {
 
         </Fragment>)}
 
+
       {mode === SHOW_LOGIN && (
-        < Login
-          onLogin={loginUser}
-        />
+        <Fragment>
+          <NavigationLogin />
+          < Login
+           onLogin={loginUser}
+          />
+        </Fragment>
       )}
 
     </Fragment>
