@@ -17,17 +17,28 @@ export default function WorkorderListItem(props) {
     student_rating,
     student_notes,
     date_created,
+    date_closed,
     module,
     topic,
     week,
     status,
-    onView }
+    onView,
+    mentor_first_name,
+    mentor_last_name,
+    screenshot_url
+  }
     = props;
 
-    const options = { year: "numeric", month: "long", day: "numeric" };
-  const formattedDate = new Date(date_created).toLocaleDateString(undefined, options);
-  const formattedTime = new Date(date_created).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  const formattedDateTime = `${formattedDate} ${formattedTime}`;
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  const formattedDateCreated = new Date(date_created).toLocaleDateString(undefined, options);
+  const formattedTimeCreated = new Date(date_created).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+  const formattedDateClosed = new Date(date_closed).toLocaleDateString(undefined, options);
+  const formattedTimeClosed = new Date(date_closed).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+  const formattedDateTimeCreated = `${formattedDateCreated} ${formattedTimeCreated}`;
+  const formattedDateTimeClosed = `${formattedDateClosed} ${formattedTimeClosed}`;
+
 
   return (
     <div class="workorder-item-container">
@@ -35,13 +46,14 @@ export default function WorkorderListItem(props) {
       <div class="workorder-item-header">
         <div id="workorder-title">Workorder #: {workorder_id}</div>
         <div class="workorder-item-header-right">
-          <div id="workorder-created">Created {formattedDateTime}</div>
           <button type="button" class="btn btn-success"> Completed</button>
+          <div id="workorder-created">Created {formattedDateTimeCreated}</div>
+          <div id="workorder-created">Closed {formattedDateTimeClosed}</div>
         </div>
       </div>
       <div class="workorder-item-body">
         <div class="workorder-item-body-left">
-          <p class="workorder-item-text"><span class="category-name">Mentor Name: </span> <span>{mentor_name}</span></p>
+          <p class="workorder-item-text"><span class="category-name">Mentor Name: </span> <span>{`${mentor_first_name} ${mentor_last_name}`}</span></p>
           <p class="workorder-item-text"><span class="category-name">Mentor Rating: </span>3 Stars</p>
         </div>
         <div class="workorder-item-body-right">
@@ -51,6 +63,11 @@ export default function WorkorderListItem(props) {
       </div>
       <div class="workorder-item-description-container">
         <p class="workorder-item-text"><span class="category-name">Issue Description: </span>{description}</p>
+      </div>
+      <div class="wo-form-screenshot">
+        <a href={screenshot_url}>
+          <img src={screenshot_url} alt="Error Screenshot" />
+        </a>
       </div>
       <div class="workorder-item-footer">
         <div><a class="btn-workorder-footer" onClick={() => onView(workorder_id)}>View</a></div>
