@@ -197,7 +197,7 @@ export default function Application(props) {
   };
  
   return (
-    <Fragment>
+    <section id="main-container">
 
 
       {user === SHOW_USER_STUDENT && (
@@ -301,8 +301,7 @@ export default function Application(props) {
           />
         </Fragment>
       )}
-
-    </Fragment>
+  </section>  
   );
 }
 

@@ -1,8 +1,6 @@
-import "./navigation-mentor.css";
-import Button from "./Button";
+import "./navigation.css";
 
-export default function NavigationStudent(props) {
-  const { onShowNew, onShowInProgress, onShowClosed, onShowMy, getWorkordersByMentorID, onLogout } = props;
+export default function NavigationLogin(props) {
   return (
     <div class="nav-container">
       <div class="nav-app-title">SOAR</div>

@@ -1,0 +1,29 @@
+.miain-container {
+  width:100%;
+}
+
+.nav-container {
+  display: flex;
+  flex-direction: row nowrap;
+  background-color: #0d4000;
+  background-image: url("/public/images/brick-wall.png");
+  width: 100%;
+  height: 300px;
+}
+
+.nav-container-button {
+  display: flex;
+  justify-content: flex-end; 
+}
+
+.nav-container-button div{
+  padding:20px;
+}
+
+.nav-app-title {
+  display: flex;
+  width: 75%;
+  font-size: 72px;
+  padding:20px;
+  justify-content: flex-start;
+}
