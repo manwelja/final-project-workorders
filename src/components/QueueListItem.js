@@ -7,12 +7,13 @@ import './queue.css';
 //Component that displays individual interviewer data
 export default function QueueListItem(props) {
   console.log(props)
-  const { date_created, student_first_name, student_last_name, environment, description, numInQueue, week, topic, screenshot_url, onView, workorder_id, student_id, status_id, onHistory, onPickupTicket } = props;
+  const { date_created, date_closed, workorderID, student_first_name, student_last_name, environment, description, numInQueue, week, topic, screenshot_url, onView, workorder_id, student_id, status_id, onHistory, onPickupTicket } = props;
   //return an item for each workorder passed in as a prop
   const options = { year: "numeric", month: "long", day: "numeric" };
-  const formattedDate = new Date(date_created).toLocaleDateString(undefined, options);
-  const formattedTime = new Date(date_created).toLocaleTimeString('en-US');
-  const formattedDateTime = formattedDate + " - " + formattedTime;
+  const formattedClosedDate = new Date(date_closed).toLocaleDateString(undefined, options);
+  const formattedClosedTime = new Date(date_closed).toLocaleTimeString('en-US');
+  const formattedClosedDateTime = formattedClosedDate + " - " + formattedClosedTime;
+  
   const imageClass = classNames("queue-workorder-screenshot",
     { " hidden": !screenshot_url }
   );
@@ -28,8 +29,12 @@ export default function QueueListItem(props) {
   return (
     <div class="queue-workorder-box">
       <div class="queue-workorder-header">
-        <div id="workorder-title">Queue Order #: {numInQueue}</div>
-        <div id="workorder-created">Created {age(date_created)} ago</div></div>
+        {status_id === 1 && <div id="workorder-title">Queue Order #: {numInQueue}</div>}
+        {status_id !== 1 && <div id="workorder-title">Work Order #: {workorderID}</div>}
+        {status_id !== 3 && <div id="workorder-created">Created {age(date_created)} ago</div>}        
+        {status_id === 3 && <div id="workorder-created">Closed: {formattedClosedDateTime} </div>}        
+        </div>
+        
       <div class="queue-workorder-body">
         <div class="queue-workorder-body-left">
           <p class="queue-workorder-text"><span class="category-name">Student Name: </span> <span>{student_first_name + " " + student_last_name}</span></p>

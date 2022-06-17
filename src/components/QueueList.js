@@ -10,10 +10,12 @@ export default function QueueList(props) {
     return (
       <QueueListItem class="queue-container"
         key={workOrderData.id}
+        workorderID={workOrderData.id}
         numInQueue={idx + 1}
         environment={workOrderData.environment}
         description={workOrderData.description}
         date_created={workOrderData.date_created}
+        date_closed={workOrderData.date_closed}
         student_first_name={workOrderData.student_first_name}
         student_last_name={workOrderData.student_last_name}
         topic={workOrderData.topic}

@@ -18,7 +18,7 @@ const BASE_URL = HOST + ":" + PORT;
 export default function ViewWorkorder(props){
 
   const {workorder, userRole, onCancel, onHistory, onPickupTicket, onCloseTicket } = props
-  
+  console.log(workorder)
   return (
     <>
     <main>
@@ -75,7 +75,6 @@ export default function ViewWorkorder(props){
 
    
               <div class="wo-form-footer">
-              {userRole === "mentor" && <div><Button className="button--danger" confirm onClick={ () => {  }}>Provide Student Feedback</Button></div>}
               {userRole === "mentor" && <div><Button className="button--confirm" confirm onClick={(e) => {e.preventDefault(); onHistory(workorder.user_student_id)}}>See History</Button></div>}
               {workorder.status_id === 1 && userRole === "mentor" && <div><Button className="button--confirm" confirm onClick={ () => { onPickupTicket(workorder.id) }}>Pick Up</Button></div>}
               {workorder.status_id === 2 && userRole === "mentor" && <div><Button className="button--confirm" confirm onClick={ () => { onCloseTicket(workorder.id) }}>Close Ticket</Button></div>}
@@ -88,8 +87,8 @@ export default function ViewWorkorder(props){
 
 <div class="wo-form-label-data">
     <div class="wo-form-data">  
-    {userRole === "student" && <StudentFeedbackForm id={workorder.mentor_id} mentorName={workorder.mentor_name} />}
-    {userRole === "mentor" && <MentorFeedbackForm id={workorder.student_id} studentName={workorder.mentor_name}/>}
+    {userRole === "student" && workorder.status_id === 3 && <StudentFeedbackForm id={workorder.mentor_id} mentorName={workorder.mentor_first_name + " " + workorder.mentor_last_name} />}
+    {userRole === "mentor" && workorder.status_id === 3 && <MentorFeedbackForm id={workorder.student_id} studentName={workorder.student_first_name + " " + workorder.student_last_name}/>}
     </div>  
 </div> 
 </>
