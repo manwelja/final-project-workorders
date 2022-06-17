@@ -10,18 +10,21 @@ export default function QueueList(props) {
     return (
       <QueueListItem class="queue-container"
         key={workOrderData.id}
+        workorderID={workOrderData.id}
         numInQueue={idx + 1}
         environment={workOrderData.environment}
         description={workOrderData.description}
         date_created={workOrderData.date_created}
+        date_closed={workOrderData.date_closed}
         student_first_name={workOrderData.student_first_name}
         student_last_name={workOrderData.student_last_name}
         topic={workOrderData.topic}
         week={workOrderData.week}
         screenshot_url={workOrderData.screenshot_url}
-        onView={onView}
+        status_id={workOrderData.status_id}
         workorder_id={workOrderData.id}
         student_id={workOrderData.user_student_id}
+        onView={onView}
         onHistory={onHistory}
         onPickupTicket={onPickupTicket}
       />
@@ -29,7 +32,7 @@ export default function QueueList(props) {
   });
 
   return (
-    <ul>{queueItem}</ul>
+    <ul class="queue-container">{queueItem}</ul>
   );
 
 };

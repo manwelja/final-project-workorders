@@ -27,7 +27,6 @@ const StudentFeedbackForm = (props) => {
     // rating component doesn't like division when setting state
     // need to multiply by 20 when retrieving from database
     const newData = { description: description, rating: rating / 20 };
-
     axios.patch(`http://${BASE_URL}/api/update/workorder/studentfeedback/${props.id}`, newData)
       .then(() => {
         setDescription("");
@@ -36,7 +35,7 @@ const StudentFeedbackForm = (props) => {
         console.error(error);
       });
   };
-  console.log(rating);
+  
 
   return (
     <article>

@@ -1,5 +1,6 @@
 import { React, useState, useEffect, Fragment } from "react";
 import Login from "./Login";
+import NavigationLogin from "./NavigationLogin";
 import NavigationStudent from "./NavigationStudent";
 import NavigationMentor from "./NavigationMentor";
 import NewWorkorder from "./Form/NewWorkorder";
@@ -131,18 +132,22 @@ export default function Application(props) {
     }
     return;
   };
+
   //console.log(state)
   useEffect(() => {
-    updateState();
-    return;
+    updateState();    
   }, [mode]);
 
-  const loginUser = function(email, password) {
-    verifyUserLogin(email, password);
+  //console.log(state)
+  useEffect(() => {
     setUserView();
-    // return;
+  }, [userRole]);
+
+  const loginUser = function(email, password) {
+    verifyUserLogin(email, password)
   };
   const setUserView = function() {
+    console.log("setUserView", userRole)
     if (userRole.trim() === "mentor") {
       transitionView(SHOW_QUEUE);
       transitionUser(SHOW_USER_MENTOR);
@@ -170,22 +175,29 @@ export default function Application(props) {
 
   const markWorkorderInProgress = function(workorder_id) {
     if (userRole.trim() === "mentor") {
-      changeWorkorderStatus(userID, workorder_id);
+      changeWorkorderStatus(userID, 2, workorder_id);
     }
     return;
   };
  
+  const markWorkorderClosed = function(workorder_id) {
+    if (userRole.trim() === "mentor") {
+      changeWorkorderStatus(userID, 3, workorder_id);
+    }
+    return;
+  };
 
   const logout = function() {
     console.log("log me out")
     deleteLoginCookie();
+    console.log("transition to undefined user")
     transitionUser(SHOW_USER_UNDEFINED); 
     transitionView(SHOW_LOGIN);
     return;
   };
  
   return (
-    <Fragment>
+    <main class="main-container">
 
 
       {user === SHOW_USER_STUDENT && (
@@ -212,6 +224,7 @@ export default function Application(props) {
           {mode === SHOW_EXISTING_WO && (
             <ViewWorkorder
               workorder={state.workorderItem}
+              userRole={userRole.trim()}
               onCancel={() => { transitionView(SHOW_WO_LIST); }}
             />)}
 
@@ -263,9 +276,11 @@ export default function Application(props) {
           {mode === SHOW_EXISTING_WO && (
             <ViewWorkorder
               workorder={state.workorderItem}
+              userRole={userRole.trim()}
               onCancel={() => { transitionView(SHOW_QUEUE); }}
               onHistory={openUserHistory}
               onPickupTicket={markWorkorderInProgress}
+              onCloseTicket={markWorkorderClosed}              
             />)}
 
 
@@ -277,13 +292,16 @@ export default function Application(props) {
 
         </Fragment>)}
 
-      {mode === SHOW_LOGIN && (
-        < Login
-          onLogin={loginUser}
-        />
-      )}
 
-    </Fragment>
+      {mode === SHOW_LOGIN && (
+        <Fragment>
+          <NavigationLogin />
+          < Login
+           onLogin={loginUser}
+          />
+        </Fragment>
+      )}
+  </main>  
   );
 }
 
