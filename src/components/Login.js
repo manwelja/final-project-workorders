@@ -35,7 +35,7 @@ export default function Login(props) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <div><Button className="button--inline" onClick={(e) => { e.preventDefault(); onLogin(email, password); }}>Submit</Button></div>
+            <div><button class="button--inline" onClick={(e) => { e.preventDefault(); onLogin(email, password); }}>Submit</button></div>
           </div>
 
         </form>
