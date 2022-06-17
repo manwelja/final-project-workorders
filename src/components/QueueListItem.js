@@ -1,4 +1,5 @@
 import React from "react";
+import { formatDistance } from "date-fns";
 import classNames from "classnames";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './queue.css';
@@ -15,12 +16,19 @@ export default function QueueListItem(props) {
     { " hidden": !screenshot_url }
   );
 
+  const age = (date) => {
+    const currentDate = new Date().toISOString(); //get new date as string in iso format
+
+    //return the time difference as age
+    //arguments have to be casted as date objects
+    return formatDistance(new Date(date), new Date(currentDate));
+  };
 
   return (
     <div class="queue-workorder-box">
       <div class="queue-workorder-header">
         <div id="workorder-title">Queue Order #: {numInQueue}</div>
-        <div id="workorder-created">Created {formattedDateTime}</div></div>
+        <div id="workorder-created">Created {age(date_created)} ago</div></div>
       <div class="queue-workorder-body">
         <div class="queue-workorder-body-left">
           <p class="queue-workorder-text"><span class="category-name">Student Name: </span> <span>{student_first_name + " " + student_last_name}</span></p>
@@ -43,7 +51,7 @@ export default function QueueListItem(props) {
       <div class="queue-workorder-footer">
         <div><a class="btn-workorder-footer" onClick={() => onHistory(student_id)}>See user History</a></div>
         <div><a class="btn-workorder-footer" onClick={() => onView(workorder_id)}>View</a></div>
-        <div><a  class="btn-workorder-footer" onClick={() => onPickupTicket(workorder_id)}>Pick Up Ticket</a></div>
+        <div><a class="btn-workorder-footer" onClick={() => onPickupTicket(workorder_id)}>Pick Up Ticket</a></div>
       </div>
     </div >
   );

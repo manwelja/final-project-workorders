@@ -75,31 +75,31 @@ export default function Application(props) {
       const dataFromServer = JSON.parse(message.data);
       //save this data to state to refresh screen
       console.log("RECEIVED server data ", userRole);
-      if(userRole.trim() === "mentor") {
-        getWorkordersByMentorID(userID) 
+      if (userRole.trim() === "mentor") {
+        getWorkordersByMentorID(userID);
       } else if (userRole.trim() === "student") {
-        getWorkordersByStudentID(userID) 
-      }      
-      if(mode === SHOW_EXISTING_WO) {
-        console.log("workorder item id", state.workorderItem.id)
-        getWorkorderByID(state.workorderItem.id)
-      }  
+        getWorkordersByStudentID(userID);
+      }
+      if (mode === SHOW_EXISTING_WO) {
+        console.log("workorder item id", state.workorderItem.id);
+        getWorkorderByID(state.workorderItem.id);
+      }
 
-      updateQueue();      
+      updateQueue();
     };
   };
   componentDidMount();
 
-  const updateState = function () {
+  const updateState = function() {
     // if user is student
-    switch(mode) {
+    switch (mode) {
       case SHOW_NEW_WO:
         //don't need to load any data
         break;
       case SHOW_EXISTING_WO:
         //load form data by workorder id
         //getWorkorderByID();
-        break;        
+        break;
       case SHOW_QUEUE:
         //load in new/open workorders
         getWorkordersByStatus(1);
@@ -114,29 +114,29 @@ export default function Application(props) {
         break;
       case SHOW_MY_WO:
         //show workorders by mentor id
-        console.log("MENTOR", userID)
-        getWorkordersByMentorID(userID)
+        console.log("MENTOR", userID);
+        getWorkordersByMentorID(userID);
         break;
       case SHOW_STUDENT_WO:
         //show workorders by student id
-       // console.log("wo item", state.workorderItem)
-       // getWorkordersByStudentID()
+        // console.log("wo item", state.workorderItem)
+        // getWorkordersByStudentID()
         break;
       case SHOW_WO_LIST:
         //show workorders by student id
-        getWorkordersByStudentID(userID)
+        getWorkordersByStudentID(userID);
         break;
       default:
         break;
 
-   } 
-   return;
-}
-//console.log(state)
-useEffect(() => {
-  updateState();
-  return;
-}, [mode]);
+    }
+    return;
+  };
+  //console.log(state)
+  useEffect(() => {
+    updateState();
+    return;
+  }, [mode]);
 
   const loginUser = function(email, password) {
     verifyUserLogin(email, password);
@@ -163,19 +163,22 @@ useEffect(() => {
   };
 
   const openUserHistory = function(student_id) {
-    console.log("open history", student_id)
+    console.log("open history", student_id);
     getWorkordersByStudentID(student_id);
     transitionView(SHOW_STUDENT_WO);
     return;
   };
 
-  const markWorkorderInProgress= function(workorder_id) {
+  const markWorkorderInProgress = function(workorder_id) {
     if (userRole.trim() === "mentor") {
       changeWorkorderStatus(userID, workorder_id);
-    }  
+    }
     return;
   };
- 
+
+  console.log('Mode:', mode);
+  console.log('User:', user);
+
   return (
     <Fragment>
 
@@ -196,7 +199,7 @@ useEffect(() => {
 
           {mode === SHOW_NEW_WO && (
             <NewWorkorder
-              student_id = {userID}
+              student_id={userID}
               onCancel={() => { transitionView(SHOW_WO_LIST); }}
               onSave={() => { transitionView(SHOW_EXISTING_WO); }}
             />)}
@@ -264,7 +267,7 @@ useEffect(() => {
           {mode === SHOW_STUDENT_WO && (
             <WorkorderList
               workorders={state.workorderList}
-              onView={openWorkOrder}              
+              onView={openWorkOrder}
             />)}
 
         </Fragment>)}
