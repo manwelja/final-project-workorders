@@ -1,5 +1,6 @@
 body {
   font-size: 24px;
+  height:100vh;
   margin: 0;
   font-family: "Roboto Flex", sans-serif;
   background-color: rgb(245,245,245);

@@ -20,7 +20,7 @@ export default function ViewWorkorder(props){
   console.log(workorder)
   return (
     <>
-    <main>
+
     <article>
       <form autoComplete="off" onSubmit={event => event.preventDefault()}>
         <section class="wo-form-container">
@@ -82,7 +82,7 @@ export default function ViewWorkorder(props){
       </form> 
    </article>
 
-  </main>
+
 
 <div class="wo-form-label-data">
     <div class="wo-form-data">  
