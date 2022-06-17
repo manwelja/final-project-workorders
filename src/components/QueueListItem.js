@@ -18,6 +18,14 @@ export default function QueueListItem(props) {
     { " hidden": !screenshot_url }
   );
 
+  const headerStatusClass = classNames("queue-workorder-header",
+  { 
+    " closed": status_id===3,
+    " in-progress": status_id===2,
+    " new": status_id===1  
+  }
+);
+
   const age = (date) => {
     const currentDate = new Date().toISOString(); //get new date as string in iso format
 
@@ -28,7 +36,7 @@ export default function QueueListItem(props) {
 
   return (
     <div class="queue-workorder-box">
-      <div class="queue-workorder-header">
+      <div className={headerStatusClass}>
         {status_id === 1 && <div id="workorder-title">Queue Order #: {numInQueue}</div>}
         {status_id !== 1 && <div id="workorder-title">Work Order #: {workorderID}</div>}
         {status_id !== 3 && <div id="workorder-created">Created {age(date_created)} ago</div>}        

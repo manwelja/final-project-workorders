@@ -43,6 +43,17 @@ body {
   transition: 0.3s;
 }
 
+.new {
+  background:rgb(119, 119, 181);
+}
+
+.in-progress{
+  background:#4a725c;
+}
+
+.closed {
+  background:#e9a090;
+}
 .queue-workorder-body {
   background: white;
   width: 100%;
