@@ -9,7 +9,7 @@ export default function Login(props) {
   const { onLogin } = props;
 
   return (
-    <main>
+    <section cladd="login-form">
       <title>SOAR Login</title>
 
       <div class="login-container">
@@ -46,6 +46,6 @@ export default function Login(props) {
 
       </div>
 
-    </main>
+    </section>
   );
 };

@@ -1,4 +1,4 @@
-import "./navigation-mentor.css";
+import "./navigation.css";
 import Button from "./Button";
 
 export default function NavigationStudent(props) {
