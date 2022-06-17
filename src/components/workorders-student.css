@@ -112,3 +112,12 @@ body {
   font-size: 14px;
 }
 
+.wo-form-screenshot {
+  display:flex;
+  font-size: 12px;
+  width:30%;
+  height: 30%;
+  justify-content: flex-start;
+  margin-bottom: 15px;
+  padding: 1rem;
+}
