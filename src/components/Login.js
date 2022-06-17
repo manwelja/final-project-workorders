@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import './login.css';
+import Button from "./Button";
 
 // validate that a user enters the email and pw that matches the db -- unencrypted for now bc of our seed data, fix later
 // may want to migrate this to backend in the future? 
@@ -34,12 +35,7 @@ export default function Login(props) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <button
-              type="submit"
-              onClick={(e) => { e.preventDefault(); onLogin(email, password); }}
-              name="confirm-login"
-              class="btn btn-primary">Submit
-            </button>
+            <div><Button className="button--inline" onClick={(e) => { e.preventDefault(); onLogin(email, password); }}>Submit</Button></div>
           </div>
 
         </form>
