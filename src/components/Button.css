@@ -1,17 +1,17 @@
 .button {
-  border-radius: 1rem;
-  border: 0;
-  font-size: 1.25rem;
-  height: 2rem;
-  line-height: 1.2rem;
-  margin-right: 1rem;
-  width: 10rem;
-  border-width: 2px;
-  border-style: solid;
-  border-color: white;
-  color: white;
-  background-color: transparent;
+    font-size: 1.25rem;
+    height: 4rem;
+    line-height: 1.2rem;
+    margin-right: 1rem;
+    width: 10rem;
+    border-width: 2px;
+    border-style: solid;
+    border-color: white;
+    color: white;
+    background-color: transparent;
 }
+
+
 
 .button:hover {
   color: black;
