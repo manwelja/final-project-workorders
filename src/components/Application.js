@@ -131,18 +131,22 @@ export default function Application(props) {
     }
     return;
   };
+
   //console.log(state)
   useEffect(() => {
-    updateState();
-    return;
+    updateState();    
   }, [mode]);
 
-  const loginUser = function(email, password) {
-    verifyUserLogin(email, password);
+  //console.log(state)
+  useEffect(() => {
     setUserView();
-    // return;
+  }, [userRole]);
+
+  const loginUser = function(email, password) {
+    verifyUserLogin(email, password)
   };
   const setUserView = function() {
+    console.log("setUserView", userRole)
     if (userRole.trim() === "mentor") {
       transitionView(SHOW_QUEUE);
       transitionUser(SHOW_USER_MENTOR);
@@ -170,15 +174,22 @@ export default function Application(props) {
 
   const markWorkorderInProgress = function(workorder_id) {
     if (userRole.trim() === "mentor") {
-      changeWorkorderStatus(userID, workorder_id);
+      changeWorkorderStatus(userID, 2, workorder_id);
     }
     return;
   };
  
+  const markWorkorderClosed = function(workorder_id) {
+    if (userRole.trim() === "mentor") {
+      changeWorkorderStatus(userID, 3, workorder_id);
+    }
+    return;
+  };
 
   const logout = function() {
     console.log("log me out")
     deleteLoginCookie();
+    console.log("transition to undefined user")
     transitionUser(SHOW_USER_UNDEFINED); 
     transitionView(SHOW_LOGIN);
     return;
@@ -212,6 +223,7 @@ export default function Application(props) {
           {mode === SHOW_EXISTING_WO && (
             <ViewWorkorder
               workorder={state.workorderItem}
+              userRole={userRole.trim()}
               onCancel={() => { transitionView(SHOW_WO_LIST); }}
             />)}
 
@@ -263,9 +275,11 @@ export default function Application(props) {
           {mode === SHOW_EXISTING_WO && (
             <ViewWorkorder
               workorder={state.workorderItem}
+              userRole={userRole.trim()}
               onCancel={() => { transitionView(SHOW_QUEUE); }}
               onHistory={openUserHistory}
               onPickupTicket={markWorkorderInProgress}
+              onCloseTicket={markWorkorderClosed}              
             />)}
 
 

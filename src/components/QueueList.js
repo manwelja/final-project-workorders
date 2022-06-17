@@ -19,9 +19,10 @@ export default function QueueList(props) {
         topic={workOrderData.topic}
         week={workOrderData.week}
         screenshot_url={workOrderData.screenshot_url}
-        onView={onView}
+        status_id={workOrderData.status_id}
         workorder_id={workOrderData.id}
         student_id={workOrderData.user_student_id}
+        onView={onView}
         onHistory={onHistory}
         onPickupTicket={onPickupTicket}
       />

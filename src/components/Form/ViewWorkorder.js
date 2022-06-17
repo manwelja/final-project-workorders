@@ -2,6 +2,8 @@
 import React, { useState, useEffect, Fragment } from "react";
 import axios from 'axios';
 import Button from "../Button"
+import MentorFeedbackForm from "./MentorFeedbackForm"
+import StudentFeedbackForm from "./StudentFeedbackForm"
 import useScript from '../../hooks/useScript';
 import './workorderForm.css';
 import Select from 'react-select';
@@ -15,9 +17,10 @@ const BASE_URL = HOST + ":" + PORT;
 
 export default function ViewWorkorder(props){
 
-  const {workorder, onCancel, onHistory, onPickupTicket } = props
+  const {workorder, userRole, onCancel, onHistory, onPickupTicket, onCloseTicket } = props
   
   return (
+    <>
     <main>
     <article>
       <form autoComplete="off" onSubmit={event => event.preventDefault()}>
@@ -68,15 +71,27 @@ export default function ViewWorkorder(props){
                 <a href={workorder.screenshot_url}>
                   <img src={workorder.screenshot_url} alt="Error Screenshot" />
                 </a>
-              </div>   
+              </div>
+
+   
               <div class="wo-form-footer">
-              <div><Button className="button--danger" danger onClick={ () => {  }}>Cancel</Button></div>
-              <div><Button className="button--confirm" confirm onClick={(e) => {e.preventDefault(); onHistory(workorder.user_student_id)}}>See History</Button></div>
-              <div><Button className="button--confirm" confirm onClick={ () => { onPickupTicket(workorder.id) }}>Pick Up</Button></div>
+              {userRole === "mentor" && <div><Button className="button--danger" confirm onClick={ () => {  }}>Provide Student Feedback</Button></div>}
+              {userRole === "mentor" && <div><Button className="button--confirm" confirm onClick={(e) => {e.preventDefault(); onHistory(workorder.user_student_id)}}>See History</Button></div>}
+              {workorder.status_id === 1 && userRole === "mentor" && <div><Button className="button--confirm" confirm onClick={ () => { onPickupTicket(workorder.id) }}>Pick Up</Button></div>}
+              {workorder.status_id === 2 && userRole === "mentor" && <div><Button className="button--confirm" confirm onClick={ () => { onCloseTicket(workorder.id) }}>Close Ticket</Button></div>}
             </div>
       </section> 
       </form> 
-    </article>
+   </article>
+
   </main>
+
+<div class="wo-form-label-data">
+    <div class="wo-form-data">  
+    {userRole === "student" && <StudentFeedbackForm id={workorder.mentor_id} mentorName={workorder.mentor_name} />}
+    {userRole === "mentor" && <MentorFeedbackForm id={workorder.student_id} studentName={workorder.mentor_name}/>}
+    </div>  
+</div> 
+</>
   );
 };

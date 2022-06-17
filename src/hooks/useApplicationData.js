@@ -87,9 +87,9 @@ export default function useApplicationData() {
     }).catch((err) => console.log("axios error", err));
   };
 
-  const changeWorkorderStatus = function(mentor_id, workorder_id) {
+  const changeWorkorderStatus = function(mentorID, newStatusID, workorder_id) {
     //Status id should be set to 1 initially - 
-    return axios.put(`http://localhost:8001/api/update/workorder/${workorder_id}`, {user_mentor_id: mentor_id, status_id: 2})
+    return axios.put(`http://localhost:8001/api/update/workorder/${workorder_id}`, {user_mentor_id: mentorID, status_id: newStatusID})
     .then((res) => {
       return;
     }).catch((err) => console.log("error - should show screen"))
@@ -117,9 +117,9 @@ export default function useApplicationData() {
             // validate password here
             if (userPassword === response.data[0].password) { // TO DO: ENCRYPT
               setCookie("user", userEmail, { path: "/" });
-              setUserID(response.data[0].id);
+              setUserID(response.data[0].id);              
               setUserRole(response.data[0].role);
-              return;
+              return;              
             }
           }
         })
