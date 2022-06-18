@@ -234,67 +234,8 @@ export default function Application(props) {
 
         </Fragment>)}
 
-
-      {user === SHOW_USER_MENTOR && (
-        <Fragment>
-          <NavigationMentor
-            onShowNew={() => transitionView(SHOW_QUEUE)}
-            onShowInProgress={() => transitionView(SHOW_IN_PROG)}
-            onShowClosed={() => transitionView(SHOW_CLOSED)}
-            onShowMy={() => { transitionView(SHOW_MY_WO); }}
-            onLogout={() => { transitionUser(SHOW_USER_UNDEFINED); transitionView(SHOW_LOGIN); }}
-          />
-
-          {(mode === SHOW_QUEUE) && (
-            < QueueList
-              workorders={state.workorderList}
-              onView={openWorkOrder}
-              onHistory={openUserHistory}
-              onPickupTicket={markWorkorderInProgress}
-            />
-          )}
-
-          {(mode === SHOW_IN_PROG) && (
-            < QueueList
-              workorders={state.workorderList}
-              onView={openWorkOrder}
-              onHistory={openUserHistory}
-            />
-          )}
-
-          {(mode === SHOW_CLOSED) && (
-            < QueueList
-              workorders={state.workorderList}
-              onView={openWorkOrder}
-              onHistory={openUserHistory}
-            />
-          )}   
-
-            {mode === SHOW_WO_LIST && (
-              <WorkorderList
-                workorders={state.workorderList}
-                onView={openWorkOrder}
-              />)}
-
-            {mode === SHOW_NEW_WO && (
-              <NewWorkorder
-                student_id={userID}
-                onCancel={() => { transitionView(SHOW_WO_LIST); }}
-                onSave={() => { transitionView(SHOW_EXISTING_WO); }}
-              />)}
-
-            {mode === SHOW_EXISTING_WO && (
-              <ViewWorkorder
-                workorder={state.workorderItem}
-                meetingLink={meetingLink}
-                userRole={userRole.trim()}
-                onCancel={() => { transitionView(SHOW_WO_LIST); }}
-              />)}
-
-          </Fragment>)}
-
-
-        {user === SHOW_USER_MENTOR && (
+      
+         {user === SHOW_USER_MENTOR && (
           <Fragment>
             <NavigationMentor
               onShowNew={() => transitionView(SHOW_QUEUE)}
