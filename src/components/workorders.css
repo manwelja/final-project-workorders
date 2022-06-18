@@ -1,38 +1,38 @@
 body {
   font-size: 24px;
-  height:100vh;
   margin: 0;
   font-family: "Roboto Flex", sans-serif;
   background-color: rgb(245,245,245);
+  display: flex;
+  flex-flow: row wrap;
 }
 
 .workorder-container {
-  width: 90%;
-  height: 100vh;
+  width: 90vw;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  margin-top: 140px;
+  /*margin-top: 200px;*/
+ 
 }
-
 .workorder-item-container {
-    background: white;
-    width: 90%;
-    height: auto;
-    margin: 1rem 1rem;
-    display: flex;
-    justify-content: space-between;
-    border: 1px solid rgba(0,0,0 ,0.15);
-    flex-direction: column;
-    box-shadow: 3px 3px 10px rgb(0 0 0 / 5%);
-    border-left: solid lightgrey 3px;
-    border-top: solid lightgrey 6px;
-    transition: 0.3s;
+  background-color:#EFDECD;
+  background-image: url("/public/images/brick-wall.png");
+  width: 45%;
+  height: auto;
+  margin: 1rem 1rem;
+  display: flex;
+  justify-content: space-evenly;   
+  border: 1px solid rgba(0,0,0 ,0.15);
+  flex-direction: column;  
+  /*box-shadow: 3px 3px 20px rgb(0 0 0 / 5%);
+  border-left: solid lightgrey 3px;
+  border-top: solid lightgrey 6px;
+  transition: 0.3s;*/
 }
 
 .workorder-item-header {
-  background:lightgrey;
-  font-size: 18px;
+  font-size: 1.5rem;
   width: 100%;
   height: auto;
   display: flex;
@@ -40,17 +40,9 @@ body {
   flex-flow: row nowrap;
   padding: 1rem;
   transition: 0.3s;
+  border-bottom: 1px solid brown;
 }
-
-.workorder-item-header-right {
-  background:lightgrey;
-  font-size: 18px;
-  flex-direction: row;
-  align-items: flex-end;
-}
-
 .workorder-item-body {
-  background: white;
   width: 100%;
   height: auto;
   display: flex;
@@ -61,7 +53,6 @@ body {
   transition: 0.3s;
   border: 1px black;
 }
-
 .workorder-item-body-left {
   border: 1px black;
 }
@@ -72,12 +63,12 @@ body {
 
 .workorder-item-text {
   width: 100%;
-  font-size: 14px;
+  font-size: 1.25rem;
   height: auto;
   display: flex;
   flex-direction: column;
   text-align: left;
-  align-items: left;
+  align-items: left;  
  }
 
 .workorder-item-description-container {
@@ -110,7 +101,7 @@ body {
 }
 
 #workorder-created {
-  font-size: 14px;
+  font-size: 1.75rem;
 }
 
 .wo-form-screenshot {
@@ -121,4 +112,13 @@ body {
   justify-content: flex-start;
   margin-bottom: 15px;
   padding: 1rem;
+}
+
+/* Add a hover effect (blue shadow) */
+img:hover {
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+} 
+
+.hidden {
+  display: none;
 }

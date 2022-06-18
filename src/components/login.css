@@ -2,6 +2,7 @@
 .login-container {
   /* position:absolute; */
   padding-top: 350px;
+  height: 95vh;
   display: flex;
   flex-direction: column;
   color: white;

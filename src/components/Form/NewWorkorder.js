@@ -88,9 +88,9 @@ export default function NewWorkorder(props){
     
   }    
   return (
-    <main>
+    <main class="workorder-form-main">
       <article>
-        <form autoComplete="off" onSubmit={event => event.preventDefault()}>
+        <form class="workorder-form" autoComplete="off" onSubmit={event => event.preventDefault()}>
           <section class="wo-form-container">
             <div class="wo-form-header"><h1>New Help Request</h1></div>
             <div class="wo-form-label-data">

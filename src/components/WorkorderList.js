@@ -2,7 +2,7 @@
 import React from "react";
 import WorkorderListItem from "./WorkorderListItem";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './workorders-student.css';
+import './workorders.css';
 
 //Component that invokes a QueueListItem child for each workorder in the data set
 export default function WorkorderList(props) {
@@ -31,7 +31,7 @@ export default function WorkorderList(props) {
   });
 
   return (
-    <ul>{workorder}</ul>
+    <div class="workorder-container"> {workorder} </div>
   );
 
 };

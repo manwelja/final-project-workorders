@@ -4,7 +4,7 @@
 import classNames from "classnames";
 import React, { Fragment } from "react";
 import 'bootstrap/dist/css/bootstrap.css';
-import './workorders-student.css';
+import './workorders.css';
 
 export default function WorkorderListItem(props) {
   const {
@@ -39,6 +39,10 @@ export default function WorkorderListItem(props) {
   const formattedDateTimeCreated = `${formattedDateCreated} ${formattedTimeCreated}`;
   const formattedDateTimeClosed = `${formattedDateClosed} ${formattedTimeClosed}`;
 
+  const imageClass = classNames("wo-form-screenshot",
+  { " hidden": !screenshot_url }
+);
+
 
   return (
     <div class="workorder-item-container">
@@ -46,7 +50,6 @@ export default function WorkorderListItem(props) {
       <div class="workorder-item-header">
         <div id="workorder-title">Workorder #: {workorder_id}</div>
         <div class="workorder-item-header-right">
-          <button type="button" class="btn btn-success"> Completed</button>
           <div id="workorder-created">Created {formattedDateTimeCreated}</div>
           <div id="workorder-created">Closed {formattedDateTimeClosed}</div>
         </div>
@@ -64,13 +67,13 @@ export default function WorkorderListItem(props) {
       <div class="workorder-item-description-container">
         <p class="workorder-item-text"><span class="category-name">Issue Description: </span>{description}</p>
       </div>
-      <div class="wo-form-screenshot">
+      <div className={imageClass}>
         <a href={screenshot_url}>
           <img src={screenshot_url} alt="Error Screenshot" />
         </a>
       </div>
       <div class="workorder-item-footer">
-        <div><a class="btn-workorder-footer" onClick={() => onView(workorder_id)}>View</a></div>
+        <div><a class="button--wo-inline" onClick={() => onView(workorder_id)}>View</a></div>
       </div>
 
     </div>

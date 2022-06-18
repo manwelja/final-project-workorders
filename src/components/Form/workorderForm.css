@@ -7,19 +7,20 @@ body {
   justify-content: center;
 }
 
-main {
+/*.workorder-form-main {
   display: flex;
+  height: 94vh;
   justify-content: center;
   padding: 15px;
-}
+
+}*/
 
 article {
   display: flex;
   justify-content: center;
   font-size: 16px;
-  margin: 10px;
-  width: 80vw;
-  border: 1px solid;
+ /* margin-top: 200px;*/
+  width: 80vw;  
   background-color: lightgrey; 
   background-image: url("/public/images/asfalt-light.png");   
 }
@@ -30,15 +31,17 @@ article {
 }
 
 .wo-form-container {
-  width: 80vw;
-  height: 100%;
+  width: 80vw;  
   padding: 3px;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: flex-start;
+  background-color: rgb(101, 120, 96);
+  background-image: url("/public/images/brick-wall.png");
   border: 1px solid;
 }
+
 .wo-form-label-data {
   display: flex;
   width:100%;

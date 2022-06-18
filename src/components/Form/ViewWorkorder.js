@@ -7,6 +7,8 @@ import StudentFeedbackForm from "./StudentFeedbackForm"
 import useScript from '../../hooks/useScript';
 import './workorderForm.css';
 import Select from 'react-select';
+import classNames from "classnames";
+
 
 //Environment variables
 const PORT = process.env.REACT_APP_API_PORT;
@@ -17,7 +19,12 @@ const BASE_URL = HOST + ":" + PORT;
 export default function ViewWorkorder(props){
 
   const {workorder, userRole, onCancel, onHistory, onPickupTicket, onCloseTicket } = props
-  console.log(workorder)
+ 
+   
+ const imageClass = classNames("wo-form-screenshot",
+    { " hidden": !workorder.screenshot_url }
+  );
+
   return (
     <>
 
@@ -66,11 +73,11 @@ export default function ViewWorkorder(props){
              {workorder.topic}
             </div>  
           </div>
-          <div class="wo-form-screenshot">       
+          <div className={imageClass}>       
                 <a href={workorder.screenshot_url}>
                   <img src={workorder.screenshot_url} alt="Error Screenshot" />
                 </a>
-              </div>
+          </div>
 
    
               <div class="wo-form-footer">

@@ -6,7 +6,6 @@ import './queue.css';
 
 //Component that displays individual interviewer data
 export default function QueueListItem(props) {
-  console.log(props)
   const { date_created, date_closed, workorderID, student_first_name, student_last_name, environment, description, numInQueue, week, topic, screenshot_url, onView, workorder_id, student_id, status_id, onHistory, onPickupTicket } = props;
   //return an item for each workorder passed in as a prop
   const options = { year: "numeric", month: "long", day: "numeric" };
