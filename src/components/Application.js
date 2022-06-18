@@ -277,13 +277,6 @@ export default function Application(props) {
               />
             )}
 
-            {mode === SHOW_MY_WO && (
-              < QueueList
-                workorders={state.workorderList}
-                onView={openWorkOrder}
-              />
-            )}
-
             {mode === SHOW_EXISTING_WO && (
               <ViewWorkorder
                 workorder={state.workorderItem}
