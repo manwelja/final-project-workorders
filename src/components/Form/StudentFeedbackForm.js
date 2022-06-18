@@ -35,7 +35,7 @@ const StudentFeedbackForm = (props) => {
         console.error(error);
       });
   };
-  
+
 
   return (
     <article>

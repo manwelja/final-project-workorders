@@ -1,6 +1,4 @@
-// mentor view --> giving feedback to student
-// student view --> giving feedback to mentor
-import React, { useState, useEffect } from "react";
+import React, { useState, Fragment } from "react";
 import { Rating } from "react-simple-star-rating";
 import axios from "axios";
 
@@ -9,11 +7,8 @@ const PORT = process.env.REACT_APP_API_PORT;
 const HOST = process.env.REACT_APP_API_HOST;
 const BASE_URL = HOST + ":" + PORT;
 
-//consider keeping code DRY by making a subcomponent called header 
-//to conditionally render the title and appropriate name
-//(mentor vs. student)
 
-const MentorFeedbackForm = (props) => {
+const NewFeedbackForm = (props) => {
 
   const [rating, setRating] = useState(0);
   const [description, setDescription] = useState("");
@@ -41,13 +36,11 @@ const MentorFeedbackForm = (props) => {
   };
 
   return (
-    <article>
+    <>
       <section>
         <div style={{ textAlign: "center" }}>
-          <h2><strong>Student Feedback</strong></h2>
+          <h2><strong>Leave Feedback</strong></h2>
         </div>
-
-        <p>Student Name: {props.studentName}</p>
       </section>
 
       <section style={{ textAlign: "center" }}>
@@ -77,7 +70,7 @@ const MentorFeedbackForm = (props) => {
           <input
             type="text"
             name="student_notes"
-            placeholder="Tell us how we did"
+            placeholder="Leave some feedback"
             value={description}
             onChange={event => { setDescription(event.target.value); }}
           />
@@ -87,9 +80,8 @@ const MentorFeedbackForm = (props) => {
         </form>
 
       </section>
-    </article >
-
+    </>
   );
 };
 
-export default MentorFeedbackForm;
+export default NewFeedbackForm;
