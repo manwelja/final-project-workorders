@@ -12,9 +12,18 @@
 }
 
 .button--inline {
-  font-size:0.75rem;
+  font-size: 1.25rem;
   height: 2rem;
-  width: 5rem;
+  line-height: 1.2rem;
+  margin-right: 1rem;
+  margin-top: 1rem;
+  width: 7rem;
+  border-width: 2px;
+  border-style: solid;
+  border-color: white;
+  color: white;
+  background-color: transparent;
+  justify-items: center;
 }
 
 .button:hover {

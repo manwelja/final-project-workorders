@@ -12,9 +12,15 @@
   width: 200px; /* Set a small width */
 }
 
-.button--inline {
+.button--inline--container {
   display: flex;
-  border: none;
-  text-align: center;
-  text-justify: center;
+  justify-content: center;
+}
+
+.login-label {
+  margin: 6px;
+}
+
+.login-header-h1 {
+  border-bottom: 3px solid;
 }
