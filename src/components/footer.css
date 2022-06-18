@@ -1,6 +1,7 @@
 
 .footer-container {
-  height: 65px;
+  /* height: 65px; */
+  height: 8vh;
   display: flex;
   align-content: flex-start;
   flex-direction: row;

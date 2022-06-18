@@ -9,9 +9,10 @@ body {
 
 .workorder-form-main {
   padding-top: 13rem;
+  height: 95vh;
   display: flex;
   justify-content: center;
-  padding-bottom: 1rem;
+  /* padding-bottom: 12.1rem; */
 }
 
 article {
@@ -67,6 +68,8 @@ article {
 
 .wo-form-text-box {
   width:100%;
+  border: none;
+  border-radius: 0.1rem;
 }
 
 .wo-form-screenshot {
