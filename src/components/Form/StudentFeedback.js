@@ -1,32 +1,10 @@
 // student view --> giving feedback to mentor
-import React, { useState, useEffect } from "react";
+import React from "react";
 import PreviousFeedback from "./PreviousFeedback";
 import NewFeedbackForm from "./NewFeedbackForm";
-import { Rating } from "react-simple-star-rating";
-import axios from "axios";
-
-//environment variables
-const PORT = process.env.REACT_APP_API_PORT;
-const HOST = process.env.REACT_APP_API_HOST;
-const BASE_URL = HOST + ":" + PORT;
 
 const StudentFeedback = (props) => {
-  const { workorder } = props;
-
-  const [feedback, setMentorFeedback] = useState("");
-
-  const getFeedbackForMentor = () => {
-    axios.get(`http://${BASE_URL}/api/workorders/${workorder.id}`)
-      .then(res => {
-        if (res.data[0].student_notes) {
-          setMentorFeedback(res.data[0].student_notes);
-        }
-      });
-  };
-
-  useEffect(() => {
-    getFeedbackForMentor();
-  }, []);
+  const { userRole, workorder } = props;
 
   return (
     <article
@@ -37,7 +15,9 @@ const StudentFeedback = (props) => {
       }}
     >
 
-      {feedback ? <PreviousFeedback feedback={feedback} /> : <NewFeedbackForm />}
+      {workorder.student_notes ?
+        <PreviousFeedback userRole={userRole} feedback={workorder.student_notes} rating={workorder.mentor_rating * 20} /> :
+        <NewFeedbackForm />}
     </article >
   );
 };

@@ -91,8 +91,8 @@ export default function ViewWorkorder(props) {
 
       <div class="wo-form-label-data">
         <div class="wo-form-data">
-          {userRole === "student" && workorder.status_id === 3 && <StudentFeedback workorder={workorder} />}
-          {userRole === "mentor" && workorder.status_id === 3 && <MentorFeedback workorder={workorder} />}
+          {userRole === "student" && workorder.status_id === 3 && <StudentFeedback userRole={userRole} workorder={workorder} />}
+          {userRole === "mentor" && workorder.status_id === 3 && <MentorFeedback userRole={userRole} workorder={workorder} />}
         </div>
       </div>
     </>

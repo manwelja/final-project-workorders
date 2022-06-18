@@ -1,36 +1,11 @@
 // mentor view --> giving feedback to student
 // student view --> giving feedback to mentor
-import React, { useState, useEffect } from "react";
+import React from "react";
 import PreviousFeedback from "./PreviousFeedback";
 import NewFeedbackForm from "./NewFeedbackForm";
-import { Rating } from "react-simple-star-rating";
-import axios from "axios";
-
-//environment variables
-const PORT = process.env.REACT_APP_API_PORT;
-const HOST = process.env.REACT_APP_API_HOST;
-const BASE_URL = HOST + ":" + PORT;
-
-//consider keeping code DRY by making a subcomponent called header 
-//to conditionally render the title and appropriate name
-//(mentor vs. student)
 
 const MentorFeedback = (props) => {
-  const { workorder } = props;
-
-  const [feedback, setStudentFeedback] = useState("");
-
-  const getFeedbackForStudent = () => {
-    axios.get(`http://${BASE_URL}/api/workorders/${workorder.id}`)
-      .then(res => {
-        if (res.data[0].mentor_notes) {
-          setStudentFeedback(res.data[0].mentor_notes);
-        }
-      });
-  };
-  useEffect(() => {
-    getFeedbackForStudent();
-  }, []);
+  const { userRole, workorder } = props;
 
   return (
     <article style={{
@@ -39,7 +14,9 @@ const MentorFeedback = (props) => {
       "flex-direction": "column"
     }}
     >
-      {feedback ? <PreviousFeedback feedback={feedback} /> : <NewFeedbackForm />}
+      {workorder.mentor_notes ?
+        <PreviousFeedback userRole={userRole} feedback={workorder.mentor_notes} rating={workorder.student_rating * 20} /> :
+        <NewFeedbackForm />}
     </article >
 
   );

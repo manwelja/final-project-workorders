@@ -7,7 +7,6 @@ const PORT = process.env.REACT_APP_API_PORT;
 const HOST = process.env.REACT_APP_API_HOST;
 const BASE_URL = HOST + ":" + PORT;
 
-
 const NewFeedbackForm = (props) => {
 
   const [rating, setRating] = useState(0);
