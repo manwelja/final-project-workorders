@@ -28,29 +28,6 @@ export default function useApplicationData() {
     });
   }, []);
 
-  // //when a new user logs in, retrieve all of their workorders
-  // useEffect(() => {
-  //   if (userRole.trim() === "mentor") {
-  //    // getWorkordersByMentorID(userID);
-  //   } else if (userRole.trim() === "student") {
-  //     getWorkordersByStudentID(userID);
-  //   }
-  // }, [userID]);
-
-  //Update state data when the server sends new data
-  const updateQueue = () => {
-    Promise.all([
-      axios.get(`/api/queue/1`),
-      axios.get(`/api/queue/2`),
-      axios.get(`/api/queue/3`),
-    ]).then((all) => {
-      setState(prev => ({
-        ...prev,
-        workorderList: all[0].data
-      }));
-    });
-
-  };
   const getWorkorderByID = (workorderID) => {
     return axios.get(`api/workorders/${workorderID}`)
       .then((res) => {
@@ -131,5 +108,5 @@ export default function useApplicationData() {
     }
   };
 
-  return { state, setState, getWorkordersByStudentID, getWorkordersByMentorID, getWorkorderByID, updateQueue, verifyUserLogin, changeWorkorderStatus, getWorkordersByStatus, deleteLoginCookie, userID, userRole, oneWorkorder };
+  return { state, setState, getWorkordersByStudentID, getWorkordersByMentorID, getWorkorderByID, verifyUserLogin, changeWorkorderStatus, getWorkordersByStatus, deleteLoginCookie, userID, userRole, oneWorkorder };
 }

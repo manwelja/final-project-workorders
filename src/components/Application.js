@@ -70,28 +70,24 @@ export default function Application(props) {
     client.onopen = () => {
       console.log('WebSocket Client Connected');
     };
-
+  
     //Update the state to reflect the data sent from the server via websocket
     client.onmessage = (message) => {
       const dataFromServer = JSON.parse(message.data);
       //save this data to state to refresh screen
-      console.log("RECEIVED server data ", userRole);
-      if (userRole.trim() === "mentor") {
-        getWorkordersByMentorID(userID);
-      } else if (userRole.trim() === "student") {
-        getWorkordersByStudentID(userID);
+      console.log("Received data from server - need to update view state ");
+      if(mode === SHOW_EXISTING_WO) {
+        getWorkorderByID(state.workorderItem.id)
+      } else {
+        updateState();      
       }
-      if (mode === SHOW_EXISTING_WO) {
-        console.log("workorder item id", state.workorderItem.id);
-        getWorkorderByID(state.workorderItem.id);
-      }
-
-      updateQueue();
+      
     };
-  };
+  }  
   componentDidMount();
-
+  
   const updateState = function() {
+    console.log(mode)
     // if user is student
     switch (mode) {
       case SHOW_NEW_WO:
@@ -99,7 +95,7 @@ export default function Application(props) {
         break;
       case SHOW_EXISTING_WO:
         //load form data by workorder id
-        //getWorkorderByID();
+       // getWorkorderByID(state.workorderItem.id);
         break;
       case SHOW_QUEUE:
         //load in new/open workorders
@@ -120,8 +116,7 @@ export default function Application(props) {
         break;
       case SHOW_STUDENT_WO:
         //show workorders by student id
-        // console.log("wo item", state.workorderItem)
-        // getWorkordersByStudentID()
+        getWorkordersByStudentID(userID)
         break;
       case SHOW_WO_LIST:
         //show workorders by student id
@@ -129,10 +124,11 @@ export default function Application(props) {
         break;
       default:
         break;
-
+  
     }
     return;
   };
+  
 
   //console.log(state)
   useEffect(() => {
