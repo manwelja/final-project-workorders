@@ -1,4 +1,3 @@
-// mentor view --> giving feedback to student
 // student view --> giving feedback to mentor
 import React, { useState, useEffect } from "react";
 import PreviousFeedback from "./PreviousFeedback";
@@ -11,38 +10,36 @@ const PORT = process.env.REACT_APP_API_PORT;
 const HOST = process.env.REACT_APP_API_HOST;
 const BASE_URL = HOST + ":" + PORT;
 
-//consider keeping code DRY by making a subcomponent called header 
-//to conditionally render the title and appropriate name
-//(mentor vs. student)
-
-const MentorFeedback = (props) => {
+const StudentFeedback = (props) => {
   const { workorder } = props;
 
-  const [feedback, setStudentFeedback] = useState("");
+  const [feedback, setMentorFeedback] = useState("");
 
-  const getFeedbackForStudent = () => {
+  const getFeedbackForMentor = () => {
     axios.get(`http://${BASE_URL}/api/workorders/${workorder.id}`)
       .then(res => {
-        if (res.data[0].mentor_notes) {
-          setStudentFeedback(res.data[0].mentor_notes);
+        if (res.data[0].student_notes) {
+          setMentorFeedback(res.data[0].student_notes);
         }
       });
   };
+
   useEffect(() => {
-    getFeedbackForStudent();
+    getFeedbackForMentor();
   }, []);
 
   return (
-    <article style={{
-      textAlign: "center",
-      display: "flex",
-      "flex-direction": "column"
-    }}
+    <article
+      style={{
+        textAlign: "center",
+        display: "flex",
+        "flex-direction": "column"
+      }}
     >
+
       {feedback ? <PreviousFeedback feedback={feedback} /> : <NewFeedbackForm />}
     </article >
-
   );
 };
 
-export default MentorFeedback;
+export default StudentFeedback;

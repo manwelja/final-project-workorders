@@ -3,7 +3,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import axios from 'axios';
 import Button from "../Button";
 import MentorFeedback from "./MentorFeedback";
-import StudentFeedbackForm from "./StudentFeedbackForm";
+import StudentFeedback from "./StudentFeedback";
 import useScript from '../../hooks/useScript';
 import './workorderForm.css';
 import Select from 'react-select';
@@ -91,8 +91,8 @@ export default function ViewWorkorder(props) {
 
       <div class="wo-form-label-data">
         <div class="wo-form-data">
-          {userRole === "student" && workorder.status_id === 3 && <StudentFeedbackForm workorder={workorder} id={workorder.id} mentorName={workorder.mentor_first_name + " " + workorder.mentor_last_name} />}
-          {userRole === "mentor" && workorder.status_id === 3 && <MentorFeedback workorder={workorder} studentName={workorder.student_first_name + " " + workorder.student_last_name} />}
+          {userRole === "student" && workorder.status_id === 3 && <StudentFeedback workorder={workorder} />}
+          {userRole === "mentor" && workorder.status_id === 3 && <MentorFeedback workorder={workorder} />}
         </div>
       </div>
     </>
