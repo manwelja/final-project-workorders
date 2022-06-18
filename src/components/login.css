@@ -11,3 +11,10 @@
   padding-left: 10px; /* Some padding */
   width: 200px; /* Set a small width */
 }
+
+.button--inline {
+  display: flex;
+  border: none;
+  text-align: center;
+  text-justify: center;
+}
