@@ -13,8 +13,9 @@ body {
   flex-wrap: wrap;
   justify-content: space-evenly;
   /*margin-top: 200px;*/
- 
+  padding-top: 200px;
 }
+
 .workorder-item-container {
   background-color:#EFDECD;
   background-image: url("/public/images/brick-wall.png");

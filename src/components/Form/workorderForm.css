@@ -7,13 +7,12 @@ body {
   justify-content: center;
 }
 
-/*.workorder-form-main {
+.workorder-form-main {
+  padding-top: 13rem;
   display: flex;
-  height: 94vh;
   justify-content: center;
-  padding: 15px;
-
-}*/
+  padding-bottom: 1rem;
+}
 
 article {
   display: flex;
