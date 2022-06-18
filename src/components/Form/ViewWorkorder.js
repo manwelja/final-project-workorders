@@ -41,7 +41,7 @@ export default function ViewWorkorder(props){
           <div class="wo-form-label-data">
           <div class="wo-form-label"><label>Status</label></div>
             <div class="wo-form-data">
-            {workorder.status_id}
+            {workorder.status_description}
             </div>  
           </div>
           <div class="wo-form-label-data">

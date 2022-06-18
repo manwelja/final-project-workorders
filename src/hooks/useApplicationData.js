@@ -89,8 +89,8 @@ export default function useApplicationData() {
     console.log("woID", workorderID)
     return axios.get(`/api/meetingLinks/${workorderID}`)
       .then((res) => {
-        if(res.data[0].meeting_link) {
-          console.log("result", res.data[0].meeting_link)
+        console.log(res.data)
+        if(res.data.length) {
           setMeetingLink(res.data[0].meeting_link);  
         }        
         return;
