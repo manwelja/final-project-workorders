@@ -87,7 +87,6 @@ export default function Application(props) {
   componentDidMount();
   
   const updateState = function() {
-    console.log(mode)
     // if user is student
     switch (mode) {
       case SHOW_NEW_WO:
@@ -111,7 +110,6 @@ export default function Application(props) {
         break;
       case SHOW_MY_WO:
         //show workorders by mentor id
-        console.log("MENTOR", userID);
         getWorkordersByMentorID(userID);
         break;
       case SHOW_STUDENT_WO:
@@ -142,10 +140,11 @@ export default function Application(props) {
 
   const loginUser = function(email, password) {
     verifyUserLogin(email, password);
-    setUserView();
+    if(userRole !== SHOW_USER_UNDEFINED) {
+      setUserView()
+    }    
   };
   const setUserView = function() {
-    console.log("setUserView", userRole);
     if (userRole.trim() === "mentor") {
       transitionView(SHOW_QUEUE);
       transitionUser(SHOW_USER_MENTOR);
@@ -186,9 +185,7 @@ export default function Application(props) {
   };
 
   const logout = function() {
-    console.log("log me out");
     deleteLoginCookie();
-    console.log("transition to undefined user");
     transitionUser(SHOW_USER_UNDEFINED);
     transitionView(SHOW_LOGIN);
     return;

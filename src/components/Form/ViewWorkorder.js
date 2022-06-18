@@ -4,6 +4,8 @@ import axios from 'axios';
 import Button from "../Button"
 import MentorFeedbackForm from "./MentorFeedbackForm"
 import StudentFeedbackForm from "./StudentFeedbackForm"
+import MeetingLinkCreateForm from "./MeetingLinkCreateForm"
+import MeetingLinkViewForm from "./MeetingLinkViewForm"
 import useScript from '../../hooks/useScript';
 import './workorderForm.css';
 import Select from 'react-select';
@@ -89,6 +91,12 @@ export default function ViewWorkorder(props){
       </form> 
    </article>
 
+   <div class="wo-form-label-data">
+    <div class="wo-form-data">  
+      {userRole === "mentor" && workorder.status_id === 2 && <MeetingLinkCreateForm id={workorder.id}  />}
+      {userRole === "student" && workorder.status_id === 2 && <MeetingLinkViewForm id={workorder.id}  />}
+    </div>  
+  </div> 
 
 
 <div class="wo-form-label-data">

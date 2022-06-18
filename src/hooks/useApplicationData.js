@@ -64,7 +64,7 @@ export default function useApplicationData() {
 
   const changeWorkorderStatus = function(mentorID, newStatusID, workorder_id) {
     //Status id should be set to 1 initially - 
-    return axios.put(`http://localhost:8001/api/update/workorder/${workorder_id}`, {user_mentor_id: mentorID, status_id: newStatusID})
+    return axios.post(`http://localhost:8001/api/update/workorder/${workorder_id}`, {user_mentor_id: mentorID, status_id: newStatusID})
     .then((res) => {
       return;
     }).catch((err) => console.log("error - should show screen"))
