@@ -19,8 +19,9 @@ const MeetingLinkViewForm = (props) => {
   const getMeetingLink = () => {
     axios.get(`http://${BASE_URL}/api/meetingLinks/${props.id}`)
       .then((res) => {
-        console.log(res)
-        setMeetingLink(res.data[0].meeting_link);
+       // if(res.data[0].meeting_link) {
+          setMeetingLink(res.data[0].meeting_link);  
+       // }        
       })
       .catch(error => {
         console.error(error);

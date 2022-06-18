@@ -11,6 +11,7 @@ const BASE_URL = HOST + ":" + PORT;
 const MeetingLinkCreateForm = (props) => {
 
   const [meetingLink, setMeetingLink] = useState("");
+  const [meetingLinkDisplay, setMeetingLinkDisplay] = useState("");
 
   useEffect(() => {
     getMeetingLink();
@@ -28,23 +29,40 @@ const MeetingLinkCreateForm = (props) => {
   }
 
   const saveData = () => {
+    //if a meeting link exists, update it
+    if(meetingLink) {
+      deleteMeetingLink();
+    } 
+    saveMeetingLink()
+
+  }
+  const saveMeetingLink = () => {
     // this object is just for organizing the data to be sent to the database
     const newData = { workorder_id: props.id, meeting_link: meetingLink};
     axios.post(`http://${BASE_URL}/api/meetingLinks`, newData)
       .then(() => {
-        setMeetingLink("");
+        setMeetingLinkDisplay(meetingLink);
+        //setMeetingLink("");
       })
       .catch(error => {
         console.error(error);
-      });
+      })
+    };   
+ 
+  const deleteMeetingLink = () => {
+    //Status id should be set to 1 initially - 
+    console.log("deleteLink", props.id)
+    return axios.post(`http://${BASE_URL}/api/meetingLinks/${props.id}`, )
+    .then((res) => {
+      return;
+    }).catch((err) => console.log("error - should show screen")) 
   };
-  
 
   return (
     <article>
       <section>
         <form class="wo-form-container" autoComplete="off" onSubmit={event => event.preventDefault()}>
-          <label class="wo-form-label-data">Please enter a meeting link for the assistance session:</label>
+          <label class="wo-form-label-data">Please enter a meeting link for the assistance session: <a href={meetingLinkDisplay}>  {meetingLinkDisplay}</a></label>
           <input
             class="wo-form-data"
             type="text"
@@ -53,7 +71,7 @@ const MeetingLinkCreateForm = (props) => {
             value={meetingLink}
             onChange={event => { setMeetingLink(event.target.value); }}
           />
-              <button class="button--wo-inline" onClick={() => saveData() }>Submit</button>
+              <button class="button--wo-inline" onClick={() => saveData() }>Send</button>
         </form>
 
       </section>

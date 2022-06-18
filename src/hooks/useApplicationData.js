@@ -71,6 +71,20 @@ export default function useApplicationData() {
       return;
   };
 
+  const deleteMeetingLink = function(workorderID) {
+    //Status id should be set to 1 initially - 
+    console.log("deleteLink", workorderID)
+    return axios.post(`http://localhost:8001/api/meetingLinks/${workorderID}`)
+    .then((res) => {
+      return;
+    }).catch((err) => console.log("error - should show screen"))
+      return;
+  };
+
+  const resetState = function(workorderID) {
+    setState({workorderList: [], workorderItem: {}})
+  };
+
   function isValidEmail(userEmail) {
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(userEmail)) {
       return true;
@@ -106,5 +120,5 @@ export default function useApplicationData() {
     }
   };
 
-  return { state, setState, getWorkordersByStudentID, getWorkordersByMentorID, getWorkorderByID, verifyUserLogin, changeWorkorderStatus, getWorkordersByStatus, deleteLoginCookie, userID, userRole, oneWorkorder };
+  return { state, setState, getWorkordersByStudentID, getWorkordersByMentorID, getWorkorderByID, verifyUserLogin, changeWorkorderStatus, getWorkordersByStatus, deleteLoginCookie, deleteMeetingLink, resetState, userID, userRole, oneWorkorder };
 }

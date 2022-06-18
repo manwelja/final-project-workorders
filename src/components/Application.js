@@ -62,6 +62,8 @@ export default function Application(props) {
     getWorkordersByStatus,
     getWorkorderByID,
     deleteLoginCookie,
+    deleteMeetingLink,
+    resetState,
     userRole,
     userID
   } = useApplicationData();
@@ -180,12 +182,14 @@ export default function Application(props) {
   const markWorkorderClosed = function(workorder_id) {
     if (userRole.trim() === "mentor") {
       changeWorkorderStatus(userID, 3, workorder_id);
+      deleteMeetingLink(workorder_id)
     }
     return;
   };
 
   const logout = function() {
     deleteLoginCookie();
+    resetState();    
     transitionUser(SHOW_USER_UNDEFINED);
     transitionView(SHOW_LOGIN);
     return;
