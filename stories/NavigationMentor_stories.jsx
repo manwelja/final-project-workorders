@@ -3,9 +3,9 @@ import React, { Fragment } from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 
-import Navigation from "components/Navigation";
+import Navigation from "components/NavigationMentor";
 
-storiesOf("Navigation", module)
-  .add("Navigation", () => (<Navigation 
+storiesOf("NavigationMentor", module)
+  .add("Navigation", () => (<NavigationMentor 
   />))
 

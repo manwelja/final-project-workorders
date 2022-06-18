@@ -3,8 +3,8 @@ import React from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 
-import StudentFeedbackForm from "../src/components/Form/StudentFeedbackForm";
-import MentorFeedbackForm from "../src/components/Form/MentorFeedbackForm";
+import StudentFeedback from "../src/components/Form/StudentFeedback";
+import MentorFeedback from "../src/components/Form/MentorFeedback";
 
 const workorder = [
   {
@@ -120,8 +120,8 @@ storiesOf("Feedback", module)
       mentorName={mentorName}
     />
   ))
-  .add("MentorFeedbackForm", () => (
-    <MentorFeedbackForm
+  .add("MentorFeedback", () => (
+    <MentorFeedback
       id={id}
       studentID={studentID}
       mentorID={mentorID}
