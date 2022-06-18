@@ -142,6 +142,7 @@ export default function Application(props) {
 
   const loginUser = function(email, password) {
     verifyUserLogin(email, password);
+    setUserView();
   };
   const setUserView = function() {
     console.log("setUserView", userRole);
