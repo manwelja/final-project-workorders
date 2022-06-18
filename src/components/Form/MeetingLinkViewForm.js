@@ -9,33 +9,27 @@ const HOST = process.env.REACT_APP_API_HOST;
 const BASE_URL = HOST + ":" + PORT;
 
 const MeetingLinkViewForm = (props) => {
-
-  const [meetingLink, setMeetingLink] = useState("");
-
-  useEffect(() => {
-    getMeetingLink();
-  }, []);
     
-  const getMeetingLink = () => {
-    axios.get(`http://${BASE_URL}/api/meetingLinks/${props.id}`)
-      .then((res) => {
-       // if(res.data[0].meeting_link) {
-          setMeetingLink(res.data[0].meeting_link);  
-       // }        
-      })
-      .catch(error => {
-        console.error(error);
-      });
+  // const getMeetingLink = () => {
+  //   axios.get(`http://${BASE_URL}/api/meetingLinks/${props.id}`)
+  //     .then((res) => {
+  //       if(res.data[0].meeting_link) {
+  //         setMeetingLink(res.data[0].meeting_link);  
+  //       }        
+  //     })
+  //     .catch(error => {
+  //       console.error(error);
+  //     });
 
-  }
+  // }
 console.log("props", props)
-console.log("meeting link", meetingLink)
+console.log("meeting link", props.meetingLink)
   return (
     <article>
       <section>
         <form class="wo-form-container" autoComplete="off" onSubmit={event => event.preventDefault()}>
           <div class="wo-form-label-data">Please use the following link to meet with your mentor:</div>
-          <div class="wo-form-data"><a href={meetingLink}> {meetingLink} </a></div>
+          <div class="wo-form-data"><a href={props.meetingLink}> {props.meetingLink} </a></div>
         </form>
       </section>
     </article >

@@ -21,7 +21,7 @@ const BASE_URL = HOST + ":" + PORT;
 export default function ViewWorkorder(props){
 
   const {workorder, userRole, onCancel, onHistory, onPickupTicket, onCloseTicket } = props
- 
+ console.log("view workorder", props)
    
  const imageClass = classNames("wo-form-screenshot",
     { " hidden": !workorder.screenshot_url }
@@ -94,7 +94,7 @@ export default function ViewWorkorder(props){
    <div class="wo-form-label-data">
     <div class="wo-form-data">  
       {userRole === "mentor" && workorder.status_id === 2 && <MeetingLinkCreateForm id={workorder.id}  />}
-      {userRole === "student" && workorder.status_id === 2 && <MeetingLinkViewForm id={workorder.id}  />}
+      {userRole === "student" && workorder.status_id === 2 && <MeetingLinkViewForm id={workorder.id}  meetingLink={props.meetingLink}/>}
     </div>  
   </div> 
 

@@ -64,6 +64,8 @@ export default function Application(props) {
     deleteLoginCookie,
     deleteMeetingLink,
     resetState,
+    getMeetingLink,
+    meetingLink,
     userRole,
     userID
   } = useApplicationData();
@@ -80,6 +82,7 @@ export default function Application(props) {
       console.log("Received data from server - need to update view state ");
       if(mode === SHOW_EXISTING_WO) {
         getWorkorderByID(state.workorderItem.id)
+        getMeetingLink(state.workorderItem.id)
       } else {
         updateState();      
       }
@@ -161,6 +164,8 @@ export default function Application(props) {
 
   const openWorkOrder = function(workorder_id) {
     getWorkorderByID(workorder_id);
+    getMeetingLink(workorder_id);
+    console.log("callGetMeetingLink")
     transitionView(SHOW_EXISTING_WO);
     return;
   };
@@ -224,6 +229,7 @@ export default function Application(props) {
             {mode === SHOW_EXISTING_WO && (
               <ViewWorkorder
                 workorder={state.workorderItem}
+                meetingLink={meetingLink}
                 userRole={userRole.trim()}
                 onCancel={() => { transitionView(SHOW_WO_LIST); }}
               />)}
@@ -276,6 +282,7 @@ export default function Application(props) {
             {mode === SHOW_EXISTING_WO && (
               <ViewWorkorder
                 workorder={state.workorderItem}
+                meetingLink={meetingLink}
                 userRole={userRole.trim()}
                 onCancel={() => { transitionView(SHOW_QUEUE); }}
                 onHistory={openUserHistory}

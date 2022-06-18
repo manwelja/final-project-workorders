@@ -8,10 +8,11 @@ export default function useApplicationData() {
   const [userRole, setUserRole] = useState("");
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
   const [oneWorkorder, setOneWorkorder] = useState({});
+  const [meetingLink, setMeetingLink] = useState("");
 
   const [state, setState] = useState({
     workorderList: [],
-    workorderItem: {}
+    workorderItem: {},
   });
 
   const deleteLoginCookie = () => {
@@ -64,27 +65,41 @@ export default function useApplicationData() {
 
   const changeWorkorderStatus = function(mentorID, newStatusID, workorder_id) {
     //Status id should be set to 1 initially - 
-    return axios.post(`http://localhost:8001/api/update/workorder/${workorder_id}`, {user_mentor_id: mentorID, status_id: newStatusID})
+    return axios.post(`/api/update/workorder/${workorder_id}`, {user_mentor_id: mentorID, status_id: newStatusID})
     .then((res) => {
       return;
     }).catch((err) => console.log("error - should show screen"))
-      return;
   };
 
   const deleteMeetingLink = function(workorderID) {
     //Status id should be set to 1 initially - 
     console.log("deleteLink", workorderID)
-    return axios.post(`http://localhost:8001/api/meetingLinks/${workorderID}`)
+    return axios.post(`/api/meetingLinks/${workorderID}`)
     .then((res) => {
       return;
     }).catch((err) => console.log("error - should show screen"))
-      return;
   };
 
   const resetState = function(workorderID) {
-    setState({workorderList: [], workorderItem: {}})
+    setState({workorderList: [], workorderItem: {}});
+    setMeetingLink("");
   };
 
+  const getMeetingLink = (workorderID) => {
+    console.log("woID", workorderID)
+    return axios.get(`/api/meetingLinks/${workorderID}`)
+      .then((res) => {
+        if(res.data[0].meeting_link) {
+          console.log("result", res.data[0].meeting_link)
+          setMeetingLink(res.data[0].meeting_link);  
+        }        
+        return;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
+  }
   function isValidEmail(userEmail) {
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(userEmail)) {
       return true;
@@ -120,5 +135,5 @@ export default function useApplicationData() {
     }
   };
 
-  return { state, setState, getWorkordersByStudentID, getWorkordersByMentorID, getWorkorderByID, verifyUserLogin, changeWorkorderStatus, getWorkordersByStatus, deleteLoginCookie, deleteMeetingLink, resetState, userID, userRole, oneWorkorder };
+  return { state, setState, getWorkordersByStudentID, getWorkordersByMentorID, getWorkorderByID, verifyUserLogin, changeWorkorderStatus, getWorkordersByStatus, deleteLoginCookie, deleteMeetingLink, resetState, getMeetingLink, userID, userRole, oneWorkorder, meetingLink };
 }
