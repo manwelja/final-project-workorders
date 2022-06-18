@@ -30,21 +30,25 @@
   font-size: 1.25rem;
   height: 2rem;
   line-height: 1.2rem;
-  margin-right: 1rem;
-  margin-top: 1rem;
+  padding: 0.75rem 0.75rem 1.6rem 0.75rem;
   width: 7rem;
   border-width: 2px;
   border-style: solid;
-  border-color: white;
-  color: white;
-  background-color: transparent;
+  color: #F0F0F0;
+  background-color:#4a725c;
+  border-color: #4a725c;
+  /* color: #4a725c; */
+  /* background-color: transparent; */
   justify-items: center;
+  text-align: center;
 }
 
 .button--wo-inline:hover {
-  color: black;
-  background-color: white;
-  border: 2px solid transparent;
+  color: #4a725c;
+  border-color: #4a725c;
+  border-width: 2px;
+  border-style: solid;
+  background-color: transparent;
 }
 
 .button:hover {

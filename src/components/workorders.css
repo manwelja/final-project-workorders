@@ -13,20 +13,23 @@ body {
   flex-wrap: wrap;
   justify-content: space-evenly;
   /*margin-top: 200px;*/
-  padding-top: 15rem;
+  padding: 15rem 0rem 4rem 0rem;
+  margin-left: 5rem;
   /* height: 20rem; */
 }
 
 .workorder-item-container {
-  background-color:#EFDECD;
   background-image: url("/public/images/brick-wall.png");
+  background: 	#F0F0F0;
+
   width: 45%;
   height: auto;
   margin: 1rem 1rem;
   display: flex;
   justify-content: space-evenly;   
   border: 1px solid rgba(0,0,0 ,0.15);
-  flex-direction: column;  
+  flex-direction: column; 
+  padding: 1rem; 
   /*box-shadow: 3px 3px 20px rgb(0 0 0 / 5%);
   border-left: solid lightgrey 3px;
   border-top: solid lightgrey 6px;
@@ -42,8 +45,15 @@ body {
   flex-flow: row nowrap;
   padding: 1rem;
   transition: 0.3s;
-  border-bottom: 1px solid brown;
+  border-bottom: 0.25rem solid #4a725c;
 }
+
+.workorder-item-header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
 .workorder-item-body {
   width: 100%;
   height: auto;

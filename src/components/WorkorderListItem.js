@@ -40,8 +40,8 @@ export default function WorkorderListItem(props) {
   const formattedDateTimeClosed = `${formattedDateClosed} ${formattedTimeClosed}`;
 
   const imageClass = classNames("wo-form-screenshot",
-  { " hidden": !screenshot_url }
-);
+    { " hidden": !screenshot_url }
+  );
 
 
   return (
@@ -73,7 +73,7 @@ export default function WorkorderListItem(props) {
         </a>
       </div>
       <div class="workorder-item-footer">
-        <div><a class="button--wo-inline" onClick={() => onView(workorder_id)}>View</a></div>
+        <div class="button--wo-inline" onClick={() => onView(workorder_id)}>View</div>
       </div>
 
     </div>
