@@ -70,24 +70,24 @@ export default function Application(props) {
     client.onopen = () => {
       console.log('WebSocket Client Connected');
     };
-  
+
     //Update the state to reflect the data sent from the server via websocket
     client.onmessage = (message) => {
       const dataFromServer = JSON.parse(message.data);
       //save this data to state to refresh screen
       console.log("Received data from server - need to update view state ");
-      if(mode === SHOW_EXISTING_WO) {
-        getWorkorderByID(state.workorderItem.id)
+      if (mode === SHOW_EXISTING_WO) {
+        getWorkorderByID(state.workorderItem.id);
       } else {
-        updateState();      
+        updateState();
       }
-      
+
     };
-  }  
+  };
   componentDidMount();
-  
+
   const updateState = function() {
-    console.log(mode)
+    console.log(mode);
     // if user is student
     switch (mode) {
       case SHOW_NEW_WO:
@@ -95,7 +95,7 @@ export default function Application(props) {
         break;
       case SHOW_EXISTING_WO:
         //load form data by workorder id
-       // getWorkorderByID(state.workorderItem.id);
+        // getWorkorderByID(state.workorderItem.id);
         break;
       case SHOW_QUEUE:
         //load in new/open workorders
@@ -116,7 +116,7 @@ export default function Application(props) {
         break;
       case SHOW_STUDENT_WO:
         //show workorders by student id
-        getWorkordersByStudentID(userID)
+        getWorkordersByStudentID(userID);
         break;
       case SHOW_WO_LIST:
         //show workorders by student id
@@ -124,11 +124,11 @@ export default function Application(props) {
         break;
       default:
         break;
-  
+
     }
     return;
   };
-  
+
 
   //console.log(state)
   useEffect(() => {
@@ -194,116 +194,117 @@ export default function Application(props) {
   };
 
   return (
-    <Fragment>
-      <main class="main-container">
+    <main class="main-container">
 
 
-        {user === SHOW_USER_STUDENT && (
-          <Fragment>
-            <NavigationStudent
-              onView={() => transitionView(SHOW_WO_LIST)}
-              onNew={() => transitionView(SHOW_NEW_WO)}
-              onLogout={logout}
+      {user === SHOW_USER_STUDENT && (
+        <Fragment>
+          <NavigationStudent
+            onView={() => transitionView(SHOW_WO_LIST)}
+            onNew={() => transitionView(SHOW_NEW_WO)}
+            onLogout={logout}
+          />
+
+          {mode === SHOW_WO_LIST && (
+            <WorkorderList
+              workorders={state.workorderList}
+              onView={openWorkOrder}
+            />)}
+
+          {mode === SHOW_NEW_WO && (
+            <NewWorkorder
+              student_id={userID}
+              onCancel={() => { transitionView(SHOW_WO_LIST); }}
+              onSave={() => { transitionView(SHOW_EXISTING_WO); }}
+            />)}
+
+          {mode === SHOW_EXISTING_WO && (
+            <ViewWorkorder
+              workorder={state.workorderItem}
+              userRole={userRole.trim()}
+              onCancel={() => { transitionView(SHOW_WO_LIST); }}
+            />)}
+
+        </Fragment>)}
+
+
+      {user === SHOW_USER_MENTOR && (
+        <Fragment>
+          <NavigationMentor
+            onShowNew={() => transitionView(SHOW_QUEUE)}
+            onShowInProgress={() => transitionView(SHOW_IN_PROG)}
+            onShowClosed={() => transitionView(SHOW_CLOSED)}
+            onShowMy={() => { transitionView(SHOW_MY_WO); }}
+            onLogout={() => { transitionUser(SHOW_USER_UNDEFINED); transitionView(SHOW_LOGIN); }}
+          />
+
+          {(mode === SHOW_QUEUE) && (
+            < QueueList
+              workorders={state.workorderList}
+              onView={openWorkOrder}
+              onHistory={openUserHistory}
+              onPickupTicket={markWorkorderInProgress}
             />
+          )}
 
-            {mode === SHOW_WO_LIST && (
-              <WorkorderList
-                workorders={state.workorderList}
-                onView={openWorkOrder}
-              />)}
-
-            {mode === SHOW_NEW_WO && (
-              <NewWorkorder
-                student_id={userID}
-                onCancel={() => { transitionView(SHOW_WO_LIST); }}
-                onSave={() => { transitionView(SHOW_EXISTING_WO); }}
-              />)}
-
-            {mode === SHOW_EXISTING_WO && (
-              <ViewWorkorder
-                workorder={state.workorderItem}
-                userRole={userRole.trim()}
-                onCancel={() => { transitionView(SHOW_WO_LIST); }}
-              />)}
-
-          </Fragment>)}
-
-
-        {user === SHOW_USER_MENTOR && (
-          <Fragment>
-            <NavigationMentor
-              onShowNew={() => transitionView(SHOW_QUEUE)}
-              onShowInProgress={() => transitionView(SHOW_IN_PROG)}
-              onShowClosed={() => transitionView(SHOW_CLOSED)}
-              onShowMy={() => { transitionView(SHOW_MY_WO); }}
-              onLogout={() => { transitionUser(SHOW_USER_UNDEFINED); transitionView(SHOW_LOGIN); }}
+          {(mode === SHOW_IN_PROG) && (
+            < QueueList
+              workorders={state.workorderList}
+              onView={openWorkOrder}
+              onHistory={openUserHistory}
             />
+          )}
 
-            {(mode === SHOW_QUEUE) && (
-              < QueueList
-                workorders={state.workorderList}
-                onView={openWorkOrder}
-                onHistory={openUserHistory}
-                onPickupTicket={markWorkorderInProgress}
-              />
-            )}
-
-            {(mode === SHOW_IN_PROG) && (
-              < QueueList
-                workorders={state.workorderList}
-                onView={openWorkOrder}
-                onHistory={openUserHistory}
-              />
-            )}
-
-            {(mode === SHOW_CLOSED) && (
-              < QueueList
-                workorders={state.workorderList}
-                onView={openWorkOrder}
-                onHistory={openUserHistory}
-              />
-            )}
-
-            {mode === SHOW_MY_WO && (
-              < QueueList
-                workorders={state.workorderList}
-                onView={openWorkOrder}
-              />
-            )}
-
-            {mode === SHOW_EXISTING_WO && (
-              <ViewWorkorder
-                workorder={state.workorderItem}
-                userRole={userRole.trim()}
-                onCancel={() => { transitionView(SHOW_QUEUE); }}
-                onHistory={openUserHistory}
-                onPickupTicket={markWorkorderInProgress}
-                onCloseTicket={markWorkorderClosed}
-              />)}
-
-
-            {mode === SHOW_STUDENT_WO && (
-              <WorkorderList
-                workorders={state.workorderList}
-                onView={openWorkOrder}
-              />)}
-
-          </Fragment>)}
-
-
-        {mode === SHOW_LOGIN && (
-          <Fragment>
-            <NavigationLogin />
-            < Login
-              onLogin={loginUser}
+          {(mode === SHOW_CLOSED) && (
+            < QueueList
+              workorders={state.workorderList}
+              onView={openWorkOrder}
+              onHistory={openUserHistory}
             />
-          </Fragment>
-        )}
+          )}
 
-      </main>
+          {mode === SHOW_MY_WO && (
+            < QueueList
+              workorders={state.workorderList}
+              onView={openWorkOrder}
+            />
+          )}
 
-      <Footer />
-    </Fragment>
+          {mode === SHOW_EXISTING_WO && (
+            <ViewWorkorder
+              workorder={state.workorderItem}
+              userRole={userRole.trim()}
+              onCancel={() => { transitionView(SHOW_QUEUE); }}
+              onHistory={openUserHistory}
+              onPickupTicket={markWorkorderInProgress}
+              onCloseTicket={markWorkorderClosed}
+            />)}
+
+
+          {mode === SHOW_STUDENT_WO && (
+            <WorkorderList
+              workorders={state.workorderList}
+              onView={openWorkOrder}
+            />)}
+
+        </Fragment>)}
+
+
+      {mode === SHOW_LOGIN && (
+        <Fragment>
+          <NavigationLogin />
+          < Login
+            onLogin={loginUser}
+          />
+        </Fragment>
+      )}
+
+      <Fragment>
+        <Footer />
+      </Fragment>
+
+    </main>
+
   );
 }
 
