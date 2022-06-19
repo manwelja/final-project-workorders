@@ -22,7 +22,7 @@ export default function useApplicationData() {
 
     axios.get(`/api/queue/1`)
     .then((res) => {
-      setState(prev => ({...prev, workorderList: res.data}))
+      setState(prev => ({...prev, workorderItem: res.data[0], workorderList: res.data}))
     });
   }, []);
 
@@ -30,7 +30,8 @@ export default function useApplicationData() {
     return axios.get(`api/workorders/${workorderID}`)
       .then((res) => {
         console.log(res.data)
-        setState(prev => ({...prev, workorderItem: res.data[0] }));
+        setState(prev => ({...prev, workorderItem: res.data[0], workorderList: [] }));
+        getMeetingLink(workorderID)
        // setOneWorkorder(res.data[0]);
         return;
       }).catch((err) => console.log("axios error", err));
@@ -41,7 +42,8 @@ export default function useApplicationData() {
     return axios.get(`api/workorders/student/${studentID}`)
       .then((res) => {
         console.log("history", res.data)
-        setState(prev => ({ ...prev, workorderList: res.data }));
+        setState(prev => ({ ...prev, workorderItem:{}, workorderList: res.data }));
+        setMeetingLink("");
         return;
       }).catch((err) => console.log("axios error", err));
 
@@ -50,7 +52,8 @@ export default function useApplicationData() {
   const getWorkordersByMentorID = (mentorID) => {
     return axios.get(`api/workorders/mentor/${mentorID}`)
       .then((res) => {
-        setState((prev) => ({...prev, workorderList: res.data }));
+        setState((prev) => ({...prev, workorderItem:{}, workorderList: res.data }));
+        setMeetingLink("");
         return;
       }).catch((err) => console.log("axios error", err));
 
@@ -59,7 +62,8 @@ export default function useApplicationData() {
   const getWorkordersByStatus = (statusID) => {
     return axios.get(`/api/queue/${statusID}`)
     .then((res) => {
-      setState(prev => ({...prev, workorderList: res.data }));
+      setState(prev => ({...prev, workorderItem:{}, workorderList: res.data }));
+      setMeetingLink("");
       return;
     }).catch((err) => console.log("axios error", err));
   };

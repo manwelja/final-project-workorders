@@ -88,7 +88,7 @@ export default function Application(props) {
         getMeetingLink(state.workorderItem.id)
         console.log("show meet link", state.workorder.id)
       } else {
-        //updateState();
+        updateState();
       }
 
     };
@@ -178,7 +178,7 @@ console.log("state", state)
 
   const openWorkOrder = function(workorder_id) {
     getWorkorderByID(workorder_id);
-    getMeetingLink(workorder_id);
+   // getMeetingLink(workorder_id);
     transitionView(SHOW_EXISTING_WO);
     return;
   };
