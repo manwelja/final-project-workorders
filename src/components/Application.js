@@ -268,7 +268,7 @@ export default function Application(props) {
             onShowInProgress={() => transitionView(SHOW_IN_PROG)}
             onShowClosed={() => transitionView(SHOW_CLOSED)}
             onShowMy={() => { transitionView(SHOW_MY_WO); }}
-            onLogout={() => { logout; }}
+            onLogout={logout}
           />
 
           {mode === SHOW_MY_WO && (

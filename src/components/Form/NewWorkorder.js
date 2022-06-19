@@ -30,7 +30,6 @@ export default function NewWorkorder(props) {
   const [link_to_module, setLinkToModule] = useState("");
   const [environment, setEnvironment] = useState("");
 
-  const { onCancel } = props;
   console.log(props);
 
   //populate the workorder when the application loads
