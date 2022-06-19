@@ -26,7 +26,8 @@ export default function WorkorderListItem(props) {
     mentor_first_name,
     mentor_last_name,
     screenshot_url,
-    status_description
+    status_description,
+    mentor_rating
   }
     = props;
 
@@ -65,7 +66,8 @@ export default function WorkorderListItem(props) {
         <div class="workorder-col-1">
           <div class="workorder-item-body-left">
             <p class="workorder-item-text"><span class="category-name">Mentor Name: </span> <span>{`${mentor_first_name} ${mentor_last_name}`}</span></p>
-            <p class="workorder-item-text"><span class="category-name">Mentor Rating: </span>3 Stars</p>
+            {mentor_rating && <p class="workorder-item-text"><span class="category-name">Mentor Rating: </span>{mentor_rating} stars</p>}
+            {!mentor_rating && <p class="workorder-item-text"><span class="category-name">Mentor Rating: </span>N/A</p>}
           </div>
           <div class="workorder-item-body-right">
             <p class="workorder-item-text"><span class="category-name"> Topic: </span>{topic}</p>

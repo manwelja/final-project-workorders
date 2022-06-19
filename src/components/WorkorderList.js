@@ -25,9 +25,10 @@ export default function WorkorderList(props) {
         module={workorder.module_id}
         topic={workorder.topic}
         category={workorder.category}
+        status_description={workorder.status_description}
+        mentor_rating={workorder.mentor_rating}
         screenshot_url={workorder.screenshot_url}
         onView={onView}
-        status_description={workorder.status_description}
       />);
   });
 
