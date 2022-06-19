@@ -5,7 +5,7 @@ import NewFeedbackForm from "./NewFeedbackForm";
 
 const StudentFeedback = (props) => {
   const { userRole, workorder } = props;
-
+console.log("WO props", workorder)
   return (
     <article
       style={{
@@ -15,11 +15,14 @@ const StudentFeedback = (props) => {
       }}
     >
 
-      {workorder.student_notes ?
-        <PreviousFeedback userRole={userRole} feedback={workorder.student_notes} rating={workorder.mentor_rating * 20} /> :
-        <NewFeedbackForm />}
+       <NewFeedbackForm workorderID={workorder.id} role={"student"}/>
+     
     </article >
   );
 };
 
 export default StudentFeedback;
+
+// {workorder.student_notes ?
+//   <PreviousFeedback userRole={userRole} feedback={workorder.student_notes} rating={workorder.mentor_rating * 20} /> :
+//   <NewFeedbackForm workorderID={workorder.id} role={"student"}/>}

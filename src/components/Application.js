@@ -80,13 +80,11 @@ export default function Application(props) {
     //Update the state to reflect the data sent from the server via websocket
     client.onmessage = (message) => {
       const dataFromServer = JSON.parse(message.data);
-      console.log("mode", mode)
       //save this data to state to refresh screen
       console.log("Received data from server - need to update view state ");
       if(mode === SHOW_EXISTING_WO) {
         getWorkorderByID(state.workorderItem.id)
         getMeetingLink(state.workorderItem.id)
-        console.log("show meet link", state.workorder.id)
       } else {
         updateState();
       }
@@ -97,7 +95,6 @@ export default function Application(props) {
 
   const updateState = function() {
     // if user is student
-    console.log(mode)
     switch (mode) {
       case SHOW_NEW_WO:
         //don't need to load any data
@@ -137,18 +134,15 @@ export default function Application(props) {
     }
     return;
   };
-console.log("state", state)
   useEffect(() => {
     console.log("update state")
     updateState();
   }, [mode]);
 
-  // console.log(state)
    useEffect(() => {
      updateState();
    }, [userID]);
 
-   //console.log(state)
    useEffect(() => {
      setUserView();
    }, [userRole]);
@@ -167,7 +161,6 @@ console.log("state", state)
  //     updateState();
       //getWorkordersByMentorID(userID) 
     } else if (userRole.trim() === "student") {
-      console.log("update state student")
       transitionView(SHOW_WO_LIST);
       transitionUser(SHOW_USER_STUDENT);
    //   updateState();
@@ -184,7 +177,6 @@ console.log("state", state)
   };
 
   const openUserHistory = function(student_id) {
-    console.log("open history", student_id);
     getWorkordersByStudentID(student_id);
     transitionView(SHOW_STUDENT_WO);
     return;
@@ -237,7 +229,7 @@ console.log("state", state)
             <NewWorkorder
               student_id={userID}
               onCancel={() => { transitionView(SHOW_WO_LIST); }}
-              onSave={() => { transitionView(SHOW_EXISTING_WO); }}
+              onSave={() => { transitionView(SHOW_WO_LIST); }}
             />)}
 
           {mode === SHOW_EXISTING_WO && (

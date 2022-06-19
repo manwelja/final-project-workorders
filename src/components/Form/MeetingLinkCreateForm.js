@@ -18,9 +18,11 @@ const MeetingLinkCreateForm = (props) => {
   }, []);
     
   const getMeetingLink = () => {
-    axios.get(`http://${BASE_URL}/api/meetingLinks/${props.id}`)
+    axios.get(`/api/meetingLinks/${props.id}`)
       .then((res) => {
-        setMeetingLink(res.data[0].meeting_link);
+        if(res.data.length) {
+          setMeetingLink(res.data[0].meeting_link);
+        }        
       })
       .catch(error => {
         console.error(error);
@@ -38,9 +40,8 @@ const MeetingLinkCreateForm = (props) => {
   }
   const saveMeetingLink = () => {
     // this object is just for organizing the data to be sent to the database
-    console.log("save lnk", props.id)
     const newData = { workorder_id: props.id, meeting_link: meetingLink};
-    axios.post(`http://${BASE_URL}/api/meetingLinks`, newData)
+    axios.post(`/api/meetingLinks`, newData)
       .then(() => {
         setMeetingLinkDisplay(meetingLink);
         //setMeetingLink("");
@@ -52,8 +53,7 @@ const MeetingLinkCreateForm = (props) => {
  
   const deleteMeetingLink = () => {
     //Status id should be set to 1 initially - 
-    console.log("deleteLink", props.id)
-    return axios.post(`http://${BASE_URL}/api/meetingLinks/${props.id}`, )
+    return axios.post(`/api/meetingLinks/${props.id}`, )
     .then((res) => {
       return;
     }).catch((err) => console.log("error - should show screen")) 

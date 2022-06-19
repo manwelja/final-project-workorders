@@ -10,20 +10,6 @@ const BASE_URL = HOST + ":" + PORT;
 
 const MeetingLinkViewForm = (props) => {
     
-  // const getMeetingLink = () => {
-  //   axios.get(`http://${BASE_URL}/api/meetingLinks/${props.id}`)
-  //     .then((res) => {
-  //       if(res.data[0].meeting_link) {
-  //         setMeetingLink(res.data[0].meeting_link);  
-  //       }        
-  //     })
-  //     .catch(error => {
-  //       console.error(error);
-  //     });
-
-  // }
-console.log("props", props)
-console.log("meeting link", props.meetingLink)
   return (
     <article>
       <section>

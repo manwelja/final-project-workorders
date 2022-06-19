@@ -92,12 +92,9 @@ export default function useApplicationData() {
   };
 
   const getMeetingLink = (workorderID) => {
-    console.log("woID before api", workorderID)
     return axios.get(`/api/meetingLinks/${workorderID}`)
       .then((res) => {
-        console.log("set meeting link before", res)
        if(res.data.length) {
-        console.log("set meeting link", res.data[0].meeting_link)
           setMeetingLink(res.data[0].meeting_link);  
         }        
         return;

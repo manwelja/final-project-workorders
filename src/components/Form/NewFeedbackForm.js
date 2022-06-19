@@ -24,8 +24,7 @@ const NewFeedbackForm = (props) => {
   const saveData = () => {
     // this object is just for organizing the data to be sent to the database
     const newData = { description: description, rating: rating / 20 };
-
-    axios.patch(`http://${BASE_URL}/api/update/workorder/mentorfeedback/${props.id}`, newData)
+    axios.post(`/api/update/workorder/studentfeedback/${props.workorderID}`, newData)
       .then(() => {
         setDescription("");
       })

@@ -14,12 +14,14 @@ const MentorFeedback = (props) => {
       "flex-direction": "column"
     }}
     >
-      {workorder.mentor_notes ?
-        <PreviousFeedback userRole={userRole} feedback={workorder.mentor_notes} rating={workorder.student_rating * 20} /> :
-        <NewFeedbackForm />}
+      <NewFeedbackForm workorderID={workorder.id} role={"mentor"}/>
     </article >
 
   );
 };
 
 export default MentorFeedback;
+
+// {workorder.mentor_notes ?
+//   <PreviousFeedback userRole={userRole} feedback={workorder.mentor_notes} rating={workorder.student_rating * 20} /> :
+//   <NewFeedbackForm workorderID={workorder.id} role={"mentor"}/>}

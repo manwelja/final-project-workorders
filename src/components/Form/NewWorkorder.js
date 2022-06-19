@@ -27,6 +27,8 @@ export default function NewWorkorder(props){
   const [link_to_module, setLinkToModule] = useState("");
   const [environment, setEnvironment] = useState("");
 
+  const {onCancel} = props;
+  console.log(props)
   
   //populate the workorder when the application loads
   useEffect(() => {        
@@ -81,7 +83,7 @@ export default function NewWorkorder(props){
   }
   //Status id should be set to 1 initially - 
   const postToDatabase = (filePath = "") => {
-     return axios.post(`http://${BASE_URL}/api/workorders`, {user_student_id: props.student_id, category_id: parseInt(state.selectedCategory), module_id: parseInt(state.selectedModule), environment: environment, description: description, link_to_module: link_to_module, screenshot_url: filePath})
+     return axios.post(`api/workorders`, {user_student_id: props.student_id, category_id: parseInt(state.selectedCategory), module_id: parseInt(state.selectedModule), environment: environment, description: description, link_to_module: link_to_module, screenshot_url: filePath})
     .then((res) => {
       return;
     }).catch((err) => console.log("error - should show screen"))
@@ -167,8 +169,8 @@ export default function NewWorkorder(props){
                 <input type="file" accept="image/png, image/jpeg" onChange={handleFileChange}></input>
               </div>     
             </div>  
-            <div class="wo-form-footer">
-              <div><Button className="button--danger" danger onClick={ () => { resetFormState() }}>Cancel</Button></div>
+            <div class="wo-form-footer">              
+              <div><Button className="button--danger" danger onClick={() => { onCancel() }}>Cancel</Button></div>
               <div><Button className="button--confirm" confirm onClick={ () => { saveData() }}>Save Me</Button></div>
             </div>
         </section> 
