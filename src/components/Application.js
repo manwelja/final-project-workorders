@@ -231,6 +231,7 @@ export default function Application(props) {
             onView={() => transitionView(SHOW_WO_LIST)}
             onNew={() => transitionView(SHOW_NEW_WO)}
             onLogout={logout}
+            mode={mode}
           />
 
           {mode === SHOW_WO_LIST && (
@@ -271,6 +272,7 @@ export default function Application(props) {
             onShowClosed={() => transitionView(SHOW_CLOSED)}
             onShowMy={() => { transitionView(SHOW_MY_WO); }}
             onLogout={logout}
+            mode={mode}
           />
 
           {mode === SHOW_MY_WO && (
