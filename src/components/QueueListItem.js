@@ -58,7 +58,7 @@ export default function QueueListItem(props) {
 
       <div className={imageClass}>
         <a href={screenshot_url}>
-          <img src={screenshot_url} alt="Error Screenshot" />
+          <img class="queue-image" src={screenshot_url} alt="Error Screenshot" />
         </a>
       </div>
       <div class="queue-workorder-footer">

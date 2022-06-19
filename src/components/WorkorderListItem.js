@@ -25,7 +25,8 @@ export default function WorkorderListItem(props) {
     onView,
     mentor_first_name,
     mentor_last_name,
-    screenshot_url
+    screenshot_url,
+    status_description
   }
     = props;
 
@@ -43,6 +44,11 @@ export default function WorkorderListItem(props) {
     { " hidden": !screenshot_url }
   );
 
+  const noImageClass = classNames("wo-form-screenshot",
+    { " hidden": screenshot_url }
+  );
+
+
 
   return (
     <div class="workorder-item-container">
@@ -50,32 +56,40 @@ export default function WorkorderListItem(props) {
       <div class="workorder-item-header">
         <div id="workorder-title">Workorder #: {workorder_id}</div>
         <div class="workorder-item-header-right">
-          <div id="workorder-created">Created {formattedDateTimeCreated}</div>
-          <div id="workorder-created">Closed {formattedDateTimeClosed}</div>
+          <div id="workorder-created">Created: {formattedDateTimeCreated}</div>
+          {status === 3 && <div id="workorder-created">Closed: {formattedDateTimeClosed}</div>}
+          {status !== 3 && <div id="workorder-created">Status: {status_description}</div>}
         </div>
       </div>
       <div class="workorder-item-body">
-        <div class="workorder-item-body-left">
-          <p class="workorder-item-text"><span class="category-name">Mentor Name: </span> <span>{`${mentor_first_name} ${mentor_last_name}`}</span></p>
-          <p class="workorder-item-text"><span class="category-name">Mentor Rating: </span>3 Stars</p>
+        <div class="workorder-col-1">
+          <div class="workorder-item-body-left">
+            <p class="workorder-item-text"><span class="category-name">Mentor Name: </span> <span>{`${mentor_first_name} ${mentor_last_name}`}</span></p>
+            <p class="workorder-item-text"><span class="category-name">Mentor Rating: </span>3 Stars</p>
+          </div>
+          <div class="workorder-item-body-right">
+            <p class="workorder-item-text"><span class="category-name"> Topic: </span>{topic}</p>
+            <p class="workorder-item-text"><span class="category-name">Category: </span>{category}</p>
+          </div>
         </div>
-        <div class="workorder-item-body-right">
-          <p class="workorder-item-text"><span class="category-name"> Topic: </span>{topic}</p>
-          <p class="workorder-item-text"><span class="category-name">Category: </span>{category}</p>
-        </div>
-      </div>
-      <div class="workorder-item-description-container">
-        <p class="workorder-item-text"><span class="category-name">Issue Description: </span>{description}</p>
-      </div>
-      <div className={imageClass}>
-        <a href={screenshot_url}>
-          <img src={screenshot_url} alt="Error Screenshot" />
-        </a>
-      </div>
-      <div class="workorder-item-footer">
-        <div class="button--wo-inline" onClick={() => onView(workorder_id)}>View</div>
-      </div>
+        <div class="workorder-col-2">
+          <div class="workorder-item-description-container">
+            <p class="workorder-item-text"><span class="category-name">Issue Description: </span>{description}</p>
+          </div>
+          <div className={imageClass}>
 
+            <a href={screenshot_url}>
+              <img class="workorder-image" src={screenshot_url} alt="Error Screenshot" />
+            </a>
+          </div>
+          <div className={noImageClass}>
+          </div>
+        </div>
+
+        <div class="workorder-item-footer">
+          <div class="button--wo-inline" onClick={() => onView(workorder_id)}>View</div>
+        </div>
+      </div>
     </div>
   );
 }

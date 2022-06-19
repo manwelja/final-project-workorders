@@ -27,6 +27,7 @@ export default function WorkorderList(props) {
         category={workorder.category}
         screenshot_url={workorder.screenshot_url}
         onView={onView}
+        status_description={workorder.status_description}
       />);
   });
 
