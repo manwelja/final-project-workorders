@@ -1,7 +1,7 @@
 // form when student is creating a new workorder
 import React, { useState, useEffect, Fragment } from "react";
 import axios from 'axios';
-import Button from "../Button"
+import Button from "../Button";
 import useScript from '../../hooks/useScript';
 import './workorderForm.css';
 import Select from 'react-select';
@@ -12,9 +12,12 @@ const HOST = process.env.REACT_APP_API_HOST;
 const BASE_URL = HOST + ":" + PORT;
 const API_CLOUD_ID = process.env.REACT_APP_API_CLOUD_ID;
 const API_CLOUD_PRESET = process.env.REACT_APP_API_CLOUD_PRESET;
-  
 
-export default function NewWorkorder(props){
+
+export default function NewWorkorder(props) {
+
+  const { onCancel, onSave } = props;
+
   const [state, setState] = useState({
     modules: [{}],
     selectedModule: "",
@@ -22,49 +25,51 @@ export default function NewWorkorder(props){
     selectedCategory: "",
     selectedFileUpload: "",
   });
-  
+
   const [description, setDescription] = useState("");
   const [link_to_module, setLinkToModule] = useState("");
   const [environment, setEnvironment] = useState("");
 
-  const {onCancel} = props;
-  console.log(props)
-  
+  const { onCancel } = props;
+  console.log(props);
+
   //populate the workorder when the application loads
-  useEffect(() => {        
-    Promise.all([                       
+  useEffect(() => {
+    Promise.all([
       axios.get(`http://${BASE_URL}/api/modules`),
       axios.get(`http://${BASE_URL}/api/categories`),
-    ]).then((all) => {    
-        //format modules for select box
-        const formattedModules = all[0].data.map((itm) => ({value:itm.id, label:itm.topic}))
-        const formattedCategories = all[1].data.map((itm) => ({value:itm.id, label:itm.description}))
-        setState(prev => ({...prev, modules: formattedModules, categories: formattedCategories}));      
-      })
-    },[])
+    ]).then((all) => {
+      //format modules for select box
+      const formattedModules = all[0].data.map((itm) => ({ value: itm.id, label: itm.topic }));
+      const formattedCategories = all[1].data.map((itm) => ({ value: itm.id, label: itm.description }));
+      setState(prev => ({ ...prev, modules: formattedModules, categories: formattedCategories }));
+    });
+  }, []);
 
   const handleModuleChange = (event) => {
-    setState(prev => ({...prev, selectedModule: event.value}));    
+    setState(prev => ({ ...prev, selectedModule: event.value }));
   };
   const handleCategoryChange = (event) => {
-    setState(prev => ({...prev, selectedCategory: event.value}));    
+    setState(prev => ({ ...prev, selectedCategory: event.value }));
   };
 
   const handleFileChange = (event) => {
-    setState(prev => ({...prev, selectedFileUpload: event.target.files[0]}));        
+    setState(prev => ({ ...prev, selectedFileUpload: event.target.files[0] }));
   };
 
   function saveData() {
     //need validation
-    state.selectedFileUpload ? uploadToCloudifyData() : postToDatabase()
-   // resetFormState()
+    state.selectedFileUpload ? uploadToCloudifyData() : postToDatabase();
+    // resetFormState()
+    onSave();
   }
 
   function resetFormState() {
-    setState(prev => ({...prev, selectedModule: "", selectedCategory: "", selectedFileUpload: ""}));
+    setState(prev => ({ ...prev, selectedModule: "", selectedCategory: "", selectedFileUpload: "" }));
     setDescription("");
     setLinkToModule("");
-    setEnvironment("");    
+    setEnvironment("");
+    onCancel();
   }
 
   function uploadToCloudifyData() {
@@ -77,18 +82,18 @@ export default function NewWorkorder(props){
       headers: { "X-Requested-With": "XMLHttpRequest" },
     };
     return axios.post(url, fd, config)
-        .then((res) => {
-            postToDatabase(res.data.secure_url);
-    }).catch((err) => console.log(err));    
+      .then((res) => {
+        postToDatabase(res.data.secure_url);
+      }).catch((err) => console.log(err));
   }
   //Status id should be set to 1 initially - 
   const postToDatabase = (filePath = "") => {
-     return axios.post(`api/workorders`, {user_student_id: props.student_id, category_id: parseInt(state.selectedCategory), module_id: parseInt(state.selectedModule), environment: environment, description: description, link_to_module: link_to_module, screenshot_url: filePath})
-    .then((res) => {
-      return;
-    }).catch((err) => console.log("error - should show screen"))
-    
-  }    
+    return axios.post(`api/workorders`, { user_student_id: props.student_id, category_id: parseInt(state.selectedCategory), module_id: parseInt(state.selectedModule), environment: environment, description: description, link_to_module: link_to_module, screenshot_url: filePath })
+      .then((res) => {
+        return;
+      }).catch((err) => console.log("error - should show screen"));
+
+  };
   return (
     <main class="workorder-form-main">
       <article>
@@ -107,8 +112,8 @@ export default function NewWorkorder(props){
                   name="module-link"
                   type="text"
                   placeholder="Enter URL here"
-                  value={ link_to_module }
-                  onChange={(event) => { 
+                  value={link_to_module}
+                  onChange={(event) => {
                     setLinkToModule(event.target.value);
                   }}
                 />
@@ -116,65 +121,65 @@ export default function NewWorkorder(props){
             </div>
             <div class="wo-form-label-data">
               <div class="wo-form-label"><label>Please describe your issue</label></div>
-                <div class="wo-form-data">
-                  <input         
-                  class="wo-form-text-box"         
+              <div class="wo-form-data">
+                <input
+                  class="wo-form-text-box"
                   name="description"
                   type="text"
                   placeholder="What's up?"
-                  value={ description }
-                  onChange={(event) => { 
+                  value={description}
+                  onChange={(event) => {
                     setDescription(event.target.value);
-                  }}        
-                 />  
+                  }}
+                />
               </div>
-            </div>                      
+            </div>
             <div class="wo-form-label-data">
-            <div class="wo-form-label"><label>Please specify your computer environment</label></div>
+              <div class="wo-form-label"><label>Please specify your computer environment</label></div>
               <div class="wo-form-data">
-                <input      
-                class="wo-form-text-box"            
-                    name="environment"
-                    type="text"
-                    placeholder="e.g. M1, Vagrant, Windows?"
-                    value={ environment }
-                    onChange={(event) => { 
-                      setEnvironment(event.target.value);
-                    }}        
-                  />  
-              </div>  
+                <input
+                  class="wo-form-text-box"
+                  name="environment"
+                  type="text"
+                  placeholder="e.g. M1, Vagrant, Windows?"
+                  value={environment}
+                  onChange={(event) => {
+                    setEnvironment(event.target.value);
+                  }}
+                />
+              </div>
             </div>
             <div class="wo-form-label-data">
               <div class="wo-form-label"><label>Please specify the category</label></div>
-                <div class="wo-form-data">
-                <Select 
-                 options={state.categories}
-                 onChange={handleCategoryChange}
-                /> 
-                </div>  
+              <div class="wo-form-data">
+                <Select
+                  options={state.categories}
+                  onChange={handleCategoryChange}
+                />
               </div>
+            </div>
 
             <div class="wo-form-label-data">
               <div class="wo-form-label"><label>Please specify which module you're working on:</label></div>
-              <div class="wo-form-data">  
-                <Select 
+              <div class="wo-form-data">
+                <Select
                   options={state.modules}
                   onChange={handleModuleChange}
-                /> 
-              </div>  
+                />
+              </div>
             </div>
             <div class="wo-form-label-data">
               <div class="wo-form-label"><label>Please provide a screenshot if applicable:</label></div>
-              <div class="wo-form-data">       
+              <div class="wo-form-data">
                 <input type="file" accept="image/png, image/jpeg" onChange={handleFileChange}></input>
-              </div>     
-            </div>  
-            <div class="wo-form-footer">              
-              <div><Button className="button--danger" danger onClick={() => { onCancel() }}>Cancel</Button></div>
-              <div><Button className="button--confirm" confirm onClick={ () => { saveData() }}>Save Me</Button></div>
+              </div>
             </div>
-        </section> 
-        </form> 
+            <div class="wo-form-footer">
+              <div><Button className="button--danger" danger onClick={() => { resetFormState(); }}>Cancel</Button></div>
+              <div><Button className="button--confirm" confirm onClick={() => { saveData(); }}>Save Me</Button></div>
+            </div>
+          </section>
+        </form>
       </article>
     </main>
   );

@@ -84,10 +84,8 @@ export default function Application(props) {
       //save this data to state to refresh screen
       console.log("Received data from server - need to update view state ");
       if (mode === SHOW_EXISTING_WO) {
-        if (getWorkorderByID(state.workorderItem.id)) {
-          getWorkorderByID(state.workorderItem.id);
-          getMeetingLink(state.workorderItem.id);
-        }
+        getWorkorderByID(state.workorderItem.id);
+        getMeetingLink(state.workorderItem.id);
       } else {
         updateState();
       }
@@ -95,6 +93,7 @@ export default function Application(props) {
     };
   };
   componentDidMount();
+  console.log('workorder id', state.workorderItem.id);
 
   const updateState = function() {
     // if user is student
@@ -184,6 +183,7 @@ export default function Application(props) {
     // if(workorder_id){
     getWorkorderByID(workorder_id);
     // getMeetingLink(workorder_id);
+    // console.log("callGetMeetingLink");
     transitionView(SHOW_EXISTING_WO);
     //  }
     return;
@@ -264,16 +264,16 @@ export default function Application(props) {
       {user === SHOW_USER_MENTOR && (
         <Fragment>
           <NavigationMentor
-            email={cookies.user}
             onShowNew={() => transitionView(SHOW_QUEUE)}
             onShowInProgress={() => transitionView(SHOW_IN_PROG)}
             onShowClosed={() => transitionView(SHOW_CLOSED)}
             onShowMy={() => { transitionView(SHOW_MY_WO); }}
-            onLogout={logout}
+            onLogout={() => { logout; }}
           />
 
           {mode === SHOW_MY_WO && (
             < QueueList
+              key={state.workorderList.id}
               workorders={state.workorderList}
               onView={openWorkOrder}
               onHistory={openUserHistory}
