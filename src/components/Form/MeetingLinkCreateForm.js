@@ -38,6 +38,7 @@ const MeetingLinkCreateForm = (props) => {
   }
   const saveMeetingLink = () => {
     // this object is just for organizing the data to be sent to the database
+    console.log("save lnk", props.id)
     const newData = { workorder_id: props.id, meeting_link: meetingLink};
     axios.post(`http://${BASE_URL}/api/meetingLinks`, newData)
       .then(() => {
@@ -60,8 +61,7 @@ const MeetingLinkCreateForm = (props) => {
 
   return (
     <article>
-      <section>
-        <form class="wo-form-container" autoComplete="off" onSubmit={event => event.preventDefault()}>
+      <section  class="wo-form-container">
           <label class="wo-form-label-data">Please enter a meeting link for the assistance session: <a href={meetingLinkDisplay}>  {meetingLinkDisplay}</a></label>
           <input
             class="wo-form-data"
@@ -71,9 +71,7 @@ const MeetingLinkCreateForm = (props) => {
             value={meetingLink}
             onChange={event => { setMeetingLink(event.target.value); }}
           />
-              <button class="button--wo-inline" onClick={() => saveData() }>Send</button>
-        </form>
-
+              <button class="button--wo-inline" onClick={(event) => {event.preventDefault(); saveData() }}>Send</button>
       </section>
     </article >
   );

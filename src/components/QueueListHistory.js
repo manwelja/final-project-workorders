@@ -1,5 +1,5 @@
 import React from "react";
-import QueueListItem from "./QueueListItem";
+import QueueListItemHistory from "./QueueListItemHistory";
 
 //Component that invokes a QueueListItem child for each workorder in the data set
 export default function QueueList(props) {
@@ -8,7 +8,7 @@ export default function QueueList(props) {
   const queueItem = workorders.map((workOrderData, idx) => {
     //return a populated Queuelist item for each workorder in the data set
     return (
-      <QueueListItem class="queue-container"
+      <QueueListItemHistory class="queue-container"
         key={workOrderData.id}
         workorderID={workOrderData.id}
         numInQueue={idx + 1}

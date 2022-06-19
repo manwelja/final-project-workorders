@@ -7,7 +7,6 @@ export default function useApplicationData() {
   const [userID, setUserID] = useState("");
   const [userRole, setUserRole] = useState("");
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
-  const [oneWorkorder, setOneWorkorder] = useState({});
   const [meetingLink, setMeetingLink] = useState("");
 
   const [state, setState] = useState({
@@ -30,7 +29,8 @@ export default function useApplicationData() {
   const getWorkorderByID = (workorderID) => {
     return axios.get(`api/workorders/${workorderID}`)
       .then((res) => {
-        setState({ ...state, workorderItem: res.data[0] });
+        console.log(res.data)
+        setState(prev => ({...prev, workorderItem: res.data[0] }));
        // setOneWorkorder(res.data[0]);
         return;
       }).catch((err) => console.log("axios error", err));
@@ -40,6 +40,7 @@ export default function useApplicationData() {
   const getWorkordersByStudentID = (studentID) => {
     return axios.get(`api/workorders/student/${studentID}`)
       .then((res) => {
+        console.log("history", res.data)
         setState(prev => ({ ...prev, workorderList: res.data }));
         return;
       }).catch((err) => console.log("axios error", err));
@@ -49,7 +50,7 @@ export default function useApplicationData() {
   const getWorkordersByMentorID = (mentorID) => {
     return axios.get(`api/workorders/mentor/${mentorID}`)
       .then((res) => {
-        setState(prev => ({ ...prev, workorderList: res.data }));
+        setState((prev) => ({...prev, workorderList: res.data }));
         return;
       }).catch((err) => console.log("axios error", err));
 
@@ -58,7 +59,7 @@ export default function useApplicationData() {
   const getWorkordersByStatus = (statusID) => {
     return axios.get(`/api/queue/${statusID}`)
     .then((res) => {
-      setState(prev => ({ ...prev, workorderList: res.data }));
+      setState(prev => ({...prev, workorderList: res.data }));
       return;
     }).catch((err) => console.log("axios error", err));
   };
@@ -83,14 +84,16 @@ export default function useApplicationData() {
   const resetState = function(workorderID) {
     setState({workorderList: [], workorderItem: {}});
     setMeetingLink("");
+    setUserID("");
   };
 
   const getMeetingLink = (workorderID) => {
-    console.log("woID", workorderID)
+    console.log("woID before api", workorderID)
     return axios.get(`/api/meetingLinks/${workorderID}`)
       .then((res) => {
-        console.log(res.data)
-        if(res.data.length) {
+        console.log("set meeting link before", res)
+       if(res.data.length) {
+        console.log("set meeting link", res.data[0].meeting_link)
           setMeetingLink(res.data[0].meeting_link);  
         }        
         return;
@@ -135,5 +138,5 @@ export default function useApplicationData() {
     }
   };
 
-  return { state, setState, getWorkordersByStudentID, getWorkordersByMentorID, getWorkorderByID, verifyUserLogin, changeWorkorderStatus, getWorkordersByStatus, deleteLoginCookie, deleteMeetingLink, resetState, getMeetingLink, userID, userRole, oneWorkorder, meetingLink };
+  return { state, setState, getWorkordersByStudentID, getWorkordersByMentorID, getWorkorderByID, verifyUserLogin, changeWorkorderStatus, getWorkordersByStatus, deleteLoginCookie, deleteMeetingLink, resetState, getMeetingLink, userID, userRole, meetingLink, cookies };
 }

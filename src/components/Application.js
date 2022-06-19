@@ -7,6 +7,7 @@ import NewWorkorder from "./Form/NewWorkorder";
 import ViewWorkorder from "./Form/ViewWorkorder";
 import WorkorderList from "./WorkorderList";
 import QueueList from "./QueueList";
+import QueueListHistory from "./QueueListHistory";
 import useVisualMode from "../hooks/useVisualMode";
 import useUserMode from "../hooks/useUserMode";
 import useApplicationData from "../hooks/useApplicationData";
@@ -67,6 +68,7 @@ export default function Application(props) {
     getMeetingLink,
     meetingLink,
     userRole,
+    cookies,
     userID
   } = useApplicationData();
 
@@ -78,13 +80,15 @@ export default function Application(props) {
     //Update the state to reflect the data sent from the server via websocket
     client.onmessage = (message) => {
       const dataFromServer = JSON.parse(message.data);
+      console.log("mode", mode)
       //save this data to state to refresh screen
       console.log("Received data from server - need to update view state ");
       if(mode === SHOW_EXISTING_WO) {
         getWorkorderByID(state.workorderItem.id)
         getMeetingLink(state.workorderItem.id)
+        console.log("show meet link", state.workorder.id)
       } else {
-        updateState();
+        //updateState();
       }
 
     };
@@ -93,6 +97,7 @@ export default function Application(props) {
 
   const updateState = function() {
     // if user is student
+    console.log(mode)
     switch (mode) {
       case SHOW_NEW_WO:
         //don't need to load any data
@@ -119,10 +124,11 @@ export default function Application(props) {
         break;
       case SHOW_STUDENT_WO:
         //show workorders by student id
-        getWorkordersByStudentID(userID);
+       // getWorkordersByStudentID(userID);
         break;
       case SHOW_WO_LIST:
         //show workorders by student id
+        console.log("get by student id", userID)
         getWorkordersByStudentID(userID);
         break;
       default:
@@ -131,17 +137,21 @@ export default function Application(props) {
     }
     return;
   };
-
-
-  //console.log(state)
+console.log("state", state)
   useEffect(() => {
+    console.log("update state")
     updateState();
   }, [mode]);
 
-  //console.log(state)
-  useEffect(() => {
-    setUserView();
-  }, [userRole]);
+  // console.log(state)
+   useEffect(() => {
+     updateState();
+   }, [userID]);
+
+   //console.log(state)
+   useEffect(() => {
+     setUserView();
+   }, [userRole]);
 
   const loginUser = function(email, password) {
     verifyUserLogin(email, password);
@@ -149,15 +159,19 @@ export default function Application(props) {
       setUserView()
     }    
   };
+
   const setUserView = function() {
     if (userRole.trim() === "mentor") {
       transitionView(SHOW_QUEUE);
       transitionUser(SHOW_USER_MENTOR);
+ //     updateState();
       //getWorkordersByMentorID(userID) 
     } else if (userRole.trim() === "student") {
+      console.log("update state student")
       transitionView(SHOW_WO_LIST);
       transitionUser(SHOW_USER_STUDENT);
-      //getWorkordersByStudentID(userID) 
+   //   updateState();
+    //  getWorkordersByStudentID(userID) 
     }
     //return;
   };
@@ -165,7 +179,6 @@ export default function Application(props) {
   const openWorkOrder = function(workorder_id) {
     getWorkorderByID(workorder_id);
     getMeetingLink(workorder_id);
-    console.log("callGetMeetingLink")
     transitionView(SHOW_EXISTING_WO);
     return;
   };
@@ -207,6 +220,7 @@ export default function Application(props) {
       {user === SHOW_USER_STUDENT && (
         <Fragment>
           <NavigationStudent
+            email={cookies.user}
             onView={() => transitionView(SHOW_WO_LIST)}
             onNew={() => transitionView(SHOW_NEW_WO)}
             onLogout={logout}
@@ -214,6 +228,7 @@ export default function Application(props) {
 
           {mode === SHOW_WO_LIST && (
             <WorkorderList
+              key={state.workorderList.id}
               workorders={state.workorderList}
               onView={openWorkOrder}
             />)}
@@ -227,9 +242,13 @@ export default function Application(props) {
 
           {mode === SHOW_EXISTING_WO && (
             <ViewWorkorder
-              workorder={state.workorderItem}
-              userRole={userRole.trim()}
-              onCancel={() => { transitionView(SHOW_WO_LIST); }}
+            workorder={state.workorderItem}
+            meetingLink={meetingLink}
+            userRole={userRole.trim()}
+            onCancel={() => { transitionView(SHOW_QUEUE); }}
+            onHistory={openUserHistory}
+            onPickupTicket={markWorkorderInProgress}
+            onCloseTicket={markWorkorderClosed}
             />)}
 
         </Fragment>)}
@@ -238,22 +257,25 @@ export default function Application(props) {
          {user === SHOW_USER_MENTOR && (
           <Fragment>
             <NavigationMentor
+              email={cookies.user}
               onShowNew={() => transitionView(SHOW_QUEUE)}
               onShowInProgress={() => transitionView(SHOW_IN_PROG)}
               onShowClosed={() => transitionView(SHOW_CLOSED)}
               onShowMy={() => { transitionView(SHOW_MY_WO); }}
-              onLogout={() => { transitionUser(SHOW_USER_UNDEFINED); transitionView(SHOW_LOGIN); }}
+              onLogout={logout}
             />
      
           {mode === SHOW_MY_WO && (
             < QueueList
               workorders={state.workorderList}
               onView={openWorkOrder}
+              onHistory={openUserHistory}
               />
           )}
 
             {mode === SHOW_QUEUE && (
               < QueueList
+                key={state.workorderList.id}
                 workorders={state.workorderList}
                 onView={openWorkOrder}
                 onHistory={openUserHistory}
@@ -263,6 +285,7 @@ export default function Application(props) {
 
             {mode === SHOW_IN_PROG && (
               < QueueList
+                key={state.workorderList.id}
                 workorders={state.workorderList}
                 onView={openWorkOrder}
                 onHistory={openUserHistory}
@@ -271,6 +294,7 @@ export default function Application(props) {
 
             {mode === SHOW_CLOSED && (
               < QueueList
+                key={state.workorderList.id} 
                 workorders={state.workorderList}
                 onView={openWorkOrder}
                 onHistory={openUserHistory}
@@ -290,9 +314,11 @@ export default function Application(props) {
 
 
             {mode === SHOW_STUDENT_WO && (
-              <WorkorderList
+              <QueueListHistory
+                key={state.workorderList.id}
                 workorders={state.workorderList}
                 onView={openWorkOrder}
+                onHistory={openUserHistory}
               />)}
 
           </Fragment>)}

@@ -20,7 +20,7 @@ export default function WorkorderListItem(props) {
     date_closed,
     module,
     topic,
-    week,
+    category,
     status,
     onView,
     mentor_first_name,
@@ -61,7 +61,7 @@ export default function WorkorderListItem(props) {
         </div>
         <div class="workorder-item-body-right">
           <p class="workorder-item-text"><span class="category-name"> Topic: </span>{topic}</p>
-          <p class="workorder-item-text"><span class="category-name">Week: </span>{week}</p>
+          <p class="workorder-item-text"><span class="category-name">Category: </span>{category}</p>
         </div>
       </div>
       <div class="workorder-item-description-container">

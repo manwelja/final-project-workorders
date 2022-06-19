@@ -19,7 +19,7 @@ const BASE_URL = HOST + ":" + PORT;
 
 
 export default function ViewWorkorder(props) {
-
+console.log("props", props)
  const {workorder, userRole, onCancel, onHistory, onPickupTicket, onCloseTicket } = props;
    
  const imageClass = classNames("wo-form-screenshot",
@@ -50,7 +50,7 @@ export default function ViewWorkorder(props) {
             <div class="wo-form-label-data">
               <div class="wo-form-label"><label>Status</label></div>
               <div class="wo-form-data">
-                {workorder.status_id}
+                {workorder.status_description}
               </div>
             </div>
             <div class="wo-form-label-data">

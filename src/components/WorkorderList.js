@@ -13,8 +13,8 @@ export default function WorkorderList(props) {
       <WorkorderListItem class="workorder-container"
         workorder_id={workorder.id}
         student_name={workorder.user_student_id}
-        mentor_first_name={workorder.mentor_first_name}
-        mentor_last_name={workorder.mentor_last_name}
+        mentor_first_name={workorder.mentor_first_name || "N/A"}
+        mentor_last_name={workorder.mentor_last_name || ""}
         ref_link={workorder.link_to_module}
         description={workorder.description}
         mentor_notes={workorder.mentor_notes}
@@ -24,7 +24,7 @@ export default function WorkorderList(props) {
         date_closed={workorder.date_closed}
         module={workorder.module_id}
         topic={workorder.topic}
-        week={workorder.week}
+        category={workorder.category}
         screenshot_url={workorder.screenshot_url}
         onView={onView}
       />);

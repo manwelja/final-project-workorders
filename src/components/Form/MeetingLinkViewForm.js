@@ -27,10 +27,10 @@ console.log("meeting link", props.meetingLink)
   return (
     <article>
       <section>
-        <form class="wo-form-container" autoComplete="off" onSubmit={event => event.preventDefault()}>
+        <div class="wo-form-container">
           <div class="wo-form-label-data">Please use the following link to meet with your mentor:</div>
           <div class="wo-form-data"><a href={props.meetingLink}> {props.meetingLink} </a></div>
-        </form>
+        </div>
       </section>
     </article >
   );

@@ -27,7 +27,7 @@ export default function QueueListItem(props) {
 
   const age = (date) => {
     const currentDate = new Date().toISOString(); //get new date as string in iso format
-
+console.log("history")
     //return the time difference as age
     //arguments have to be casted as date objects
     return formatDistance(new Date(date), new Date(currentDate));
@@ -36,8 +36,7 @@ export default function QueueListItem(props) {
   return (
     <div class="queue-workorder-box">
       <div className={headerStatusClass}>
-        {status_id === 1 && <div id="workorder-title">Queue Order #: {numInQueue}</div>}
-        {status_id !== 1 && <div id="workorder-title">Work Order #: {workorderID}</div>}
+        <div id="workorder-title">Work Order #: {workorderID}</div>
         {status_id !== 3 && <div id="workorder-created">Created {age(date_created)} ago</div>}        
         {status_id === 3 && <div id="workorder-created">Closed: {formattedClosedDateTime} </div>}        
         </div>
