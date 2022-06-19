@@ -1,0 +1,9 @@
+/* main {
+  display: flex;
+  min-height: 100vh;
+} */
+
+
+.workorder-form-main {
+  min-height:100vh;
+}

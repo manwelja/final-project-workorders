@@ -49,3 +49,14 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   justify-content: flex-start;
   border: 0px transparent;
 }
+
+.nav-login-email {
+  font-size:1rem;
+  color: white;
+}
+
+.nav-container-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}

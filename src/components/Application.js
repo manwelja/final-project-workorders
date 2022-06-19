@@ -13,6 +13,7 @@ import useUserMode from "../hooks/useUserMode";
 import useApplicationData from "../hooks/useApplicationData";
 import Footer from "./Footer";
 import axios from "axios";
+import "./index.css";
 
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 //Environment variables
@@ -82,10 +83,10 @@ export default function Application(props) {
       const dataFromServer = JSON.parse(message.data);
       //save this data to state to refresh screen
       console.log("Received data from server - need to update view state ");
-      if(mode === SHOW_EXISTING_WO) {
-        if(getWorkorderByID(state.workorderItem.id)){
+      if (mode === SHOW_EXISTING_WO) {
+        if (getWorkorderByID(state.workorderItem.id)) {
           getWorkorderByID(state.workorderItem.id);
-          getMeetingLink(state.workorderItem.id);  
+          getMeetingLink(state.workorderItem.id);
         }
       } else {
         updateState();
@@ -118,23 +119,23 @@ export default function Application(props) {
         getWorkordersByStatus(3);
         break;
       case SHOW_MY_WO:
-        console.log("get by mentor id", userID)
+        console.log("get by mentor id", userID);
         //show workorders by mentor id
-   //     if(userID) {
-          getWorkordersByMentorID(userID);
-  //      }        
+        //     if(userID) {
+        getWorkordersByMentorID(userID);
+        //      }        
         break;
       case SHOW_STUDENT_WO:
         //show workorders by student id
-       // getWorkordersByStudentID(userID);
+        // getWorkordersByStudentID(userID);
         break;
       case SHOW_WO_LIST:
         //show workorders by student id
-        console.log("get by student id", userID)
-   //     if(userID){
-          getWorkordersByStudentID(userID);
-   //     }
-        
+        console.log("get by student id", userID);
+        //     if(userID){
+        getWorkordersByStudentID(userID);
+        //     }
+
         break;
       default:
         break;
@@ -143,53 +144,53 @@ export default function Application(props) {
     return;
   };
   useEffect(() => {
-    console.log("update state")
+    console.log("update state");
     updateState();
   }, [mode]);
 
-   useEffect(() => {
-    console.log("update state")
-     updateState();
-   }, [userID]);
+  useEffect(() => {
+    console.log("update state");
+    updateState();
+  }, [userID]);
 
-   useEffect(() => {
-    console.log("update view")
-     setUserView();
-   }, [userRole]);
+  useEffect(() => {
+    console.log("update view");
+    setUserView();
+  }, [userRole]);
 
   const loginUser = function(email, password) {
     verifyUserLogin(email, password);
-    if(userRole !== SHOW_USER_UNDEFINED) {
-      setUserView()
-    }    
+    if (userRole !== SHOW_USER_UNDEFINED) {
+      setUserView();
+    }
   };
 
   const setUserView = function() {
     if (userRole.trim() === "mentor") {
       transitionView(SHOW_QUEUE);
       transitionUser(SHOW_USER_MENTOR);
- //     updateState();
+      //     updateState();
       //getWorkordersByMentorID(userID) 
     } else if (userRole.trim() === "student") {
       transitionView(SHOW_WO_LIST);
       transitionUser(SHOW_USER_STUDENT);
-   //   updateState();
-    //  getWorkordersByStudentID(userID) 
+      //   updateState();
+      //  getWorkordersByStudentID(userID) 
     }
     //return;
   };
 
   const openWorkOrder = function(workorder_id) {
-   // if(workorder_id){
-      getWorkorderByID(workorder_id);
-      // getMeetingLink(workorder_id);
-       transitionView(SHOW_EXISTING_WO);   
-  //  }
+    // if(workorder_id){
+    getWorkorderByID(workorder_id);
+    // getMeetingLink(workorder_id);
+    transitionView(SHOW_EXISTING_WO);
+    //  }
     return;
   };
 
   const openUserHistory = function(student_id) {
-    console.log("get by student id openhistory", userID)
+    console.log("get by student id openhistory", userID);
     getWorkordersByStudentID(student_id);
     transitionView(SHOW_STUDENT_WO);
     return;
@@ -199,21 +200,21 @@ export default function Application(props) {
     if (userRole.trim() === "mentor") {
       changeWorkorderStatus(userID, 2, workorder_id);
     }
-    
+
     return;
   };
 
   const markWorkorderClosed = function(workorder_id) {
     if (userRole.trim() === "mentor") {
-      changeWorkorderStatus(userID, 3, workorder_id)
-      deleteMeetingLink(workorder_id)
+      changeWorkorderStatus(userID, 3, workorder_id);
+      deleteMeetingLink(workorder_id);
     }
     return;
   };
 
   const logout = function() {
     deleteLoginCookie();
-    resetState();    
+    resetState();
     transitionUser(SHOW_USER_UNDEFINED);
     transitionView(SHOW_LOGIN);
     return;
@@ -248,86 +249,86 @@ export default function Application(props) {
 
           {mode === SHOW_EXISTING_WO && (
             <ViewWorkorder
-            workorder={state.workorderItem}
-            meetingLink={meetingLink}
-            userRole={userRole.trim()}
-            onCancel={() => { transitionView(SHOW_QUEUE); }}
-            onHistory={openUserHistory}
-            onPickupTicket={markWorkorderInProgress}
-            onCloseTicket={markWorkorderClosed}
+              workorder={state.workorderItem}
+              meetingLink={meetingLink}
+              userRole={userRole.trim()}
+              onCancel={() => { transitionView(SHOW_QUEUE); }}
+              onHistory={openUserHistory}
+              onPickupTicket={markWorkorderInProgress}
+              onCloseTicket={markWorkorderClosed}
             />)}
 
         </Fragment>)}
 
-      
-         {user === SHOW_USER_MENTOR && (
-          <Fragment>
-            <NavigationMentor
-              email={cookies.user}
-              onShowNew={() => transitionView(SHOW_QUEUE)}
-              onShowInProgress={() => transitionView(SHOW_IN_PROG)}
-              onShowClosed={() => transitionView(SHOW_CLOSED)}
-              onShowMy={() => { transitionView(SHOW_MY_WO); }}
-              onLogout={logout}
-            />
-     
+
+      {user === SHOW_USER_MENTOR && (
+        <Fragment>
+          <NavigationMentor
+            email={cookies.user}
+            onShowNew={() => transitionView(SHOW_QUEUE)}
+            onShowInProgress={() => transitionView(SHOW_IN_PROG)}
+            onShowClosed={() => transitionView(SHOW_CLOSED)}
+            onShowMy={() => { transitionView(SHOW_MY_WO); }}
+            onLogout={logout}
+          />
+
           {mode === SHOW_MY_WO && (
             < QueueList
               workorders={state.workorderList}
               onView={openWorkOrder}
               onHistory={openUserHistory}
-              />
+            />
           )}
 
-            {mode === SHOW_QUEUE && (
-              < QueueList
-                key={state.workorderList.id}
-                workorders={state.workorderList}
-                onView={openWorkOrder}
-                onHistory={openUserHistory}
-                onPickupTicket={markWorkorderInProgress}
-              />
-            )}
+          {mode === SHOW_QUEUE && (
+            < QueueList
+              key={state.workorderList.id}
+              workorders={state.workorderList}
+              onView={openWorkOrder}
+              onHistory={openUserHistory}
+              onPickupTicket={markWorkorderInProgress}
+            />
+          )}
 
-            {mode === SHOW_IN_PROG && (
-              < QueueList
-                key={state.workorderList.id}
-                workorders={state.workorderList}
-                onView={openWorkOrder}
-                onHistory={openUserHistory}
-              />
-            )}
+          {mode === SHOW_IN_PROG && (
+            < QueueList
+              key={state.workorderList.id}
+              workorders={state.workorderList}
+              onView={openWorkOrder}
+              onHistory={openUserHistory}
+            />
+          )}
 
-            {mode === SHOW_CLOSED && (
-              < QueueList
-                key={state.workorderList.id} 
-                workorders={state.workorderList}
-                onView={openWorkOrder}
-                onHistory={openUserHistory}
-              />
-            )}
+          {mode === SHOW_CLOSED && (
+            < QueueList
+              key={state.workorderList.id}
+              workorders={state.workorderList}
+              onView={openWorkOrder}
+              onHistory={openUserHistory}
+            />
+          )}
 
-            {mode === SHOW_EXISTING_WO && (
-              <ViewWorkorder
-                workorder={state.workorderItem}
-                meetingLink={meetingLink}
-                userRole={userRole.trim()}
-                onCancel={() => { transitionView(SHOW_QUEUE); }}
-                onHistory={openUserHistory}
-                onPickupTicket={markWorkorderInProgress}
-                onCloseTicket={markWorkorderClosed}
-              />)}
+          {mode === SHOW_EXISTING_WO && (
+            <ViewWorkorder
+              workorder={state.workorderItem}
+              meetingLink={meetingLink}
+              userRole={userRole.trim()}
+              onCancel={() => { transitionView(SHOW_QUEUE); }}
+              onHistory={openUserHistory}
+              onPickupTicket={markWorkorderInProgress}
+              onCloseTicket={markWorkorderClosed}
+            />)}
 
 
-            {mode === SHOW_STUDENT_WO && (
-              <QueueListHistory
-                key={state.workorderList.id}
-                workorders={state.workorderList}
-                onView={openWorkOrder}
-                onHistory={openUserHistory}
-              />)}
+          {mode === SHOW_STUDENT_WO && (
+            <QueueListHistory
+              key={state.workorderList.id}
+              workorders={state.workorderList}
+              onView={openWorkOrder}
+              onHistory={openUserHistory}
+            />)}
 
-          </Fragment>)}
+        </Fragment>)}
 
 
       {mode === SHOW_LOGIN && (
