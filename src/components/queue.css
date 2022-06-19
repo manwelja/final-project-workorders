@@ -20,7 +20,7 @@ body {
 .queue-workorder-box {
   background-image: url("/public/images/brick-wall.png");
   background: 	#F0F0F0;
-  width: 45%;
+  width: 30%;
   height: 60%;
   margin: 1rem 1rem;
   display: flex;
