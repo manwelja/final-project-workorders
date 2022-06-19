@@ -12,18 +12,18 @@ export default function QueueListItem(props) {
   const formattedClosedDate = new Date(date_closed).toLocaleDateString(undefined, options);
   const formattedClosedTime = new Date(date_closed).toLocaleTimeString('en-US');
   const formattedClosedDateTime = formattedClosedDate + " - " + formattedClosedTime;
-  
+
   const imageClass = classNames("queue-workorder-screenshot",
     { " hidden": !screenshot_url }
   );
 
   const headerStatusClass = classNames("queue-workorder-header",
-  { 
-    " closed": status_id===3,
-    " in-progress": status_id===2,
-    " new": status_id===1  
-  }
-);
+    {
+      " closed": status_id === 3,
+      " in-progress": status_id === 2,
+      " new": status_id === 1
+    }
+  );
 
   const age = (date) => {
     const currentDate = new Date().toISOString(); //get new date as string in iso format
@@ -38,10 +38,10 @@ export default function QueueListItem(props) {
       <div className={headerStatusClass}>
         {status_id === 1 && <div id="workorder-title">Queue Order #: {numInQueue}</div>}
         {status_id !== 1 && <div id="workorder-title">Work Order #: {workorderID}</div>}
-        {status_id !== 3 && <div id="workorder-created">Created {age(date_created)} ago</div>}        
-        {status_id === 3 && <div id="workorder-created">Closed: {formattedClosedDateTime} </div>}        
-        </div>
-        
+        {status_id !== 3 && <div id="workorder-created">Created {age(date_created)} ago</div>}
+        {status_id === 3 && <div id="workorder-created">Closed: {formattedClosedDateTime} </div>}
+      </div>
+
       <div class="queue-workorder-body">
         <div class="queue-workorder-body-left">
           <p class="queue-workorder-text"><span class="category-name">Student Name: </span> <span>{student_first_name + " " + student_last_name}</span></p>
@@ -62,9 +62,9 @@ export default function QueueListItem(props) {
         </a>
       </div>
       <div class="queue-workorder-footer">
-        <div><a class="btn-workorder-footer" onClick={() => onHistory(student_id)}>See user History</a></div>
-        <div><a class="btn-workorder-footer" onClick={() => onView(workorder_id)}>View</a></div>
-        {status_id === 1 && <div><a class="btn-workorder-footer" onClick={() => onPickupTicket(workorder_id)}>Pick Up Ticket</a></div>}
+        <div><div class="btn-workorder-footer" onClick={() => onHistory(student_id)}>See user History</div></div>
+        <div><div class="btn-workorder-footer" onClick={() => onView(workorder_id)}>View</div></div>
+        {status_id === 1 && <div><div class="btn-workorder-footer--pickup" onClick={() => onPickupTicket(workorder_id)}>Pick Up Ticket</div></div>}
       </div>
     </div >
   );

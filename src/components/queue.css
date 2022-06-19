@@ -8,7 +8,8 @@ body {
 }
 
 .queue-container {
-  width: vw;
+  width: 100vw;
+  min-height: 93vh;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
@@ -17,22 +18,23 @@ body {
 
 
 .queue-workorder-box {
-  background: white;
+  background-image: url("/public/images/brick-wall.png");
+  background: 	#F0F0F0;
   width: 45%;
-  height: auto;
+  height: 60%;
   margin: 1rem 1rem;
   display: flex;
   justify-content: space-evenly;   
-  border: 1px solid rgba(0,0,0 ,0.15);
+  /* border: 1px solid rgba(0,0,0 ,0.15); */
   flex-direction: column;
   box-shadow: 3px 3px 10px rgb(0 0 0 / 5%);
-  border-left: solid lightgrey 3px;
-  border-top: solid lightgrey 6px;
+  /* border-left: solid lightgrey 3px;
+  border-top: solid lightgrey 6px; */
   transition: 0.3s;
 }
 
 .queue-workorder-header {
-  background:lightgrey;
+/*  */
   font-size: 18px;
   width: 100%;
   height: auto;
@@ -41,21 +43,21 @@ body {
   flex-flow: row nowrap;
   padding: 1rem;
   transition: 0.3s;
+  border-bottom: 0.25rem solid grey;
 }
 
 .new {
-  background: #e4b79f;
+  border-bottom: 0.25rem solid #BF5700;
 }
 
 .in-progress{
-  background:#4a725c;
+  border-bottom: 0.25rem solid #4a725c;
 }
 
 .closed {
-  background:#786760;
+  border-bottom: 0.25rem solid #786760;
 }
 .queue-workorder-body {
-  background: white;
   width: 100%;
   height: auto;
   display: flex;
@@ -96,6 +98,7 @@ body {
   flex-wrap: nowrap;
   justify-content: flex-end;
   width: 100%;
+  margin-bottom: 1rem;
 }
 
 .btn-workorder-footer {

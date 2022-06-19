@@ -43,6 +43,22 @@
   text-align: center;
 }
 
+.btn-workorder-footer {
+  color: #4a725c;
+  border: 1px solid;
+  font-size: 14px;
+  margin-right: 1rem;
+  padding: 0.5rem;
+}
+
+.btn-workorder-footer--pickup {
+  color: #4a725c;
+  border: 1px solid;
+  font-size: 14px;
+  margin-right: 1rem;
+  padding: 0.5rem;
+}
+
 .button--wo-inline:hover {
   color: #4a725c;
   border-color: #4a725c;
@@ -52,8 +68,6 @@
 }
 
 .button:hover {
-  color: black;
-  background-color: white;
   border: 2px solid transparent;
 }
 
@@ -64,8 +78,8 @@
 }
 
 .button--confirm {
-  color: green;
-  border-color: green;
+  color: #4a725c;
+  border-color: #4a725c;
   background-color: transparent;
 }
 
@@ -76,7 +90,7 @@
 
 .button--confirm:hover {
   color: white;
-  background-color: green;
+  background-color: #4a725c;
 }
 
 .button:last-of-type {
@@ -93,4 +107,9 @@
   color: white;
   background-color: transparent;
   opacity: 0.7;
+}
+
+.button--top-nav:hover {
+  background: white;
+  color: transparent;
 }

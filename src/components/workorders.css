@@ -97,13 +97,6 @@ body {
   width: 100%;
 }
 
-.btn-workorder-footer {
-  color: #1d3837;
-  border: ipx solid blue;
-  font-size: 14px;
-  margin-right: 1rem;
-}
-
 .category-name {
   font-weight: 800;
 }
