@@ -80,9 +80,9 @@ export default function Application(props) {
       const dataFromServer = JSON.parse(message.data);
       //save this data to state to refresh screen
       console.log("Received data from server - need to update view state ");
-      if(mode === SHOW_EXISTING_WO) {
-        getWorkorderByID(state.workorderItem.id)
-        getMeetingLink(state.workorderItem.id)
+      if (mode === SHOW_EXISTING_WO) {
+        getWorkorderByID(state.workorderItem.id);
+        getMeetingLink(state.workorderItem.id);
       } else {
         updateState();
       }
@@ -90,6 +90,7 @@ export default function Application(props) {
     };
   };
   componentDidMount();
+  console.log('workorder id', state.workorderItem.id);
 
   const updateState = function() {
     // if user is student
@@ -145,9 +146,9 @@ export default function Application(props) {
 
   const loginUser = function(email, password) {
     verifyUserLogin(email, password);
-    if(userRole !== SHOW_USER_UNDEFINED) {
-      setUserView()
-    }    
+    if (userRole !== SHOW_USER_UNDEFINED) {
+      setUserView();
+    }
   };
   const setUserView = function() {
     if (userRole.trim() === "mentor") {
@@ -165,7 +166,7 @@ export default function Application(props) {
   const openWorkOrder = function(workorder_id) {
     getWorkorderByID(workorder_id);
     getMeetingLink(workorder_id);
-    console.log("callGetMeetingLink")
+    console.log("callGetMeetingLink");
     transitionView(SHOW_EXISTING_WO);
     return;
   };
@@ -187,14 +188,14 @@ export default function Application(props) {
   const markWorkorderClosed = function(workorder_id) {
     if (userRole.trim() === "mentor") {
       changeWorkorderStatus(userID, 3, workorder_id);
-      deleteMeetingLink(workorder_id)
+      deleteMeetingLink(workorder_id);
     }
     return;
   };
 
   const logout = function() {
     deleteLoginCookie();
-    resetState();    
+    resetState();
     transitionUser(SHOW_USER_UNDEFINED);
     transitionView(SHOW_LOGIN);
     return;
@@ -222,7 +223,7 @@ export default function Application(props) {
             <NewWorkorder
               student_id={userID}
               onCancel={() => { transitionView(SHOW_WO_LIST); }}
-              onSave={() => { transitionView(SHOW_EXISTING_WO); }}
+              onSave={() => { transitionView(SHOW_WO_LIST); }}
             />)}
 
           {mode === SHOW_EXISTING_WO && (
@@ -234,68 +235,68 @@ export default function Application(props) {
 
         </Fragment>)}
 
-      
-         {user === SHOW_USER_MENTOR && (
-          <Fragment>
-            <NavigationMentor
-              onShowNew={() => transitionView(SHOW_QUEUE)}
-              onShowInProgress={() => transitionView(SHOW_IN_PROG)}
-              onShowClosed={() => transitionView(SHOW_CLOSED)}
-              onShowMy={() => { transitionView(SHOW_MY_WO); }}
-              onLogout={() => { transitionUser(SHOW_USER_UNDEFINED); transitionView(SHOW_LOGIN); }}
-            />
-     
+
+      {user === SHOW_USER_MENTOR && (
+        <Fragment>
+          <NavigationMentor
+            onShowNew={() => transitionView(SHOW_QUEUE)}
+            onShowInProgress={() => transitionView(SHOW_IN_PROG)}
+            onShowClosed={() => transitionView(SHOW_CLOSED)}
+            onShowMy={() => { transitionView(SHOW_MY_WO); }}
+            onLogout={() => { transitionUser(SHOW_USER_UNDEFINED); transitionView(SHOW_LOGIN); }}
+          />
+
           {mode === SHOW_MY_WO && (
             < QueueList
               workorders={state.workorderList}
               onView={openWorkOrder}
-              />
+            />
           )}
 
-            {mode === SHOW_QUEUE && (
-              < QueueList
-                workorders={state.workorderList}
-                onView={openWorkOrder}
-                onHistory={openUserHistory}
-                onPickupTicket={markWorkorderInProgress}
-              />
-            )}
+          {mode === SHOW_QUEUE && (
+            < QueueList
+              workorders={state.workorderList}
+              onView={openWorkOrder}
+              onHistory={openUserHistory}
+              onPickupTicket={markWorkorderInProgress}
+            />
+          )}
 
-            {mode === SHOW_IN_PROG && (
-              < QueueList
-                workorders={state.workorderList}
-                onView={openWorkOrder}
-                onHistory={openUserHistory}
-              />
-            )}
+          {mode === SHOW_IN_PROG && (
+            < QueueList
+              workorders={state.workorderList}
+              onView={openWorkOrder}
+              onHistory={openUserHistory}
+            />
+          )}
 
-            {mode === SHOW_CLOSED && (
-              < QueueList
-                workorders={state.workorderList}
-                onView={openWorkOrder}
-                onHistory={openUserHistory}
-              />
-            )}
+          {mode === SHOW_CLOSED && (
+            < QueueList
+              workorders={state.workorderList}
+              onView={openWorkOrder}
+              onHistory={openUserHistory}
+            />
+          )}
 
-            {mode === SHOW_EXISTING_WO && (
-              <ViewWorkorder
-                workorder={state.workorderItem}
-                meetingLink={meetingLink}
-                userRole={userRole.trim()}
-                onCancel={() => { transitionView(SHOW_QUEUE); }}
-                onHistory={openUserHistory}
-                onPickupTicket={markWorkorderInProgress}
-                onCloseTicket={markWorkorderClosed}
-              />)}
+          {mode === SHOW_EXISTING_WO && (
+            <ViewWorkorder
+              workorder={state.workorderItem}
+              meetingLink={meetingLink}
+              userRole={userRole.trim()}
+              onCancel={() => { transitionView(SHOW_QUEUE); }}
+              onHistory={openUserHistory}
+              onPickupTicket={markWorkorderInProgress}
+              onCloseTicket={markWorkorderClosed}
+            />)}
 
 
-            {mode === SHOW_STUDENT_WO && (
-              <WorkorderList
-                workorders={state.workorderList}
-                onView={openWorkOrder}
-              />)}
+          {mode === SHOW_STUDENT_WO && (
+            <WorkorderList
+              workorders={state.workorderList}
+              onView={openWorkOrder}
+            />)}
 
-          </Fragment>)}
+        </Fragment>)}
 
 
       {mode === SHOW_LOGIN && (
