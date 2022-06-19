@@ -58,8 +58,8 @@
 }
 
 .button--danger {
-  color: red;
-  border-color: red;
+  color: #BF5700;
+  border-color: #BF5700;
   background-color: transparent;
 }
 
@@ -71,7 +71,7 @@
 
 .button--danger:hover {
   color: white;
-  background-color: red;
+  background-color: #BF5700;
 }
 
 .button--confirm:hover {
