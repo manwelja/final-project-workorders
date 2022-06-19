@@ -35,8 +35,8 @@ export default function NewWorkorder(props) {
   //populate the workorder when the application loads
   useEffect(() => {
     Promise.all([
-      axios.get(`http://${BASE_URL}/api/modules`),
-      axios.get(`http://${BASE_URL}/api/categories`),
+      axios.get(`/api/modules`),
+      axios.get(`/api/categories`),
     ]).then((all) => {
       //format modules for select box
       const formattedModules = all[0].data.map((itm) => ({ value: itm.id, label: itm.topic }));
@@ -171,9 +171,10 @@ export default function NewWorkorder(props) {
             <div class="wo-form-label"><label>Please provide a screenshot if applicable:</label></div>
             <div class="wo-form-data">
               <label for="file-upload" class="custom-file-upload">
-                <i class="fa fa-cloud-upload"></i> Custom Upload
+                Upload Screenshot
               </label>
               <input id="file-upload" type="file" accept="image/png, image/jpeg" onChange={handleFileChange}></input>
+              <span id="file-chosen">{state.selectedFileUpload.name}</span>
             </div>
           </div>
           <div class="wo-form-footer">
