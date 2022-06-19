@@ -90,12 +90,11 @@ export default function ViewWorkorder(props) {
               </a>
             </div>
 
-            <div class="wo-form-label-data">
-              <div class="wo-form-data">
+           <div class="wo-form-meetinglink-data">
                 {userRole === "mentor" && workorder.status_id === 2 && <MeetingLinkCreateForm id={workorder.id} />}
                 {userRole === "student" && workorder.status_id === 2 && <MeetingLinkViewForm id={workorder.id} meetingLink={props.meetingLink} />}
-              </div>
-            </div>
+           </div>
+      
 
             <div class="wo-form-footer">
               {userRole === "mentor" && <div><Button className="button--confirm" confirm onClick={(e) => { e.preventDefault(); onHistory(workorder.user_student_id); }}>See History</Button></div>}

@@ -23,6 +23,15 @@ body {
   display: flex;
 }
 
+.wo-form-meetinglink-data {
+  display: flex;
+  width:100%;
+  flex-flow: row no-wrap;
+  justify-content: flex-start;
+  margin-top: 25px;
+  padding: 5px;
+}
+
 /* .wo-form-header {
   display: flex;
   justify-content: center;

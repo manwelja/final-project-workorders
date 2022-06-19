@@ -65,20 +65,20 @@ const MeetingLinkCreateForm = (props) => {
   };
 
   return (
-    <article>
-      <section  class="wo-form-container">
-          <label class="wo-form-label-data">Please enter a meeting link for the assistance session: <a href={meetingLinkDisplay}>  {meetingLinkDisplay}</a></label>
+    <>
+         <label class="wo-form-label">Please enter a meeting link for the assistance session: <a href={meetingLinkDisplay}>  {meetingLinkDisplay}</a></label>
           <input
-            class="wo-form-data"
+            class="wo-meeting-link-text"
             type="text"
             name="meetingLink"
             placeholder="https://meet.google.com/xxx-xxxx-xxx"
             value={meetingLink}
             onChange={event => { setMeetingLink(event.target.value); }}
           />
+          <div class="wo-form-data">
               <button class="button--wo-inline" onClick={(event) => {event.preventDefault(); saveData() }}>Send</button>
-      </section>
-    </article >
+          </div>        
+    </>   
   );
 };
 
