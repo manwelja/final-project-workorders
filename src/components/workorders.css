@@ -37,6 +37,11 @@ body {
   transition: 0.3s;*/
 }
 
+.workorder-item-container:hover {
+  box-shadow: 22px 22px 21px 0px rgba(65,65,65,0.56);
+}
+
+
 .workorder-item-header {
   font-size: 1.5rem;
   width: 100%;
@@ -134,7 +139,7 @@ body {
 
 /* Add a hover effect (blue shadow) */
 .workorder-image:hover {
-  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+  box-shadow: 0 0 2px 1px rgba(74, 114, 92, 0.5);
 } 
 
 .hidden {
