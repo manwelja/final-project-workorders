@@ -38,8 +38,9 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 
 .nav-container-button div{
-  padding:20px;
+   padding:0px 20px;
 }
+
 
 .nav-app-logo {
   display: flex;
@@ -51,8 +52,10 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 
 .nav-login-email {
-  font-size:1rem;
+  font-size: 1rem;
   color: white;
+  text-align: end;
+  padding: 1rem 1.3rem 1rem 0rem;
 }
 
 .nav-container-buttons {
