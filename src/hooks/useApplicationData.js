@@ -88,7 +88,7 @@ export default function useApplicationData() {
   const resetState = function(workorderID) {
     setState({workorderList: [], workorderItem: {}});
     setMeetingLink("");
-    setUserID("");
+ //   setUserID("");
   };
 
   const getMeetingLink = (workorderID) => {
@@ -122,6 +122,7 @@ export default function useApplicationData() {
           else if (response.data.length > 1) {
             alert('Internal server error');
           } else {
+            console.log("loggin in")
             // validate password here
             if (userPassword === response.data[0].password) { // TO DO: ENCRYPT              )
               setCookie("user", userEmail, { path: "/" });

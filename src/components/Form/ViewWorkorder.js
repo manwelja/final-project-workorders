@@ -38,17 +38,6 @@ export default function ViewWorkorder(props) {
           </div>
           
           <div class="wo-form-label-data">
-          <div class="wo-form-label"><label>Status</label></div>
-            <div class="wo-form-data">
-            {workorder.status_description}
-            </div>  
-          </div>
-          <div class="wo-form-label-data">
-            <div class="wo-form-label"><label>Link to module</label></div>
-            <div class="wo-form-data">{workorder.link_to_module}</div>
-          </div>
-
-          <div class="wo-form-label-data">
             <div class="wo-form-label"><label>Mentor Name:</label></div>
             <div class="wo-form-data">{(workorder.mentor_first_name || "N/A") + " " + (workorder.mentor_last_name || "")}</div>
           </div>
@@ -64,6 +53,12 @@ export default function ViewWorkorder(props) {
                 {workorder.link_to_module}
               </div>
             </div>
+            <div class="wo-form-label-data">
+          <div class="wo-form-label"><label>Workoder Number: </label></div>
+            <div class="wo-form-data">
+            {workorder.id}
+            </div>  
+          </div>
             <div class="wo-form-label-data">
               <div class="wo-form-label"><label>Please describe your issue</label></div>
               <div class="wo-form-data">

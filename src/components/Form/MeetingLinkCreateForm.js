@@ -22,6 +22,7 @@ const MeetingLinkCreateForm = (props) => {
       .then((res) => {
         if(res.data.length) {
           setMeetingLink(res.data[0].meeting_link);
+          setMeetingLinkDisplay(res.data[0].meeting_link)
         }        
       })
       .catch(error => {
@@ -33,18 +34,20 @@ const MeetingLinkCreateForm = (props) => {
   const saveData = () => {
     //if a meeting link exists, update it
     if(meetingLink) {
-      deleteMeetingLink();
+      deleteMeetingLink()
+      .then( saveMeetingLink())
     } 
-    saveMeetingLink()
-
+    saveMeetingLink();
   }
   const saveMeetingLink = () => {
     // this object is just for organizing the data to be sent to the database
     const newData = { workorder_id: props.id, meeting_link: meetingLink};
     axios.post(`/api/meetingLinks`, newData)
       .then(() => {
+        console.log("display link", meetingLink)
         setMeetingLinkDisplay(meetingLink);
         //setMeetingLink("");
+        return;
       })
       .catch(error => {
         console.error(error);

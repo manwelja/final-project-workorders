@@ -83,8 +83,10 @@ export default function Application(props) {
       //save this data to state to refresh screen
       console.log("Received data from server - need to update view state ");
       if(mode === SHOW_EXISTING_WO) {
-        getWorkorderByID(state.workorderItem.id)
-        getMeetingLink(state.workorderItem.id)
+        if(getWorkorderByID(state.workorderItem.id)){
+          getWorkorderByID(state.workorderItem.id);
+          getMeetingLink(state.workorderItem.id);  
+        }
       } else {
         updateState();
       }
@@ -116,8 +118,11 @@ export default function Application(props) {
         getWorkordersByStatus(3);
         break;
       case SHOW_MY_WO:
+        console.log("get by mentor id", userID)
         //show workorders by mentor id
-        getWorkordersByMentorID(userID);
+   //     if(userID) {
+          getWorkordersByMentorID(userID);
+  //      }        
         break;
       case SHOW_STUDENT_WO:
         //show workorders by student id
@@ -126,7 +131,10 @@ export default function Application(props) {
       case SHOW_WO_LIST:
         //show workorders by student id
         console.log("get by student id", userID)
-        getWorkordersByStudentID(userID);
+   //     if(userID){
+          getWorkordersByStudentID(userID);
+   //     }
+        
         break;
       default:
         break;
@@ -140,10 +148,12 @@ export default function Application(props) {
   }, [mode]);
 
    useEffect(() => {
+    console.log("update state")
      updateState();
    }, [userID]);
 
    useEffect(() => {
+    console.log("update view")
      setUserView();
    }, [userRole]);
 
@@ -170,13 +180,16 @@ export default function Application(props) {
   };
 
   const openWorkOrder = function(workorder_id) {
-    getWorkorderByID(workorder_id);
-   // getMeetingLink(workorder_id);
-    transitionView(SHOW_EXISTING_WO);
+   // if(workorder_id){
+      getWorkorderByID(workorder_id);
+      // getMeetingLink(workorder_id);
+       transitionView(SHOW_EXISTING_WO);   
+  //  }
     return;
   };
 
   const openUserHistory = function(student_id) {
+    console.log("get by student id openhistory", userID)
     getWorkordersByStudentID(student_id);
     transitionView(SHOW_STUDENT_WO);
     return;
@@ -186,12 +199,13 @@ export default function Application(props) {
     if (userRole.trim() === "mentor") {
       changeWorkorderStatus(userID, 2, workorder_id);
     }
+    
     return;
   };
 
   const markWorkorderClosed = function(workorder_id) {
     if (userRole.trim() === "mentor") {
-      changeWorkorderStatus(userID, 3, workorder_id);
+      changeWorkorderStatus(userID, 3, workorder_id)
       deleteMeetingLink(workorder_id)
     }
     return;

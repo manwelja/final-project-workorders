@@ -1,9 +1,11 @@
 import "./navigation.css";
 import Button from "./Button";
 
+
 export default function NavigationStudent(props) {
   const { onShowNew, onShowInProgress, onShowClosed, onShowMy, getWorkordersByMentorID, onLogout } = props;
   const logoUrl = "./images/SOAR_Logo.png";
+ 
   return (
     <div class="nav-container">
       <div class="nav-app-logo"><img class="nav-app-logo" src={logoUrl} alt="Logo" /></div>
