@@ -94,92 +94,94 @@ export default function NewWorkorder(props) {
 
   };
   return (
-    <main class="workorder-form-main">
-      <article>
-        <form class="workorder-form" autoComplete="off" onSubmit={event => event.preventDefault()}>
-          <section class="wo-form-container">
-            <div class="wo-form-header"><h1>New Help Request</h1></div>
-            <div class="wo-form-label-data">
-              <div class="wo-form-label"><label>Student Name:</label></div>
-              <div class="wo-form-data">{props.student_name}</div>
+    <main class="workorder-form-main--new">
+      <form class="workorder-form" autoComplete="off" onSubmit={event => event.preventDefault()}>
+        <section class="wo-form-container--new">
+          <div class="wo-form-header"><h1>New Help Request</h1></div>
+          <div class="wo-form-label-data">
+            <div class="wo-form-label"><label>Student Name:</label></div>
+            <div class="wo-form-data">{props.student_name}</div>
+          </div>
+          <div class="wo-form-label-data">
+            <div class="wo-form-label"><label>Link to module:</label></div>
+            <div class="wo-form-data">
+              <input
+                class="wo-form-text-box"
+                name="module-link"
+                type="text"
+                placeholder="Enter URL here"
+                value={link_to_module}
+                onChange={(event) => {
+                  setLinkToModule(event.target.value);
+                }}
+              />
             </div>
-            <div class="wo-form-label-data">
-              <div class="wo-form-label"><label>Link to module</label></div>
-              <div class="wo-form-data">
-                <input
-                  class="wo-form-text-box"
-                  name="module-link"
-                  type="text"
-                  placeholder="Enter URL here"
-                  value={link_to_module}
-                  onChange={(event) => {
-                    setLinkToModule(event.target.value);
-                  }}
-                />
-              </div>
+          </div>
+          <div class="wo-form-label-data">
+            <div class="wo-form-label"><label>Please describe your issue:</label></div>
+            <div class="wo-form-data">
+              <input
+                class="wo-form-text-box"
+                name="description"
+                type="text"
+                placeholder="What's up?"
+                value={description}
+                onChange={(event) => {
+                  setDescription(event.target.value);
+                }}
+              />
             </div>
-            <div class="wo-form-label-data">
-              <div class="wo-form-label"><label>Please describe your issue</label></div>
-              <div class="wo-form-data">
-                <input
-                  class="wo-form-text-box"
-                  name="description"
-                  type="text"
-                  placeholder="What's up?"
-                  value={description}
-                  onChange={(event) => {
-                    setDescription(event.target.value);
-                  }}
-                />
-              </div>
+          </div>
+          <div class="wo-form-label-data">
+            <div class="wo-form-label"><label>Please specify your computer environment:</label></div>
+            <div class="wo-form-data">
+              <input
+                class="wo-form-text-box"
+                name="environment"
+                type="text"
+                placeholder="e.g. M1, Vagrant, Windows?"
+                value={environment}
+                onChange={(event) => {
+                  setEnvironment(event.target.value);
+                }}
+              />
             </div>
-            <div class="wo-form-label-data">
-              <div class="wo-form-label"><label>Please specify your computer environment</label></div>
-              <div class="wo-form-data">
-                <input
-                  class="wo-form-text-box"
-                  name="environment"
-                  type="text"
-                  placeholder="e.g. M1, Vagrant, Windows?"
-                  value={environment}
-                  onChange={(event) => {
-                    setEnvironment(event.target.value);
-                  }}
-                />
-              </div>
+          </div>
+          <div class="wo-form-label-data">
+            <div class="wo-form-label"><label>Please specify the category:</label></div>
+            <div class="wo-form-data">
+              <Select
+                options={state.categories}
+                onChange={handleCategoryChange}
+              />
             </div>
-            <div class="wo-form-label-data">
-              <div class="wo-form-label"><label>Please specify the category</label></div>
-              <div class="wo-form-data">
-                <Select
-                  options={state.categories}
-                  onChange={handleCategoryChange}
-                />
-              </div>
-            </div>
+          </div>
 
-            <div class="wo-form-label-data">
-              <div class="wo-form-label"><label>Please specify which module you're working on:</label></div>
-              <div class="wo-form-data">
-                <Select
-                  options={state.modules}
-                  onChange={handleModuleChange}
-                />
-              </div>
+          <div class="wo-form-label-data">
+            <div class="wo-form-label"><label>Please specify which framework/language you're working with:</label></div>
+            <div class="wo-form-data">
+              <Select
+                styles={{ color: 'darkgrey' }}
+                options={state.modules}
+                onChange={handleModuleChange}
+              />
             </div>
-            <div class="wo-form-label-data">
-              <div class="wo-form-label"><label>Please provide a screenshot if applicable:</label></div>
-              <div class="wo-form-data">
-                <input type="file" accept="image/png, image/jpeg" onChange={handleFileChange}></input>
-              </div>
+          </div>
+          <div class="wo-form-label-data">
+            <div class="wo-form-label"><label>Please provide a screenshot if applicable:</label></div>
+            <div class="wo-form-data">
+              <label for="file-upload" class="custom-file-upload">
+                <i class="fa fa-cloud-upload"></i> Custom Upload
+              </label>
+              <input id="file-upload" type="file" accept="image/png, image/jpeg" onChange={handleFileChange}></input>
             </div>
-            <div class="wo-form-footer">
-              <div><Button className="button--danger" danger onClick={() => { resetFormState(); }}>Cancel</Button></div>
-              <div><Button className="button--confirm" confirm onClick={() => { saveData(); }}>Save Me</Button></div>
-            </div>
-          </section>
-        </form>
-      </article>
+          </div>
+          <div class="wo-form-footer">
+            <div><Button className="button--danger" danger onClick={() => { resetFormState(); }}>Cancel</Button></div>
+            <div><Button className="button--confirm" confirm onClick={() => { saveData(); }}>Save Me</Button></div>
+          </div>
+        </section>
+      </form>
     </main>
   );
 };

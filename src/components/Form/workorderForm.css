@@ -5,12 +5,18 @@ body {
   justify-content: center;
 }
 
-.workorder-form-main {
+.workorder-form-main { /* May need to remove this later, need to check on shared class names */
   padding-top: 13rem;
   height: 95vh;
   display: flex;
   justify-content: center;
   /* padding-bottom: 12.1rem; */
+}
+
+.workorder-form-main--new {
+  padding-top: 14rem;
+  display: flex;
+  justify-content: center;
 }
 
 .workorder-form {
@@ -51,6 +57,23 @@ body {
   border: 1px solid rgba(0,0,0 ,0.15);
 }
 
+.wo-form-container--new {
+  width: 80vw;  
+  padding: 3px;
+  color: #414141;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  margin: 2rem 0rem 4rem 0rem;
+  /* background-color: rgb(101, 120, 96);
+  background-image: url("/public/images/brick-wall.png"); */
+  border: 1px solid;
+  background: rgba( 211, 211, 211, 0.5);
+  border: 1px solid rgba(0,0,0 ,0.15);
+}
+
+
 .wo-form-container-view-mentor {
     width: 70vw;
     /* padding-top: 15rem; */
@@ -86,11 +109,13 @@ body {
   width: 49%;
   justify-content: flex-start;
   padding: 5px;
+  font-size: 1.2rem;
 }
 .wo-form-data {
   width: 49%;
   justify-content: flex-start;
   padding: 5px;
+  font-size: 1rem;
 }
 .wo-form-footer {
   display: flex;
@@ -122,4 +147,15 @@ img {
 /* Add a hover effect (blue shadow) */
 img:hover {
   box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
 }
