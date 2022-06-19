@@ -42,13 +42,13 @@ export default function ViewWorkorder(props) {
               <div class="wo-form-data">{(workorder.mentor_first_name || "N/A") + " " + (workorder.mentor_last_name || "")}</div>
             </div>
             <div class="wo-form-label-data">
-              <div class="wo-form-label"><label>Status</label></div>
+              <div class="wo-form-label"><label>Status:</label></div>
               <div class="wo-form-data">
                 {workorder.status_description}
               </div>
             </div>
             <div class="wo-form-label-data">
-              <div class="wo-form-label"><label>Link to module</label></div>
+              <div class="wo-form-label"><label>Link to module:</label></div>
               <div class="wo-form-data">
                 {workorder.link_to_module}
               </div>
@@ -60,19 +60,19 @@ export default function ViewWorkorder(props) {
               </div>
             </div>
             <div class="wo-form-label-data">
-              <div class="wo-form-label"><label>Please describe your issue</label></div>
+              <div class="wo-form-label"><label>Please describe your issue:</label></div>
               <div class="wo-form-data">
                 {workorder.description}
               </div>
             </div>
             <div class="wo-form-label-data">
-              <div class="wo-form-label"><label>Please specify your computer environment</label></div>
+              <div class="wo-form-label"><label>Please specify your computer environment:</label></div>
               <div class="wo-form-data">
                 {workorder.environment}
               </div>
             </div>
             <div class="wo-form-label-data">
-              <div class="wo-form-label"><label>Please specify the category</label></div>
+              <div class="wo-form-label"><label>Please specify the category:</label></div>
               <div class="wo-form-data">
                 {workorder.category}
               </div>
