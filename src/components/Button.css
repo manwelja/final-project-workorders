@@ -109,9 +109,10 @@
   opacity: 0.7;
 }
 
-.button--top-nav:hover {
+.button:hover {
   background: white;
-  color: transparent;
+  /* color: rgba(255,255,255, 0); */
+  color: #4a725c;
 }
 
 .button-upload-file {
