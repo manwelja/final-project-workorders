@@ -29,7 +29,8 @@ body {
   flex-flow: row no-wrap;
   justify-content: flex-start;
   margin-top: 25px;
-  padding: 5px;
+  padding: 0rem 0rem 2rem 0rem;
+  align-items: center;
 }
 
 /* .wo-form-header {
@@ -95,8 +96,7 @@ body {
     justify-content: flex-start;
     /* margin: 2rem 0rem 4rem 0rem; */
     border: 1px solid;
-    background-image: url("/public/images/brick-wall.png");
-    background: #F0F0F0;
+    background: rgba( 211, 211, 211, 0.5);
     border: 1px solid rgba(0,0,0 ,0.15);
 }
 
@@ -121,7 +121,6 @@ body {
   font-size: 1.2rem;
 }
 .wo-form-data {
-  width: 49%;
   justify-content: flex-start;
   padding: 5px;
   font-size: 1rem;
@@ -168,3 +167,32 @@ input[type="file"] {
     padding: 6px 12px;
     cursor: pointer;
 }
+
+.wo-meeting-link-text {
+  height: 2rem;
+  padding: 0.2rem;
+  font-size: 1rem;
+  width: 19rem;
+  margin-right: 1rem;
+}
+
+#send-meeting-link {
+  font-size: 1rem;
+  height: 1.5rem;
+  width: 4rem;
+  text-align: center;
+}
+
+
+/* font-size: 1.25rem;
+  height: 2rem;
+  line-height: 1.2rem;
+  margin-right: 1rem;
+  margin-top: 1rem;
+  width: 7rem;
+  border-width: 2px;
+  border-style: solid;
+  border-color: white;
+  color: white;
+  background-color: transparent;
+  justify-items: center; */

@@ -53,14 +53,9 @@ export default function QueueListItem(props) {
         </div>
       </div>
       <div class="description-container">
-        <p class="queue-workorder-text"><span class="category-name">Description: </span>{description}</p>
+        <span class="queue-workorder-text--description"><span class="category-name">Description: </span>{description}</span>
       </div>
 
-      <div className={imageClass}>
-        <a href={screenshot_url}>
-          <img class="queue-image" src={screenshot_url} alt="Error Screenshot" />
-        </a>
-      </div>
       <div class="queue-workorder-footer">
         <div><div class="btn-workorder-footer" onClick={() => onHistory(student_id)}>See user History</div></div>
         <div><div class="btn-workorder-footer" onClick={() => onView(workorder_id)}>View</div></div>

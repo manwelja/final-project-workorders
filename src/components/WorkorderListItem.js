@@ -76,14 +76,6 @@ export default function WorkorderListItem(props) {
           <div class="workorder-item-description-container">
             <p class="workorder-item-text"><span class="category-name">Issue Description: </span>{description}</p>
           </div>
-          <div className={imageClass}>
-
-            <a href={screenshot_url}>
-              <img class="workorder-image" src={screenshot_url} alt="Error Screenshot" />
-            </a>
-          </div>
-          <div className={noImageClass}>
-          </div>
         </div>
 
         <div class="workorder-item-footer">

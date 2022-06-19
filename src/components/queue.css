@@ -24,7 +24,7 @@ body {
   height: 60%;
   margin: 1rem 1rem;
   display: flex;
-  justify-content: space-evenly;   
+  height: 375px;
   /* border: 1px solid rgba(0,0,0 ,0.15); */
   flex-direction: column;
   box-shadow: 3px 3px 10px rgb(0 0 0 / 5%);
@@ -78,8 +78,17 @@ body {
 }
 .queue-workorder-text {
   width: 100%;
-  font-size: 14px;
-  height: auto;
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  align-items: left;
+ }
+
+ .queue-workorder-text--description {
+  height: 6rem;
+  width: 100%;
+  font-size: 0.9rem;
   display: flex;
   flex-direction: column;
   text-align: left;
@@ -90,7 +99,7 @@ body {
   display: flex;
   justify-content: flex-start;
   align-items: left;
-  padding: 1rem;
+  padding: 0rem 1rem;
 }
 
 .queue-workorder-footer {
@@ -99,6 +108,7 @@ body {
   justify-content: flex-end;
   width: 100%;
   margin-bottom: 1rem;
+  padding-top: 1rem;
 }
 
 .btn-workorder-footer {

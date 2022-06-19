@@ -24,7 +24,7 @@ body {
   background: 	#F0F0F0;
 
   width: 30%;
-  height: 600px;
+  height: 390px;
   margin: 1rem 1rem;
   display: flex;
   /* justify-content: space-between;    */
@@ -103,7 +103,6 @@ body {
   flex-wrap: nowrap;
   justify-content: flex-end;
   width: 100%;
-  padding-top: 4rem;
 }
 
 .category-name {

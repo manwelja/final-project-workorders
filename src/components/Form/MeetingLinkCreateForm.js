@@ -16,69 +16,68 @@ const MeetingLinkCreateForm = (props) => {
   useEffect(() => {
     getMeetingLink();
   }, []);
-    
+
   const getMeetingLink = () => {
     axios.get(`/api/meetingLinks/${props.id}`)
       .then((res) => {
-        if(res.data.length) {
+        if (res.data.length) {
           setMeetingLink(res.data[0].meeting_link);
-          setMeetingLinkDisplay(res.data[0].meeting_link)
-        }        
+          setMeetingLinkDisplay(res.data[0].meeting_link);
+        }
       })
       .catch(error => {
         console.error(error);
       });
 
-  }
+  };
 
   const saveData = () => {
     //if a meeting link exists, update it
-    if(meetingLink) {
+    if (meetingLink) {
       deleteMeetingLink()
-      .then( saveMeetingLink())
-    } else
-    {
+        .then(saveMeetingLink());
+    } else {
       saveMeetingLink();
-    }   
-  }
+    }
+  };
   const saveMeetingLink = () => {
     // this object is just for organizing the data to be sent to the database
-    const newData = { workorder_id: props.id, meeting_link: meetingLink};
+    const newData = { workorder_id: props.id, meeting_link: meetingLink };
     axios.post(`/api/meetingLinks`, newData)
       .then(() => {
-        console.log("display link", meetingLink)
+        console.log("display link", meetingLink);
         setMeetingLinkDisplay(meetingLink);
         //setMeetingLink("");
         return;
       })
       .catch(error => {
         console.error(error);
-      })
-    };   
- 
+      });
+  };
+
   const deleteMeetingLink = () => {
     //Status id should be set to 1 initially - 
-    return axios.post(`/api/meetingLinks/${props.id}`, )
-    .then((res) => {
-      return;
-    }).catch((err) => console.log("error - should show screen")) 
+    return axios.post(`/api/meetingLinks/${props.id}`,)
+      .then((res) => {
+        return;
+      }).catch((err) => console.log("error - should show screen"));
   };
 
   return (
     <>
-         <label class="wo-form-label">Please enter a meeting link for the assistance session: <a href={meetingLinkDisplay}>  {meetingLinkDisplay}</a></label>
-          <input
-            class="wo-meeting-link-text"
-            type="text"
-            name="meetingLink"
-            placeholder="https://meet.google.com/xxx-xxxx-xxx"
-            value={meetingLink}
-            onChange={event => { setMeetingLink(event.target.value); }}
-          />
-          <div class="wo-form-data">
-              <button class="button--wo-inline" onClick={(event) => {event.preventDefault(); saveData() }}>Send</button>
-          </div>        
-    </>   
+      <label class="wo-form-label">Please enter a meeting link for the assistance session: <a href={meetingLinkDisplay}>  {meetingLinkDisplay}</a></label>
+      <input
+        class="wo-meeting-link-text"
+        type="text"
+        name="meetingLink"
+        placeholder="https://meet.google.com/xxx-xxxx-xxx"
+        value={meetingLink}
+        onChange={event => { setMeetingLink(event.target.value); }}
+      />
+      <div class="wo-form-data">
+        <button id="send-meeting-link" class="button--wo-inline" onClick={(event) => { event.preventDefault(); saveData(); }}>Send</button>
+      </div>
+    </>
   );
 };
 
