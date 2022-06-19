@@ -36,8 +36,10 @@ const MeetingLinkCreateForm = (props) => {
     if(meetingLink) {
       deleteMeetingLink()
       .then( saveMeetingLink())
-    } 
-    saveMeetingLink();
+    } else
+    {
+      saveMeetingLink();
+    }   
   }
   const saveMeetingLink = () => {
     // this object is just for organizing the data to be sent to the database
