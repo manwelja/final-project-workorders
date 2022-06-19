@@ -54,7 +54,7 @@ export default function ViewWorkorder(props) {
               </div>
             </div>
             <div class="wo-form-label-data">
-              <div class="wo-form-label"><label>Workoder Number: </label></div>
+              <div class="wo-form-label"><label>Workorder Number: </label></div>
               <div class="wo-form-data">
                 {workorder.id}
               </div>
@@ -107,8 +107,8 @@ export default function ViewWorkorder(props) {
 
       <div class="wo-form-label-data">
         <div class="wo-form-data">
-          {userRole === "student" && workorder.status_id === 3 && !workorder.mentor_notes && <StudentFeedback userRole={userRole} workorder={workorder} />}
-          {userRole === "mentor" && workorder.status_id === 3 && !workorder.student_notes && <MentorFeedback userRole={userRole} workorder={workorder} />}
+          {userRole === "student" && workorder.status_id === 3 && !workorder.student_notes && <StudentFeedback userRole={userRole} workorder={workorder} />}
+          {userRole === "mentor" && workorder.status_id === 3 && !workorder.mentor_notes && <MentorFeedback userRole={userRole} workorder={workorder} />}
         </div>
       </div>
     </>

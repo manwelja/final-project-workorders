@@ -243,6 +243,7 @@ export default function Application(props) {
           {mode === SHOW_NEW_WO && (
             <NewWorkorder
               student_id={userID}
+              student_email={cookies.user}
               onCancel={() => { transitionView(SHOW_WO_LIST); }}
               onSave={() => { transitionView(SHOW_WO_LIST); }}
             />)}
@@ -264,6 +265,7 @@ export default function Application(props) {
       {user === SHOW_USER_MENTOR && (
         <Fragment>
           <NavigationMentor
+            email={cookies.user}
             onShowNew={() => transitionView(SHOW_QUEUE)}
             onShowInProgress={() => transitionView(SHOW_IN_PROG)}
             onShowClosed={() => transitionView(SHOW_CLOSED)}

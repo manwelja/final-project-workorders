@@ -99,8 +99,8 @@ export default function NewWorkorder(props) {
         <section class="wo-form-container--new">
           <div class="wo-form-header"><h1>New Help Request</h1></div>
           <div class="wo-form-label-data">
-            <div class="wo-form-label"><label>Student Name:</label></div>
-            <div class="wo-form-data">{props.student_name}</div>
+            <div class="wo-form-label"><label>Student Email:</label></div>
+            <div class="wo-form-data">{props.student_email}</div>
           </div>
           <div class="wo-form-label-data">
             <div class="wo-form-label"><label>Link to module:</label></div>
