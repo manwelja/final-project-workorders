@@ -32,7 +32,7 @@ export default function QueueList(props) {
   });
 
   return (
-    <ul class="queue-container">{queueItem}</ul>
+    <div class="queue-container">{queueItem}</div>
   );
 
 };
