@@ -6,10 +6,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-
+// Component that renders Navigation bar with proper buttons displayed for mentor view
 
 export default function NavigationMentor(props) {
-  const { onShowNew, onShowInProgress, onShowClosed, onShowMy, getWorkordersByMentorID, onLogout, mode } = props;
+  const { onShowNew, onShowInProgress, onShowClosed, onShowMy, onLogout, mode } = props;
   const logoUrl = "./images/SOAR_Logo.png";
 
   const [menuValue, setMenuValue] = useState('Queue');
