@@ -93,7 +93,6 @@ export default function Application(props) {
     };
   };
   componentDidMount();
-  console.log('workorder id', state.workorderItem.id);
 
   const updateState = function() {
     // if user is student
