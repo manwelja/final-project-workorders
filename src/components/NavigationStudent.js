@@ -2,7 +2,7 @@ import "./navigation.css";
 import Button from "./Button";
 
 export default function NavigationStudent(props) {
-  const { onView, onNew, onLogout } = props;
+  const { onView, onNew, onLogout, mode } = props;
   const logoUrl = "./images/SOAR_Logo.png";
   return (
     <div class="nav-container">
@@ -11,10 +11,10 @@ export default function NavigationStudent(props) {
         <div class="nav-login-email">Logged in as: {props.email}</div>
         <div class="nav-container-buttons">
           <div class="nav-container-button">
-            <div><Button className="button--top-nav" top-nav onClick={onView}>My Workorders</Button></div>
+            <div><Button className="button--top-nav" top-nav onClick={onView} list={mode}>My Workorders</Button></div>
           </div>
           <div class="nav-container-button">
-            <div><Button className="button--top-nav" top-nav onClick={onNew}>New Workorder</Button></div>
+            <div><Button className="button--top-nav" top-nav onClick={onNew} new={mode}>New Workorder</Button></div>
           </div>
           <div class="nav-container-button">
             <div><Button className="button--top-nav" top-nav onClick={onLogout}>Logout</Button></div>

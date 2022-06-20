@@ -10,7 +10,9 @@ export default function Button(props) {
       "highlight--queue": props.queue === "SHOW_QUEUE",
       "highlight--progress": props.progress === "SHOW_IN_PROG",
       "highlight--closed": props.closed === "SHOW_CLOSED",
-      "highlight--wo": props.workorders === "SHOW_MY_WO"
+      "highlight--wo": props.workorders === "SHOW_MY_WO",
+      "highlight--list": props.list === "SHOW_WO_LIST",
+      "highlight--new": props.new === "SHOW_NEW_WO"
    });
 
    return (
