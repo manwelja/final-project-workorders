@@ -12,7 +12,6 @@ export default function Button(props) {
       "highlight--closed": props.closed === "SHOW_CLOSED",
       "highlight--wo": props.workorders === "SHOW_MY_WO"
    });
-   console.log('buttonClass', buttonClass);
 
    return (
       <button
