@@ -69,8 +69,19 @@ export default function useApplicationData() {
   };
 
   const changeWorkorderStatus = function(mentorID, newStatusID, workorder_id) {
-    //Status id should be set to 1 initially - 
-    return axios.post(`/api/update/workorder/${workorder_id}`, {user_mentor_id: mentorID, status_id: newStatusID})
+    const updates = {
+      user_mentor_id: mentorID,
+      status_id: newStatusID
+    }
+    const date = new Date();
+    const formatDate = date.toISOString(); 
+    
+    if (newStatusID === 3) {
+      updates.date_closed = formatDate;
+    } else if (newStatusID === 2) {
+      updates.date_pickup = formatDate;
+    }
+    return axios.post(`/api/update/workorder/${workorder_id}`, updates)
     .then((res) => {
       return;
     }).catch((err) => console.log("error - should show screen"))
