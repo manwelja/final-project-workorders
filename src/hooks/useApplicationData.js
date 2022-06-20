@@ -3,7 +3,6 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 
 // useApplicationData function responsible for managing all state changes in the application 
-
 export default function useApplicationData() {
 
   const [userID, setUserID] = useState("");
@@ -25,7 +24,7 @@ export default function useApplicationData() {
       });
   }, []);
 
-  // Fetches a workorder by its ID and updates state
+  // Fetches a workorder by its ID and updates state accordingly
   const getWorkorderByID = (workorderID) => {
     return axios.get(`api/workorders/${workorderID}`)
       .then((res) => {
@@ -36,6 +35,7 @@ export default function useApplicationData() {
 
   };
 
+  // Fetches workorders by student ID and updates state accordingly
   const getWorkordersByStudentID = (studentID) => {
     return axios.get(`api/workorders/student/${studentID}`)
       .then((res) => {
@@ -46,6 +46,7 @@ export default function useApplicationData() {
 
   };
 
+  // Fetches workorders by mentor ID and updates state accordingly
   const getWorkordersByMentorID = (mentorID) => {
     return axios.get(`api/workorders/mentor/${mentorID}`)
       .then((res) => {
@@ -56,6 +57,7 @@ export default function useApplicationData() {
 
   };
 
+  // Fetches workorders by status ID and updates state accordingly
   const getWorkordersByStatus = (statusID) => {
     return axios.get(`/api/queue/${statusID}`)
       .then((res) => {
@@ -65,6 +67,7 @@ export default function useApplicationData() {
       }).catch((err) => console.log("axios error", err));
   };
 
+  // Sets workorder status ID to updated status ID, which in turn updates date 
   const changeWorkorderStatus = function(mentorID, newStatusID, workorder_id) {
     const updates = {
       user_mentor_id: mentorID,
@@ -83,6 +86,7 @@ export default function useApplicationData() {
         return;
       }).catch((err) => console.log("error - should show screen"));
   };
+
 
   const deleteMeetingLink = function(workorderID) {
     //Status id should be set to 1 initially - 
@@ -137,8 +141,8 @@ export default function useApplicationData() {
           else if (response.data.length > 1) {
             alert('Internal server error');
           } else {
-            // Password is checked here. Unencrypted for the scope of this project
-            // Would utilize a secuity management platform such as Auth0 if use case expanded in the future
+            // Password is checked here. Unencrypted for the scope of this project. 
+            // Would use a secuity management platform such as Auth0 if use case expanded in the future
             if (userPassword === response.data[0].password) {
               setCookie("user", userEmail, { path: "/" });
               setUserID(response.data[0].id);

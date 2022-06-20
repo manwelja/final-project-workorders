@@ -9,23 +9,15 @@ import './workorders.css';
 export default function WorkorderListItem(props) {
   const {
     workorder_id,
-    mentor_name,
-    student_name,
-    ref_link,
     description,
-    mentor_notes,
-    student_rating,
-    student_notes,
     date_created,
     date_closed,
-    module,
     topic,
     category,
     status,
     onView,
     mentor_first_name,
     mentor_last_name,
-    screenshot_url,
     status_description,
     mentor_rating
   }
@@ -41,14 +33,7 @@ export default function WorkorderListItem(props) {
   const formattedDateTimeCreated = `${formattedDateCreated} ${formattedTimeCreated}`;
   const formattedDateTimeClosed = `${formattedDateClosed} ${formattedTimeClosed}`;
 
-  const imageClass = classNames("wo-form-screenshot",
-    { " hidden": !screenshot_url }
-  );
-
-  const noImageClass = classNames("wo-form-screenshot",
-    { " hidden": screenshot_url }
-  );
-
+  // Set classnames for conditional styling of status desctription and workorder item border colour based on order status
   const statusClass = classNames("wo-workorder-status", {
     "wo--new": status_description === "New",
     "wo--progress": status_description === "In Progress"
