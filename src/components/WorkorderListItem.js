@@ -49,6 +49,10 @@ export default function WorkorderListItem(props) {
     { " hidden": screenshot_url }
   );
 
+  const statusClass = classNames("wo-workorder-status", {
+    "wo--new": status_description === "New",
+    "wo--progress": status_description === "In Progress"
+  });
 
 
   return (
@@ -57,9 +61,9 @@ export default function WorkorderListItem(props) {
       <div class="workorder-item-header">
         <div id="workorder-title">Workorder #: {workorder_id}</div>
         <div class="workorder-item-header-right">
-          <div id="workorder-created">Created: {formattedDateTimeCreated}</div>
-          {status === 3 && <div id="workorder-created">Closed: {formattedDateTimeClosed}</div>}
-          {status !== 3 && <div id="workorder-created">Status: {status_description}</div>}
+          <div class="wo-workorder-created">Created: {formattedDateTimeCreated}</div>
+          {status === 3 && <div class="wo-workorder-created">Closed: {formattedDateTimeClosed}</div>}
+          {status !== 3 && <div class={statusClass}>Status: {status_description}</div>}
         </div>
       </div>
       <div class="workorder-item-body">

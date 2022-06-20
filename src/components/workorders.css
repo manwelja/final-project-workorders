@@ -118,8 +118,12 @@ body {
   font-weight: 800;
 }
 
-#workorder-created {
-  font-size: 1.75rem;
+.wo-workorder-created {
+  font-size: 0.9rem;
+}
+
+.wo-workorder-status {
+  font-size: 0.9rem;
 }
 
 .wo-form-screenshot {
@@ -144,4 +148,12 @@ body {
 
 .hidden {
   display: none;
+}
+
+.wo--new {
+  color: #BF5700
+}
+
+.wo--progress {
+  color: #4a725c
 }
