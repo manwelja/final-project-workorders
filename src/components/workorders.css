@@ -13,7 +13,7 @@ body {
   flex-wrap: wrap;
   justify-content: space-evenly;
   /*margin-top: 200px;*/
-  padding: 15rem 0rem 4rem 0rem;
+  padding: 13rem 0rem 4rem 0rem;
   margin-left: 5rem;
   min-height: 93vh;
   /* height: 20rem; */
@@ -31,6 +31,7 @@ body {
   border: 1px solid rgba(0,0,0 ,0.15);
   flex-direction: column; 
   padding: 1rem; 
+  box-shadow: 10px 10px 8px -3px rgba(106,106,106,0.68);
   /*box-shadow: 3px 3px 20px rgb(0 0 0 / 5%);
   border-left: solid lightgrey 3px;
   border-top: solid lightgrey 6px;
@@ -38,7 +39,7 @@ body {
 }
 
 .workorder-item-container:hover {
-  box-shadow: 22px 22px 21px 0px rgba(65,65,65,0.56);
+  transform: translateY(-2px);
 }
 
 
