@@ -86,7 +86,7 @@ export default function ViewWorkorder(props) {
             </div>
             <div className={imageClass}>
               <a href={workorder.screenshot_url}>
-                <img src={workorder.screenshot_url} alt="Error Screenshot" />
+                <img class="view-wo-img" src={workorder.screenshot_url} alt="Error Screenshot" />
               </a>
             </div>
 

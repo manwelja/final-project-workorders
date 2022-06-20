@@ -24,7 +24,7 @@ body {
   height: 60%;
   margin: 1rem 1rem;
   display: flex;
-  height: 400px;
+  height: 475px;
   padding: 1rem;
   /* border: 1px solid rgba(0,0,0 ,0.15); */
   flex-direction: column;
@@ -72,10 +72,12 @@ body {
 
 .queue-workorder-body-left {
   border: 1px black;
+  width: 65%;
 }
 
 .queue-workorder-body-right {
   border: 1px black;
+  margin-left: 1rem;
 }
 .queue-workorder-text {
   width: 100%;
@@ -84,6 +86,7 @@ body {
   flex-direction: column;
   text-align: left;
   align-items: left;
+  height: 3.5rem;
  }
 
  .queue-workorder-text--description {
@@ -100,7 +103,7 @@ body {
   display: flex;
   justify-content: flex-start;
   align-items: left;
-  padding: 0rem 1rem;
+  padding: 0rem 1rem 0.5rem 1rem;
 }
 
 .queue-workorder-footer {

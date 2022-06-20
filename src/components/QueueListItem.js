@@ -57,8 +57,8 @@ export default function QueueListItem(props) {
       </div>
 
       <div class="queue-workorder-footer">
-        <div><div class="btn-workorder-footer" onClick={() => onHistory(student_id)}>See user History</div></div>
-        <div><div class="btn-workorder-footer" onClick={() => onView(workorder_id)}>View</div></div>
+        <div><div class="btn-workorder-footer-viewhist" onClick={() => onHistory(student_id)}>See user History</div></div>
+        <div><div class="btn-workorder-footer-viewhist" onClick={() => onView(workorder_id)}>View</div></div>
         {status_id === 1 && <div><div class="btn-workorder-footer--pickup" onClick={() => onPickupTicket(workorder_id)}>Pick Up Ticket</div></div>}
       </div>
     </div >
