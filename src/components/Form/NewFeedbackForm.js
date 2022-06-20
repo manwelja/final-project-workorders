@@ -12,6 +12,7 @@ const NewFeedbackForm = (props) => {
   const [rating, setRating] = useState(0);
   const [description, setDescription] = useState("");
 
+
   const handleRating = (rating) => {
     setRating(rating);
   };
@@ -24,6 +25,7 @@ const NewFeedbackForm = (props) => {
   const saveData = () => {
     // this object is just for organizing the data to be sent to the database
     const newData = { description: description, rating: rating / 20};
+    console.log(rating)
     axios.post(`/api/update/workorder/${props.role}feedback/${props.workorderID}`, newData)
       .then(() => {
         setDescription("");
@@ -46,10 +48,11 @@ const NewFeedbackForm = (props) => {
           Please Provide Feedback For Your Interaction
           (this will be viewable by the student, so keep that in mind)
         </p>
-
         <Rating
-          onChange={handleRating}
+          onClick={handleRating}
+          count={5}
           ratingValue={rating}
+          initialRating={rating}
           size={50}
           fillColorArray={[
             '#f17a45',
@@ -74,7 +77,7 @@ const NewFeedbackForm = (props) => {
           />
           <br />
           <button onClick={() => resetForm()}>Cancel</button>
-          <button onClick={(e) => {e.preventDefault(); saveData()}}>Submit Feedback</button>
+          <button onClick={() => saveData()}>Submit Feedback</button>
         </form>
 
       </section>
