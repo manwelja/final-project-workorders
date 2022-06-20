@@ -52,12 +52,42 @@
 }
 
 .btn-workorder-footer--pickup {
-  color: #4a725c;
-  border: 1px solid;
-  font-size: 14px;
-  margin-right: 1rem;
-  padding: 0.5rem;
+    color: #F0F0F0;
+    background-color: #4a725c;
+    border: #4a725c 2px solid;
+    font-size: 1rem;
+    margin-right: 1rem;
+    padding: 0.5rem 0.2rem;
 }
+
+.btn-workorder-footer--pickup:hover {
+  color: #4a725c;
+  border-color: #4a725c;
+  background-color: transparent;
+  border: #4a725c 2px solid;
+  font-size: 1rem;
+  margin-right: 1rem;
+  padding: 0.5rem 0.2rem;
+}
+
+/* .button--wo-inline 
+    font-size: 1.25rem;
+    height: 2rem;
+    line-height: 1.2rem;
+    padding: 0.75rem 0.75rem 1.6rem 0.75rem;
+    width: 7rem;
+    border-width: 2px;
+    border-style: solid;
+    color: #F0F0F0;
+    background-color: #4a725c;
+    border-color: #4a725c;
+    /* color: #4a725c; */
+    /* background-color: transparent; */
+    justify-items: center;
+    text-align: center; */
+
+
+
 
 .button--wo-inline:hover {
   color: #4a725c;

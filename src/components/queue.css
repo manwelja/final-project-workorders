@@ -24,7 +24,8 @@ body {
   height: 60%;
   margin: 1rem 1rem;
   display: flex;
-  height: 375px;
+  height: 400px;
+  padding: 1rem;
   /* border: 1px solid rgba(0,0,0 ,0.15); */
   flex-direction: column;
   box-shadow: 3px 3px 10px rgb(0 0 0 / 5%);
@@ -86,13 +87,13 @@ body {
  }
 
  .queue-workorder-text--description {
-  height: 6rem;
   width: 100%;
   font-size: 0.9rem;
   display: flex;
   flex-direction: column;
   text-align: left;
   align-items: left;
+  height: 8rem;
  }
 
 .description-container {
