@@ -1,11 +1,10 @@
 // student view --> giving feedback to mentor
 import React from "react";
-import PreviousFeedback from "./PreviousFeedback";
+// import PreviousFeedback from "./PreviousFeedback";
 import NewFeedbackForm from "./NewFeedbackForm";
 
 const StudentFeedback = (props) => {
-  const { userRole, workorder } = props;
-console.log("WO props", workorder)
+
   return (
     <article
       style={{
@@ -14,9 +13,7 @@ console.log("WO props", workorder)
         "flex-direction": "column"
       }}
     >
-
-       <NewFeedbackForm workorderID={workorder.id} role={"student"}/>
-     
+      <NewFeedbackForm workorderID={props.workorder.id} role={"student"} />
     </article >
   );
 };

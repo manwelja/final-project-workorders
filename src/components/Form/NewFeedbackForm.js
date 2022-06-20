@@ -1,38 +1,34 @@
-import React, { useState, Fragment } from "react";
+import React, { useState } from "react";
 import { Rating } from "react-simple-star-rating";
 import axios from "axios";
-
-//environment variables
-const PORT = process.env.REACT_APP_API_PORT;
-const HOST = process.env.REACT_APP_API_HOST;
-const BASE_URL = HOST + ":" + PORT;
 
 const NewFeedbackForm = (props) => {
 
   const [rating, setRating] = useState(0);
   const [description, setDescription] = useState("");
 
-
+  // set the state of star rating component when clicked
   const handleRating = (rating) => {
     setRating(rating);
   };
 
+  // clear textarea and rating when cancel is clicked
   const resetForm = () => {
     setDescription("");
     setRating(0);
   };
 
+  // save feedback and rating to db
   const saveData = () => {
+
     // this object is just for organizing the data to be sent to the database
     const newData = { description: description, rating: rating / 20 };
-    console.log(rating);
+
     axios.post(`/api/update/workorder/${props.role}feedback/${props.workorderID}`, newData)
       .then(() => {
         setDescription("");
       })
-      .catch(error => {
-        console.error(error);
-      });
+      .catch(err => { console.error(err); });
   };
 
   return (
