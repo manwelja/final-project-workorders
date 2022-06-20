@@ -118,3 +118,23 @@
 .button-upload-file {
   background: red;
 }
+
+.highlight--queue {
+  background: white;
+  color: #4a725c;
+}
+
+.highlight--progress {
+  background: white;
+  color: #4a725c;
+}
+
+.highlight--closed {
+  background: white;
+  color: #4a725c;
+}
+
+.highlight--wo {
+  background: white;
+  color: #4a725c;
+}
