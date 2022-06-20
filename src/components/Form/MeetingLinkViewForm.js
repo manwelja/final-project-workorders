@@ -1,12 +1,5 @@
 // student view --> giving feedback to mentor
-import React, { useState, useEffect } from "react";
-import { Rating } from "react-simple-star-rating";
-import axios from "axios";
-
-//environment variables
-const PORT = process.env.REACT_APP_API_PORT;
-const HOST = process.env.REACT_APP_API_HOST;
-const BASE_URL = HOST + ":" + PORT;
+import React from "react";
 
 const MeetingLinkViewForm = (props) => {
 
