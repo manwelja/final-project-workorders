@@ -1,14 +1,14 @@
-// form when student is creating a new workorder
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
 import Button from "../Button";
-import './workorderForm.css';
 import Select from 'react-select';
+
+import axios from 'axios';
+
+import './workorderForm.css';
 
 //Cloudinary API environment variables
 const API_CLOUD_ID = process.env.REACT_APP_API_CLOUD_ID;
 const API_CLOUD_PRESET = process.env.REACT_APP_API_CLOUD_PRESET;
-
 
 export default function NewWorkorder(props) {
 
@@ -26,18 +26,6 @@ export default function NewWorkorder(props) {
   const [link_to_module, setLinkToModule] = useState("");
   const [environment, setEnvironment] = useState("");
 
-  //populate the workorder when the application loads
-  useEffect(() => {
-    Promise.all([
-      axios.get(`/api/modules`),
-      axios.get(`/api/categories`),
-    ]).then((all) => {
-      // format modules for select box
-      const formattedModules = all[0].data.map((itm) => ({ value: itm.id, label: itm.topic }));
-      const formattedCategories = all[1].data.map((itm) => ({ value: itm.id, label: itm.description }));
-      setState(prev => ({ ...prev, modules: formattedModules, categories: formattedCategories }));
-    });
-  }, []);
 
   // update the state to selected module from dropdown menu
   const handleModuleChange = (event) => {
@@ -76,7 +64,8 @@ export default function NewWorkorder(props) {
     return axios.post(url, fd, config)
       .then((res) => {
         postToDatabase(res.data.secure_url);
-      }).catch((err) => console.error(err));
+      })
+      .catch((err) => console.error(err));
   }
 
   // post data to db pertaining to the user's selection in the request form
@@ -93,7 +82,8 @@ export default function NewWorkorder(props) {
       })
       .then((res) => {
         return;
-      }).catch((err) => console.error(err));
+      })
+      .catch((err) => console.error(err));
 
   };
 
@@ -102,6 +92,21 @@ export default function NewWorkorder(props) {
     state.selectedFileUpload ? uploadToCloudifyData() : postToDatabase();
     onSave();
   }
+
+  //populate the workorder when the application loads
+  useEffect(() => {
+    Promise.all([
+      axios.get(`/api/modules`),
+      axios.get(`/api/categories`),
+    ])
+      .then((all) => {
+        // format modules for select box
+        const formattedModules = all[0].data.map((itm) => ({ value: itm.id, label: itm.topic }));
+        const formattedCategories = all[1].data.map((itm) => ({ value: itm.id, label: itm.description }));
+        setState(prev => ({ ...prev, modules: formattedModules, categories: formattedCategories }));
+      })
+      .catch((err) => { console.error(err); });
+  }, []);
 
   return (
     <main class="workorder-form-main--new">

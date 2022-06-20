@@ -1,4 +1,3 @@
-// student view --> giving feedback to mentor
 import React from "react";
 
 const MeetingLinkViewForm = (props) => {

@@ -1,5 +1,5 @@
-// student view --> giving feedback to mentor
 import React, { useState, useEffect } from "react";
+
 import axios from "axios";
 
 const MeetingLinkCreateForm = (props) => {
@@ -17,9 +17,7 @@ const MeetingLinkCreateForm = (props) => {
           setMeetingLinkDisplay(res.data[0].meeting_link);
         }
       })
-      .catch(err => {
-        console.error(err);
-      });
+      .catch((err) => { console.error(err); });
   };
 
   //save meeting link to db and display it in the form
@@ -33,20 +31,21 @@ const MeetingLinkCreateForm = (props) => {
         setMeetingLinkDisplay(meetingLink);
         return;
       })
-      .catch(err => {
-        console.error(err);
-      });
+      .catch((err) => { console.error(err); });
   };
 
+  // delete existing meeting link in db
   const deleteMeetingLink = () => {
 
     //Status id should be set to 1 initially
     return axios.post(`/api/meetingLinks/${props.id}`,)
       .then((res) => {
         return;
-      }).catch((err) => console.error(err));
+      })
+      .catch((err) => console.error(err));
   };
 
+  // save new meeting link to db
   const saveData = () => {
 
     //if a meeting link exists, update it
@@ -59,9 +58,7 @@ const MeetingLinkCreateForm = (props) => {
   };
 
   useEffect(() => {
-
     getMeetingLink();
-
   }, []);
 
   return (

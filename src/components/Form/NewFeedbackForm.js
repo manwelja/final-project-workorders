@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Rating } from "react-simple-star-rating";
+
 import axios from "axios";
 
 const NewFeedbackForm = (props) => {
@@ -28,7 +29,7 @@ const NewFeedbackForm = (props) => {
       .then(() => {
         setDescription("");
       })
-      .catch(err => { console.error(err); });
+      .catch((err) => { console.error(err); });
   };
 
   return (
