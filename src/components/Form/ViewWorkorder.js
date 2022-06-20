@@ -1,33 +1,23 @@
 // form when student is creating a new workorder
-import React, { useState, useEffect, Fragment } from "react";
-import axios from 'axios';
+import React from "react";
 import Button from "../Button";
 import MentorFeedback from "./MentorFeedback";
 import StudentFeedback from "./StudentFeedback";
 import MeetingLinkCreateForm from "./MeetingLinkCreateForm";
 import MeetingLinkViewForm from "./MeetingLinkViewForm";
-import useScript from '../../hooks/useScript';
 import './workorderForm.css';
-import Select from 'react-select';
 import classNames from "classnames";
 
-
-//Environment variables
-const PORT = process.env.REACT_APP_API_PORT;
-const HOST = process.env.REACT_APP_API_HOST;
-const BASE_URL = HOST + ":" + PORT;
-
-
 export default function ViewWorkorder(props) {
-  const { workorder, userRole, onCancel, onHistory, onPickupTicket, onCloseTicket } = props;
+  const { workorder, userRole, onHistory, onPickupTicket, onCloseTicket } = props;
 
+  // display screenshot in component only if it exists
   const imageClass = classNames("wo-form-view-screenshot",
     { " hidden": !workorder.screenshot_url }
   );
 
   return (
     <>
-
       <div>
         <form class="wo-form-view-main" autoComplete="off" onSubmit={event => event.preventDefault()}>
           <section class="wo-form-container-view-mentor">

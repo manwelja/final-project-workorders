@@ -1,22 +1,18 @@
 // form when student is creating a new workorder
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import Button from "../Button";
-import useScript from '../../hooks/useScript';
 import './workorderForm.css';
 import Select from 'react-select';
 
-//Environment variables
-const PORT = process.env.REACT_APP_API_PORT;
-const HOST = process.env.REACT_APP_API_HOST;
-const BASE_URL = HOST + ":" + PORT;
+//Cloudinary API environment variables
 const API_CLOUD_ID = process.env.REACT_APP_API_CLOUD_ID;
 const API_CLOUD_PRESET = process.env.REACT_APP_API_CLOUD_PRESET;
 
 
 export default function NewWorkorder(props) {
 
-  const { onCancel, onSave } = props;
+  const { onCancel, onSave, student_id, student_email } = props;
 
   const [state, setState] = useState({
     modules: [{}],
@@ -30,39 +26,35 @@ export default function NewWorkorder(props) {
   const [link_to_module, setLinkToModule] = useState("");
   const [environment, setEnvironment] = useState("");
 
-  console.log(props);
-
   //populate the workorder when the application loads
   useEffect(() => {
     Promise.all([
       axios.get(`/api/modules`),
       axios.get(`/api/categories`),
     ]).then((all) => {
-      //format modules for select box
+      // format modules for select box
       const formattedModules = all[0].data.map((itm) => ({ value: itm.id, label: itm.topic }));
       const formattedCategories = all[1].data.map((itm) => ({ value: itm.id, label: itm.description }));
       setState(prev => ({ ...prev, modules: formattedModules, categories: formattedCategories }));
     });
   }, []);
 
+  // update the state to selected module from dropdown menu
   const handleModuleChange = (event) => {
     setState(prev => ({ ...prev, selectedModule: event.value }));
   };
+
+  // update the state to selected category from dropdown menu
   const handleCategoryChange = (event) => {
     setState(prev => ({ ...prev, selectedCategory: event.value }));
   };
 
+  // update state when
   const handleFileChange = (event) => {
     setState(prev => ({ ...prev, selectedFileUpload: event.target.files[0] }));
   };
 
-  function saveData() {
-    //need validation
-    state.selectedFileUpload ? uploadToCloudifyData() : postToDatabase();
-    // resetFormState()
-    onSave();
-  }
-
+  // reset all states when cancel button is clicked
   function resetFormState() {
     setState(prev => ({ ...prev, selectedModule: "", selectedCategory: "", selectedFileUpload: "" }));
     setDescription("");
@@ -71,6 +63,7 @@ export default function NewWorkorder(props) {
     onCancel();
   }
 
+  // function to upload a user's screenshot to cloudinary
   function uploadToCloudifyData() {
     const url = `https://api.cloudinary.com/v1_1/${API_CLOUD_ID}/upload`;
     const fd = new FormData();
@@ -83,16 +76,33 @@ export default function NewWorkorder(props) {
     return axios.post(url, fd, config)
       .then((res) => {
         postToDatabase(res.data.secure_url);
-      }).catch((err) => console.log(err));
+      }).catch((err) => console.error(err));
   }
-  //Status id should be set to 1 initially - 
+
+  // post data to db pertaining to the user's selection in the request form
   const postToDatabase = (filePath = "") => {
-    return axios.post(`api/workorders`, { user_student_id: props.student_id, category_id: parseInt(state.selectedCategory), module_id: parseInt(state.selectedModule), environment: environment, description: description, link_to_module: link_to_module, screenshot_url: filePath })
+    return axios.post(`api/workorders`,
+      {
+        user_student_id: student_id,
+        category_id: parseInt(state.selectedCategory),
+        module_id: parseInt(state.selectedModule),
+        environment: environment,
+        description: description,
+        link_to_module: link_to_module,
+        screenshot_url: filePath
+      })
       .then((res) => {
         return;
-      }).catch((err) => console.log("error - should show screen"));
+      }).catch((err) => console.error(err));
 
   };
+
+  // upload screenshot to cloudinary and post to db is screenshot exists, otherwise post to db
+  function saveData() {
+    state.selectedFileUpload ? uploadToCloudifyData() : postToDatabase();
+    onSave();
+  }
+
   return (
     <main class="workorder-form-main--new">
       <form class="workorder-form" autoComplete="off" onSubmit={event => event.preventDefault()}>
@@ -100,7 +110,7 @@ export default function NewWorkorder(props) {
           <div class="wo-form-header"><h1>New Help Request</h1></div>
           <div class="wo-form-label-data">
             <div class="wo-form-label"><label>Student Email:</label></div>
-            <div class="wo-form-data">{props.student_email}</div>
+            <div class="wo-form-data">{student_email}</div>
           </div>
           <div class="wo-form-label-data">
             <div class="wo-form-label"><label>Link to module:</label></div>
