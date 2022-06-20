@@ -23,8 +23,8 @@ const NewFeedbackForm = (props) => {
 
   const saveData = () => {
     // this object is just for organizing the data to be sent to the database
-    const newData = { description: description, rating: rating / 20 };
-    axios.post(`/api/update/workorder/studentfeedback/${props.workorderID}`, newData)
+    const newData = { description: description, rating: rating / 20};
+    axios.post(`/api/update/workorder/${props.role}feedback/${props.workorderID}`, newData)
       .then(() => {
         setDescription("");
       })
@@ -74,7 +74,7 @@ const NewFeedbackForm = (props) => {
           />
           <br />
           <button onClick={() => resetForm()}>Cancel</button>
-          <button onClick={() => saveData()}>Submit Feedback</button>
+          <button onClick={(e) => {e.preventDefault(); saveData()}}>Submit Feedback</button>
         </form>
 
       </section>

@@ -15,7 +15,7 @@ const MeetingLinkViewForm = (props) => {
       <section>
         <div class="wo-form-container">
           <div class="wo-form-label-data">Please use the following link to meet with your mentor:</div>
-          <div class="wo-form-data"><a href={props.meetingLink}> {props.meetingLink} </a></div>
+          <div class="wo-form-data"><a href={props.meetingLink}  target="_blank" rel="noreferrer"> {props.meetingLink} </a></div>
         </div>
       </section>
     </article >
