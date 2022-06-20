@@ -10,7 +10,7 @@ const useScript = url => {
     document.body.appendChild(script);
     return () => {
       document.body.removeChild(script);
-    }
+    };
   }, [url]);
 };
 

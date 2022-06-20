@@ -2,8 +2,11 @@ import React from "react";
 import classNames from "classnames";
 import "./Button.css";
 
+// Component for buttons implemented in the application
 export default function Button(props) {
 
+   // Set classnames for conditional rendering of buttons
+   // Lines 12-17 are used to highlight the top nav bar buttons when a user is navigated to a specific page
    const buttonClass = classNames("button", {
       "button--confirm": props.confirm,
       "button--danger": props.danger,

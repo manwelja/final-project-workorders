@@ -12,10 +12,10 @@ export default function NavigationStudent(props) {
   const { onShowNew, onShowInProgress, onShowClosed, onShowMy, getWorkordersByMentorID, onLogout, mode } = props;
   const logoUrl = "./images/SOAR_Logo.png";
 
-  const [menuValue, setMenuValue]=useState('Queue');
-  const handleSelect=(e)=>{
-    setMenuValue(e)
-  }
+  const [menuValue, setMenuValue] = useState('Queue');
+  const handleSelect = (e) => {
+    setMenuValue(e);
+  };
 
   return (
     <div class="nav-container">
@@ -24,8 +24,8 @@ export default function NavigationStudent(props) {
         <div class="nav-login-email">Logged in as: {props.email}</div>
         <div class="nav-container-buttons">
 
-        <style type="text/css">
-        {`
+          <style type="text/css">
+            {`
         .queue-dropdown-menu {
           background: transparent;
           color: white;
@@ -61,25 +61,25 @@ export default function NavigationStudent(props) {
         }
 
       `}
-      </style>
+          </style>
 
-      <div>
-        <Dropdown as={ButtonGroup} onSelect={handleSelect} className="queue-dropdown-menu header">
-          <Dropdown.Toggle className="queue-dropdown-menu header" variant="outline-light"> {menuValue}</Dropdown.Toggle>
-          <Dropdown.Menu className="queue-dropdown-menu" >
-            <Dropdown.Item className="queue-dropdown-menu-item" onClick={onShowNew} eventKey="Queue">Queue</Dropdown.Item>
-            <Dropdown.Item className="queue-dropdown-menu-item" onClick={onShowInProgress} eventKey="In Progress">In Progress</Dropdown.Item>
-            <Dropdown.Item className="queue-dropdown-menu-item" onClick={onShowClosed} eventKey="Completed">Completed</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-      </div>
-        <div class="nav-container-button">
-          <div><Button className="button--top-nav" top-nav onClick={onShowMy} workorders={mode}>My Workorders</Button></div>
+          <div>
+            <Dropdown as={ButtonGroup} onSelect={handleSelect} className="queue-dropdown-menu header">
+              <Dropdown.Toggle className="queue-dropdown-menu header" variant="outline-light"> {menuValue}</Dropdown.Toggle>
+              <Dropdown.Menu className="queue-dropdown-menu" >
+                <Dropdown.Item className="queue-dropdown-menu-item" onClick={onShowNew} eventKey="Queue">Queue</Dropdown.Item>
+                <Dropdown.Item className="queue-dropdown-menu-item" onClick={onShowInProgress} eventKey="In Progress">In Progress</Dropdown.Item>
+                <Dropdown.Item className="queue-dropdown-menu-item" onClick={onShowClosed} eventKey="Completed">Completed</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
+          <div class="nav-container-button">
+            <div><Button className="button--top-nav" top-nav onClick={onShowMy} workorders={mode}>My Workorders</Button></div>
+          </div>
+          <div class="nav-container-button">
+            <div><Button className="button--top-nav" top-nav onClick={onLogout}>Logout</Button></div>
+          </div>
         </div>
-        <div class="nav-container-button">
-          <div><Button className="button--top-nav" top-nav onClick={onLogout}>Logout</Button></div>
-        </div>
-      </div>
       </div>
     </div>
   );

@@ -1,17 +1,12 @@
-// COMPONENT THAT PULLS WORKORDER INFORMATION AND DISPLAYS IT
-// AARON
-// workorder_from_queue -> what mentor sees when they open the link
 import React from "react";
-
 import ActiveTicket from "./Form/ActiveTicket";
 import OpenTicket from "./Form/OpenTicket";
 import TicketTime from "./Form/TicketTime";
 import ModuleName from "./Form/ModuleName";
 import Tag from "./Form/Tag";
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
+// Form component that pulls workorder information and displays it
 const Form = (props) => {
 
   const tagItems = props.data.tags.map(tag => {
