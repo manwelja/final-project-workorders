@@ -8,7 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 
 
-export default function NavigationStudent(props) {
+export default function NavigationMentor(props) {
   const { onShowNew, onShowInProgress, onShowClosed, onShowMy, getWorkordersByMentorID, onLogout, mode } = props;
   const logoUrl = "./images/SOAR_Logo.png";
 
