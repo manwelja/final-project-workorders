@@ -51,7 +51,18 @@ body {
   flex-flow: column nowrap;
   padding: 1rem;
   transition: 0.3s;
-  border-bottom: 0.25rem solid #4a725c;
+}
+
+.header--new{
+  border-bottom: 0.25rem solid #BF5700;
+}
+
+.header--progress{
+    border-bottom: 0.25rem solid #4a725c;
+}
+
+.header--closed{
+    border-bottom: 0.25rem solid #6a6a6a;
 }
 
 .workorder-item-header-right {

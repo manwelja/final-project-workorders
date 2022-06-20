@@ -54,11 +54,17 @@ export default function WorkorderListItem(props) {
     "wo--progress": status_description === "In Progress"
   });
 
+  const headerClass = classNames("workorder-item-header", {
+    "header--new": status_description === "New",
+    "header--progress": status_description === "In Progress",
+    "header--closed": status_description === "Closed"
+  });
+
 
   return (
     <div class="workorder-item-container">
 
-      <div class="workorder-item-header">
+      <div class={headerClass}>
         <div id="workorder-title">Workorder #: {workorder_id}</div>
         <div class="workorder-item-header-right">
           <div class="wo-workorder-created">Created: {formattedDateTimeCreated}</div>
