@@ -38,9 +38,9 @@ body {
   transition: 0.3s;*/
 }
 
-.workorder-item-container:hover {
+/* .workorder-item-container:hover {
   transform: translateY(-2px);
-}
+} */
 
 
 .workorder-item-header {
@@ -141,14 +141,6 @@ body {
   font-size: 0.9rem;
 }
 
-.wo-form-screenshot {
-  display:flex;
-  font-size: 12px;
-  width:8rem;
-  height: 8rem;
-  justify-content: flex-start;
-  margin-bottom: 15px;
-}
 
 
 .workorder-image {

@@ -21,7 +21,7 @@ const BASE_URL = HOST + ":" + PORT;
 export default function ViewWorkorder(props) {
   const { workorder, userRole, onCancel, onHistory, onPickupTicket, onCloseTicket } = props;
 
-  const imageClass = classNames("wo-form-screenshot",
+  const imageClass = classNames("wo-form-view-screenshot",
     { " hidden": !workorder.screenshot_url }
   );
 

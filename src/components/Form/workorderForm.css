@@ -50,6 +50,12 @@ body {
   border-bottom: 0.25rem solid #4a725c;
 }
 
+.wo-form-view-screenshot {
+  display:flex;
+  font-size: 12px;
+  justify-content: flex-start;
+  margin-bottom: 15px;
+}
 
 .wo-form-container {
   width: 80vw;  
@@ -150,8 +156,9 @@ body {
   border: 1px solid #ddd; /* Gray border */
   border-radius: 4px;  /* Rounded border */
   padding: 5px; /* Some padding */
-  width: 50rem;
+  width: 100%;
   height: auto;
+  margin-top: 2rem;
 }
 
 
@@ -198,6 +205,7 @@ input[type="file"] {
 
 .feedback-input-box {
   font-size: 1rem;
+  color: #707070;
 }
 
 

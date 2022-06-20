@@ -34,7 +34,7 @@ export default function QueueListItem(props) {
   };
 
   return (
-    <div class="queue-workorder-box">
+    <div class="queue-workorder-box-hist">
       <div className={headerStatusClass}>
         <div id="workorder-title">Work Order #: {workorderID}</div>
         {status_id !== 3 && <div id="workorder-created">Created {age(date_created)} ago</div>}
@@ -51,14 +51,14 @@ export default function QueueListItem(props) {
           <p class="queue-workorder-text"><span class="category-name">Category: </span>{category}</p>
         </div>
       </div>
-      <div class="description-container">
+      <div class="description-container-hist">
         <p class="queue-workorder-text"><span class="category-name">Description: </span>{description}</p>
       </div>
 
 
       <div class="queue-workorder-footer">
-        <div><a class="btn-workorder-footer" onClick={() => onView(workorder_id)}>View</a></div>
-        {status_id === 1 && <div><a class="btn-workorder-footer" onClick={() => onPickupTicket(workorder_id)}>Pick Up Ticket</a></div>}
+        <div><div class="btn-workorder-footer-viewhist" onClick={() => onView(workorder_id)}>View</div></div>
+        {status_id === 1 && <div><div class="btn-workorder-footer--pickup" onClick={() => onPickupTicket(workorder_id)}>Pick Up Ticket</div></div>}
       </div>
     </div >
   );
