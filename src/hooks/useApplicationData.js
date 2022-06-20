@@ -16,7 +16,7 @@ export default function useApplicationData() {
     workorderItem: {},
   });
 
-  //populate the queue list when the application loads
+  // Populate the queue list when the application loads
   useEffect(() => {
 
     axios.get(`/api/queue/1`)
@@ -25,13 +25,12 @@ export default function useApplicationData() {
       });
   }, []);
 
+  // Fetches a workorder by its ID and updates state
   const getWorkorderByID = (workorderID) => {
     return axios.get(`api/workorders/${workorderID}`)
       .then((res) => {
-        console.log(res.data);
         setState(prev => ({ ...prev, workorderItem: res.data[0], workorderList: [] }));
         getMeetingLink(workorderID);
-        // setOneWorkorder(res.data[0]);
         return;
       }).catch((err) => console.log("axios error", err));
 
@@ -40,7 +39,6 @@ export default function useApplicationData() {
   const getWorkordersByStudentID = (studentID) => {
     return axios.get(`api/workorders/student/${studentID}`)
       .then((res) => {
-        console.log("history", res.data);
         setState(prev => ({ ...prev, workorderItem: {}, workorderList: res.data }));
         setMeetingLink("");
         return;
@@ -88,7 +86,6 @@ export default function useApplicationData() {
 
   const deleteMeetingLink = function(workorderID) {
     //Status id should be set to 1 initially - 
-    console.log("deleteLink", workorderID);
     return axios.post(`/api/meetingLinks/${workorderID}`)
       .then((res) => {
         return;
@@ -100,6 +97,7 @@ export default function useApplicationData() {
     setMeetingLink("");
     //   setUserID("");
   };
+
 
   const getMeetingLink = (workorderID) => {
     return axios.get(`/api/meetingLinks/${workorderID}`)
