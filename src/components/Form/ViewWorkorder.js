@@ -50,7 +50,7 @@ export default function ViewWorkorder(props) {
             <div class="wo-form-label-data">
               <div class="wo-form-label"><label>Link to module:</label></div>
               <div class="wo-form-data">
-                {workorder.link_to_module}
+                <a href={workorder.link_to_module} target="_blank" rel="noreferrer">{workorder.link_to_module}</a>
               </div>
             </div>
             <div class="wo-form-label-data">
@@ -85,7 +85,7 @@ export default function ViewWorkorder(props) {
               </div>
             </div>
             <div className={imageClass}>
-              <a href={workorder.screenshot_url}>
+              <a href={workorder.screenshot_url} target="_blank" rel="noreferrer">
                 <img class="view-wo-img" src={workorder.screenshot_url} alt="Error Screenshot" />
               </a>
             </div>
