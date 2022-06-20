@@ -24,8 +24,8 @@ const NewFeedbackForm = (props) => {
 
   const saveData = () => {
     // this object is just for organizing the data to be sent to the database
-    const newData = { description: description, rating: rating / 20};
-    console.log(rating)
+    const newData = { description: description, rating: rating / 20 };
+    console.log(rating);
     axios.post(`/api/update/workorder/${props.role}feedback/${props.workorderID}`, newData)
       .then(() => {
         setDescription("");
@@ -45,8 +45,7 @@ const NewFeedbackForm = (props) => {
 
       <section style={{ textAlign: "center" }}>
         <p>
-          Please Provide Feedback For Your Interaction
-          (this will be viewable by the student, so keep that in mind)
+          Please Provide Feedback For Your Interaction:
         </p>
         <Rating
           onClick={handleRating}
@@ -66,18 +65,18 @@ const NewFeedbackForm = (props) => {
 
       <section>
         <form autoComplete="off" onSubmit={event => event.preventDefault()}>
-          <label>Please Provide Feedback For Your Interaction:</label>
           <br />
-          <input
-            type="text"
+          <textarea
+            class="feedback-input-box"
+            cols="75"
             name="student_notes"
             placeholder="Leave some feedback"
             value={description}
             onChange={event => { setDescription(event.target.value); }}
           />
           <br />
-          <button onClick={() => resetForm()}>Cancel</button>
-          <button onClick={() => saveData()}>Submit Feedback</button>
+          <button class="btn-workorder-footer-viewhist" onClick={() => resetForm()}>Cancel</button>
+          <button class="btn-workorder-footer-viewhist" onClick={() => saveData()}>Submit Feedback</button>
         </form>
 
       </section>

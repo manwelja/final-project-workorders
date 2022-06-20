@@ -28,7 +28,7 @@ export default function ViewWorkorder(props) {
   return (
     <>
 
-      <article>
+      <div>
         <form class="wo-form-view-main" autoComplete="off" onSubmit={event => event.preventDefault()}>
           <section class="wo-form-container-view-mentor">
             <div class="wo-form-header"><h1>View Help Request</h1></div>
@@ -103,10 +103,11 @@ export default function ViewWorkorder(props) {
             </div>
           </section>
         </form>
-      </article>
 
-      <div class="wo-form-label-data">
-        <div class="wo-form-data">
+      </div>
+
+      <div class="wo-form-feedback-container">
+        <div class="wo-form-feedback-data">
           {userRole === "student" && workorder.status_id === 3 && !workorder.student_notes && <StudentFeedback userRole={userRole} workorder={workorder} />}
           {userRole === "mentor" && workorder.status_id === 3 && !workorder.mentor_notes && <MentorFeedback userRole={userRole} workorder={workorder} />}
         </div>

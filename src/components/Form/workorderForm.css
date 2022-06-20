@@ -109,7 +109,6 @@ body {
 
 .wo-form-label-data {
   display: flex;
-  width:100%;
   flex-flow: row no-wrap;
   justify-content: flex-start;
   padding: 5px;
@@ -118,12 +117,13 @@ body {
   width: 49%;
   justify-content: flex-start;
   padding: 5px;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 .wo-form-data {
   justify-content: flex-start;
   padding: 5px;
   font-size: 1rem;
+  width: 50%;
 }
 .wo-form-footer {
   display: flex;
@@ -141,6 +141,7 @@ body {
 .wo-form-screenshot {
   display:flex;
   width:100%;
+  height: auto;
   justify-content: center;
   margin-bottom: 15px;
 }
@@ -149,7 +150,8 @@ body {
   border: 1px solid #ddd; /* Gray border */
   border-radius: 4px;  /* Rounded border */
   padding: 5px; /* Some padding */
-  width: 350px; /* Set a small width */
+  width: 50rem;
+  height: auto;
 }
 
 
@@ -177,6 +179,25 @@ input[type="file"] {
   height: 1.5rem;
   width: 4rem;
   text-align: center;
+}
+
+.wo-form-container-meetlink {
+  font-size: 1rem;
+}
+
+.wo-form-feedback-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0rem;
+}
+
+.wo-form-feedback-data {
+  color: #414141;
+}
+
+.feedback-input-box {
+  font-size: 1rem;
 }
 
 
