@@ -12,20 +12,19 @@ import useVisualMode from "../hooks/useVisualMode";
 import useUserMode from "../hooks/useUserMode";
 import useApplicationData from "../hooks/useApplicationData";
 import Footer from "./Footer";
-import axios from "axios";
 import "./index.css";
-
 import { w3cwebsocket as W3CWebSocket } from "websocket";
+
 //Environment variables
 const PORT = process.env.REACT_APP_API_PORT;
 const HOST = process.env.REACT_APP_API_HOST;
 const BASE_URL = HOST + ":" + PORT;
 const client = new W3CWebSocket(`ws://${BASE_URL}`);
 
-// if user is undefined
+// if user is undefined, show the login page
 const SHOW_LOGIN = "SHOW_LOGIN";
 
-// if user is student
+// if user is a student, the following modes are available
 const SHOW_WO_LIST = "SHOW_WO_LIST";
 const SHOW_NEW_WO = "SHOW_NEW_WO";
 const SHOW_EXISTING_WO = "SHOW_EXISTING_WO";
@@ -33,14 +32,14 @@ const SHOW_USER_STUDENT = "SHOW_USER_STUDENT";
 const SHOW_USER_MENTOR = "SHOW_USER_MENTOR";
 const SHOW_USER_UNDEFINED = "SHOW_USER_UNDEFINED";
 
-// if user is mentor
+// if user is a mentor, the following modes are available
 const SHOW_QUEUE = "SHOW_QUEUE";
 const SHOW_IN_PROG = "SHOW_IN_PROG";
 const SHOW_CLOSED = "SHOW_CLOSED";
 const SHOW_MY_WO = "SHOW_MY_WO";
 const SHOW_STUDENT_WO = "SHOW_STUDENT_WO";
 
-//Main component that is responsible for invoking children to display workorder system content
+// Main component that is responsible for invoking children to display workorder system content
 export default function Application(props) {
   //declare the functions that are being exported in the useApplicationData hook
   //Display the login component - the login will determine what the user will ultimately see
