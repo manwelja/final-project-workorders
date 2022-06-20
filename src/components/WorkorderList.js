@@ -1,4 +1,3 @@
-// Emma - my workorders --> Just need it to link to them
 import React from "react";
 import WorkorderListItem from "./WorkorderListItem";
 import 'bootstrap/dist/css/bootstrap.min.css';
