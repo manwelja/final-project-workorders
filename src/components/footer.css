@@ -1,7 +1,3 @@
-a {
-  color: white;
-  text-decoration: none;
-}
 
 .footer-container {
   height: 6vh;
@@ -20,4 +16,9 @@ a {
 
 .team-member-name{
   text-align: center;
+}
+
+.github-handle > a {
+  color: white;
+  text-decoration: none;
 }
