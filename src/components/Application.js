@@ -74,8 +74,6 @@ export default function Application(props) {
 
     // Update the state to reflect the data sent from the server via websocket
     client.onmessage = (message) => {
-      const dataFromServer = JSON.parse(message.data);
-      // Save this data to state to refresh screen
       if (mode === SHOW_EXISTING_WO) {
         getWorkorderByID(state.workorderItem.id);
         getMeetingLink(state.workorderItem.id);
