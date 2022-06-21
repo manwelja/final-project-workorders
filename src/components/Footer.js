@@ -5,18 +5,18 @@ export default function Footer() {
     <div class="footer-container">
       <div class="name-container">
         <div class="team-member-name">Jen Manwell</div>
-        <div class="logo-github"></div>
-        <div class="github-handle">@manwelja</div>
+        <span class="logo-github"><i class="fa-brands fa-github"></i></span>
+        <span class="github-handle"> <a href="https://github.com/manwelja">@manwelja</a></span>
       </div>
       <div class="name-container">
         <div class="team-member-name">Aaron Au</div>
-        <div class="logo-github"></div>
-        <div class="github-handle">@chunloy</div>
+        <span class="logo-github"><i class="fa-brands fa-github"></i></span>
+        <span class="github-handle"> <a href="https://github.com/chunloy">@chunloy</a></span>
       </div>
       <div class="name-container">
         <div class="team-member-name">Emma Grannis</div>
-        <div class="logo-github"></div>
-        <div class="github-handle">@emmagrannis</div>
+        <span class="logo-github"><i class="fa-brands fa-github"></i></span>
+        <span class="github-handle"> <a href="https://github.com/egrannis">@egrannis</a></span>
       </div>
     </div>
   );
