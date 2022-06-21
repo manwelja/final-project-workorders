@@ -29,7 +29,7 @@ body {
   flex-flow: row no-wrap;
   justify-content: flex-start;
   margin-top: 25px;
-  padding: 0rem 0rem 2rem 0rem;
+  /* padding: 0rem 0rem 2rem 0rem; */
   align-items: center;
 }
 
@@ -128,7 +128,7 @@ body {
   flex-wrap: nowrap;
   justify-content: space-between;
   width: 100%;
-  padding: 0rem 1rem 1rem 1rem;
+  padding: 2rem 1rem 1rem 1rem;
 }
 
 .wo-form-text-box {
@@ -174,14 +174,6 @@ input[type="file"] {
   cursor: pointer;
 }
 
-.wo-meeting-link-text {
-  height: 2rem;
-  padding: 0.2rem;
-  font-size: 1rem;
-  width: 30rem;
-  margin-right: 1rem;
-  margin-left: 12rem;
-}
 
 .wo-meeting-link-text {
   height: 2rem;
