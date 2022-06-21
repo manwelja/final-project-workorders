@@ -4,7 +4,7 @@ import classNames from "classnames";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './queue.css';
 
-//Component that displays individual interviewer data
+// Component that renders a user's workorder ticket history for a mentor view
 export default function QueueListItem(props) {
   const { date_created, date_closed, workorderID, student_first_name, student_last_name, environment, description, numInQueue, category, topic, screenshot_url, onView, workorder_id, student_id, status_id, onHistory, onPickupTicket } = props;
   //return an item for each workorder passed in as a prop
@@ -12,10 +12,6 @@ export default function QueueListItem(props) {
   const formattedClosedDate = new Date(date_closed).toLocaleDateString(undefined, options);
   const formattedClosedTime = new Date(date_closed).toLocaleTimeString('en-US');
   const formattedClosedDateTime = formattedClosedDate + " - " + formattedClosedTime;
-
-  const imageClass = classNames("queue-workorder-screenshot",
-    { " hidden": !screenshot_url }
-  );
 
   const headerStatusClass = classNames("queue-workorder-header",
     {
@@ -27,7 +23,6 @@ export default function QueueListItem(props) {
 
   const age = (date) => {
     const currentDate = new Date().toISOString(); //get new date as string in iso format
-    console.log("history");
     //return the time difference as age
     //arguments have to be casted as date objects
     return formatDistance(new Date(date), new Date(currentDate));
