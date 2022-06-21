@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 
+// File upload functionality for Cloudify
+
 const useScript = url => {
   useEffect(() => {
     const script = document.createElement('script');
@@ -10,7 +12,7 @@ const useScript = url => {
     document.body.appendChild(script);
     return () => {
       document.body.removeChild(script);
-    }
+    };
   }, [url]);
 };
 

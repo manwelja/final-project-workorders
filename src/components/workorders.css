@@ -12,11 +12,9 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  /*margin-top: 200px;*/
   padding: 13rem 0rem 4rem 0rem;
   margin-left: 5rem;
   min-height: 93vh;
-  /* height: 20rem; */
 }
 
 .workorder-item-container {
@@ -27,21 +25,11 @@ body {
   height: 535px;
   margin: 1rem 1rem;
   display: flex;
-  /* justify-content: space-between;    */
   border: 1px solid rgba(0,0,0 ,0.15);
   flex-direction: column; 
   padding: 1rem; 
   box-shadow: 10px 10px 8px -3px rgba(106,106,106,0.68);
-  /*box-shadow: 3px 3px 20px rgb(0 0 0 / 5%);
-  border-left: solid lightgrey 3px;
-  border-top: solid lightgrey 6px;
-  transition: 0.3s;*/
 }
-
-/* .workorder-item-container:hover {
-  transform: translateY(-2px);
-} */
-
 
 .workorder-item-header {
   font-size: 1.5rem;
@@ -88,13 +76,11 @@ body {
   width: 65%;
 }
 
-
 .workorder-col-1 {
   display: flex;
   flex-direction: row;
   gap: 1rem;
 }
-
 
 .workorder-item-body-right {
   border: 1px black;
@@ -141,14 +127,11 @@ body {
   font-size: 0.9rem;
 }
 
-
-
 .workorder-image {
   width: 8rem;
   height: 8rem;
 }
 
-/* Add a hover effect (blue shadow) */
 .workorder-image:hover {
   box-shadow: 0 0 2px 1px rgba(74, 114, 92, 0.5);
 } 

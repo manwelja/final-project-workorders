@@ -6,7 +6,7 @@ export default function QueueList(props) {
   const { onView, onHistory, workorders, onPickupTicket } = props;
 
   const queueItem = workorders.map((workOrderData, idx) => {
-    //return a populated Queuelist item for each workorder in the data set
+    // Returns a populated Queuelist item for each workorder in the data set
     return (
       <QueueListItem class="queue-container"
         key={workOrderData.id}

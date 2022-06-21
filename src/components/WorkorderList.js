@@ -1,14 +1,14 @@
-// Emma - my workorders --> Just need it to link to them
 import React from "react";
 import WorkorderListItem from "./WorkorderListItem";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './workorders.css';
 
-//Component that invokes a QueueListItem child for each workorder in the data set
+// Component that invokes a WorkorderListItem child for each workorder in the data set
 export default function WorkorderList(props) {
-  const { workorders, onView, onHistory } = props;
+  const { workorders, onView } = props;
 
   const workorder = workorders.map((workorder) => {
+    // Returns a populated WorkorderListItem component for each workorder that exists in the data set
     return (
       <WorkorderListItem class="workorder-container"
         workorder_id={workorder.id}

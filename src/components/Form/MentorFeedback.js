@@ -5,12 +5,7 @@ import NewFeedbackForm from "./NewFeedbackForm";
 const MentorFeedback = (props) => {
 
   return (
-    <article style={{
-      textAlign: "center",
-      display: "flex",
-      "flex-direction": "column"
-    }}
-    >
+    <article class="new-feedback">
       <NewFeedbackForm workorderID={props.workorder.id} role={"mentor"} />
     </article >
   );

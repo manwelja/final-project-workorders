@@ -52,12 +52,12 @@ const NewFeedbackForm = (props) => {
   return (
     <>
       <section>
-        <div style={{ textAlign: "center" }}>
+        <div class="new-feedback-header">
           <h2><strong>Leave Feedback</strong></h2>
         </div>
       </section>
 
-      <section style={{ textAlign: "center" }}>
+      <section class="new-feedback-header">
         <p>
           Please Provide Feedback For Your Interaction:
         </p>

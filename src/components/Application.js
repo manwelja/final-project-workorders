@@ -12,20 +12,19 @@ import useVisualMode from "../hooks/useVisualMode";
 import useUserMode from "../hooks/useUserMode";
 import useApplicationData from "../hooks/useApplicationData";
 import Footer from "./Footer";
-import axios from "axios";
 import "./index.css";
-
 import { w3cwebsocket as W3CWebSocket } from "websocket";
+
 //Environment variables
 const PORT = process.env.REACT_APP_API_PORT;
 const HOST = process.env.REACT_APP_API_HOST;
 const BASE_URL = HOST + ":" + PORT;
 const client = new W3CWebSocket(`ws://${BASE_URL}`);
 
-// if user is undefined
+// if user is undefined, show the login page
 const SHOW_LOGIN = "SHOW_LOGIN";
 
-// if user is student
+// if user is a student, the following modes are available
 const SHOW_WO_LIST = "SHOW_WO_LIST";
 const SHOW_NEW_WO = "SHOW_NEW_WO";
 const SHOW_EXISTING_WO = "SHOW_EXISTING_WO";
@@ -33,31 +32,29 @@ const SHOW_USER_STUDENT = "SHOW_USER_STUDENT";
 const SHOW_USER_MENTOR = "SHOW_USER_MENTOR";
 const SHOW_USER_UNDEFINED = "SHOW_USER_UNDEFINED";
 
-// if user is mentor
+// if user is a mentor, the following modes are available
 const SHOW_QUEUE = "SHOW_QUEUE";
 const SHOW_IN_PROG = "SHOW_IN_PROG";
 const SHOW_CLOSED = "SHOW_CLOSED";
 const SHOW_MY_WO = "SHOW_MY_WO";
 const SHOW_STUDENT_WO = "SHOW_STUDENT_WO";
 
-//Main component that is responsible for invoking children to display workorder system content
+// Main component that is responsible for invoking children to display workorder system content
 export default function Application(props) {
-  //declare the functions that are being exported in the useApplicationData hook
-  //Display the login component - the login will determine what the user will ultimately see
 
+  // By default, display the login component - the login will determine what the user will ultimately see
   const { mode, transitionView } = useVisualMode(
     SHOW_LOGIN
   );
 
+  // By default, set the user to undefined - the user will be set upon login to mentor or student
   const { user, transitionUser } = useUserMode(SHOW_USER_UNDEFINED);
-  // need users: mentor, student, unknown for the different views
 
 
-  //declare the functions that are being exported in the useApplicationData hook
+  // Declare the functions that are being imported via the useApplicationData hook
   const {
     state,
     verifyUserLogin,
-    updateQueue,
     getWorkordersByStudentID,
     getWorkordersByMentorID,
     changeWorkorderStatus,
@@ -78,10 +75,10 @@ export default function Application(props) {
       console.log('WebSocket Client Connected');
     };
 
-    //Update the state to reflect the data sent from the server via websocket
+    // Update the state to reflect the data sent from the server via websocket
     client.onmessage = (message) => {
       const dataFromServer = JSON.parse(message.data);
-      //save this data to state to refresh screen
+      // Save this data to state to refresh screen
       console.log("Received data from server - need to update view state ");
       if (mode === SHOW_EXISTING_WO) {
         getWorkorderByID(state.workorderItem.id);
@@ -98,49 +95,43 @@ export default function Application(props) {
     // if user is student
     switch (mode) {
       case SHOW_NEW_WO:
-        //don't need to load any data
+        // Don't need to load any data when creating a new workorder
         break;
       case SHOW_EXISTING_WO:
-        //load form data by workorder id
-        // getWorkorderByID(state.workorderItem.id);
+        // Load form data by workorder id
         break;
       case SHOW_QUEUE:
-        //load in new/open workorders
+        // Load in new/open workorders
         getWorkordersByStatus(1);
         break;
       case SHOW_IN_PROG:
-        //load in progress workorders
+        // Load in progress workorders
         getWorkordersByStatus(2);
         break;
       case SHOW_CLOSED:
-        //show closed workorders
+        // Show closed workorders
         getWorkordersByStatus(3);
         break;
       case SHOW_MY_WO:
         console.log("get by mentor id", userID);
-        //show workorders by mentor id
-        //     if(userID) {
+        // Show workorders by mentor id
         getWorkordersByMentorID(userID);
-        //      }        
         break;
       case SHOW_STUDENT_WO:
-        //show workorders by student id
-        // getWorkordersByStudentID(userID);
+        // Show workorders by student id
         break;
       case SHOW_WO_LIST:
-        //show workorders by student id
+        // Show workorders by student id
         console.log("get by student id", userID);
-        //     if(userID){
         getWorkordersByStudentID(userID);
-        //     }
 
         break;
       default:
         break;
-
     }
     return;
   };
+
   useEffect(() => {
     console.log("update state");
     updateState();
@@ -156,6 +147,7 @@ export default function Application(props) {
     setUserView();
   }, [userRole]);
 
+  // Verify that user is in the database and meets credentials. If the userRole has been set to mentor or student, set the view for the user
   const loginUser = function(email, password) {
     verifyUserLogin(email, password);
     if (userRole !== SHOW_USER_UNDEFINED) {
@@ -163,31 +155,25 @@ export default function Application(props) {
     }
   };
 
+  // Set relevant views by transitioning based on user role
   const setUserView = function() {
     if (userRole.trim() === "mentor") {
       transitionView(SHOW_QUEUE);
       transitionUser(SHOW_USER_MENTOR);
-      //     updateState();
-      //getWorkordersByMentorID(userID) 
     } else if (userRole.trim() === "student") {
       transitionView(SHOW_WO_LIST);
       transitionUser(SHOW_USER_STUDENT);
-      //   updateState();
-      //  getWorkordersByStudentID(userID) 
     }
-    //return;
   };
 
+  // Allows a user to view a workorder by its ID
   const openWorkOrder = function(workorder_id) {
-    // if(workorder_id){
     getWorkorderByID(workorder_id);
-    // getMeetingLink(workorder_id);
-    // console.log("callGetMeetingLink");
     transitionView(SHOW_EXISTING_WO);
-    //  }
     return;
   };
 
+  // Allows a mentor to open the workorder history for a specific student
   const openUserHistory = function(student_id) {
     console.log("get by student id openhistory", userID);
     getWorkordersByStudentID(student_id);
@@ -195,14 +181,15 @@ export default function Application(props) {
     return;
   };
 
+  // Allows a mentor to change the workorder status from "new" to "in progress"
   const markWorkorderInProgress = function(workorder_id) {
     if (userRole.trim() === "mentor") {
       changeWorkorderStatus(userID, 2, workorder_id);
     }
-
     return;
   };
 
+  // Allows a mentor to change the workorder status from "in progress" to "closed" when finished
   const markWorkorderClosed = function(workorder_id) {
     if (userRole.trim() === "mentor") {
       changeWorkorderStatus(userID, 3, workorder_id);
@@ -211,6 +198,7 @@ export default function Application(props) {
     return;
   };
 
+  // Deletes a user's cookie when they logout, resets the state, and sets the user and view to their initial default values
   const logout = function() {
     deleteLoginCookie();
     resetState();

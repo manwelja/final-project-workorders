@@ -4,6 +4,8 @@ import "./Button.css";
 
 export default function Button(props) {
 
+   // Set classnames for conditional styling of buttons
+   // Lines 12-17 are used to highlight the top nav bar buttons when a user is navigated to a specific page
    const buttonClass = classNames("button", {
       "button--confirm": props.confirm,
       "button--danger": props.danger,

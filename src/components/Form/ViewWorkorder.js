@@ -40,7 +40,11 @@ export default function ViewWorkorder(props) {
       <div>
         <form class="wo-form-view-main" autoComplete="off" onSubmit={event => event.preventDefault()}>
           <section class="wo-form-container-view-mentor">
-            <div class="wo-form-header"><h1>View Help Request</h1></div>
+            <div class="wo-form-header">
+              <div class="wo-form-title-container">
+                <h1>View Help Request</h1>
+              </div>
+            </div>
             <div class="wo-form-label-data">
               <div class="wo-form-label"><label>Student Name:</label></div>
               <div class="wo-form-data">{workorder.student_first_name + " " + workorder.student_last_name}</div>

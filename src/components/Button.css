@@ -26,21 +26,9 @@
   justify-items: center;
 }
 
-.button--wo-inline {
-  font-size: 1.25rem;
-  height: 2rem;
-  line-height: 1.2rem;
-  padding: 0.75rem 0.75rem 1.6rem 0.75rem;
-  width: 7rem;
-  border-width: 2px;
-  border-style: solid;
-  color: #F0F0F0;
-  background-color:#4a725c;
+.button--inline:hover {
+  background-color: #4a725c;
   border-color: #4a725c;
-  /* color: #4a725c; */
-  /* background-color: transparent; */
-  justify-items: center;
-  text-align: center;
 }
 
 .btn-workorder-footer-viewhist {
@@ -80,30 +68,19 @@
   padding: 0.5rem 0.2rem;
 }
 
-/* .button--wo-inline 
-    font-size: 1.25rem;
-    height: 2rem;
-    line-height: 1.2rem;
-    padding: 0.75rem 0.75rem 1.6rem 0.75rem;
-    width: 7rem;
-    border-width: 2px;
-    border-style: solid;
+.button--wo-inline {
     color: #F0F0F0;
     background-color: #4a725c;
-    border-color: #4a725c;
-    /* color: #4a725c; */
-    /* background-color: transparent; */
-    /* justify-items: center;
-    text-align: center; */
-
-
+    border: #4a725c 2px solid;
+    font-size: 0.8rem;
+    margin-right: 1rem;
+    padding: 0.5rem 1rem;
+}
 
 
 .button--wo-inline:hover {
   color: #4a725c;
-  border-color: #4a725c;
-  border-width: 2px;
-  border-style: solid;
+  border-width: #4a725c 2px solid;
   background-color: transparent;
 }
 
@@ -133,6 +110,7 @@
   background-color: #4a725c;
 }
 
+
 .button:last-of-type {
   margin-right: 0;
 }
@@ -151,7 +129,6 @@
 
 .button:hover {
   background: white;
-  /* color: rgba(255,255,255, 0); */
   color: #4a725c;
 }
 
@@ -187,4 +164,22 @@
 .highlight--new {
   background: white;
   color: #4a725c;
+}
+
+#send-meeting-link {
+  font-size: 1rem;
+  width: 4rem;
+  text-align: center;
+  color: #4a725c;
+  background-color: transparent;
+  border: #4a725c 2px solid;
+  font-size: 0.8rem;
+  margin-right: 1rem;
+  padding: 0.5rem 0.2rem;
+}
+
+#send-meeting-link:hover {
+  color: #F0F0F0;
+  background-color: #4a725c;
+  border: #4a725c 2px solid;
 }

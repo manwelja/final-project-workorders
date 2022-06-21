@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-//function responsible for managing the browser history
+// Function responsible for managing the view mode a specific user sees
 export default function useVisualMode(initial) {
   const [mode, setMode] = useState(initial);
 

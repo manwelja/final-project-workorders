@@ -1,6 +1,8 @@
 import "./navigation.css";
 import Button from "./Button";
 
+// Component that renders Navigation bar with proper buttons displayed for student view
+
 export default function NavigationStudent(props) {
   const { onView, onNew, onLogout, mode } = props;
   const logoUrl = "./images/SOAR_Logo.png";
