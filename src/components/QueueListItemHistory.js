@@ -6,7 +6,7 @@ import './queue.css';
 
 // Component that renders a user's workorder ticket history for a mentor view
 export default function QueueListItem(props) {
-  const { date_created, date_closed, workorderID, student_first_name, student_last_name, environment, description, numInQueue, category, topic, screenshot_url, onView, workorder_id, student_id, status_id, onHistory, onPickupTicket } = props;
+  const { date_created, date_closed, workorderID, student_first_name, student_last_name, environment, description, category, topic, onView, workorder_id, status_id, onPickupTicket } = props;
   //return an item for each workorder passed in as a prop
   const options = { year: "numeric", month: "long", day: "numeric" };
   const formattedClosedDate = new Date(date_closed).toLocaleDateString(undefined, options);

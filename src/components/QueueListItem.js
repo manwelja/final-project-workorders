@@ -6,17 +6,13 @@ import './queue.css';
 
 // Individual queue item component that renders for the application's mentor view
 export default function QueueListItem(props) {
-  const { date_created, date_closed, workorderID, student_first_name, student_last_name, environment, description, numInQueue, category, topic, screenshot_url, onView, workorder_id, student_id, status_id, onHistory, onPickupTicket } = props;
+  const { date_created, date_closed, workorderID, student_first_name, student_last_name, environment, description, numInQueue, category, topic, onView, workorder_id, student_id, status_id, onHistory, onPickupTicket } = props;
   //return an item for each workorder passed in as a prop
   const dateOptions = { year: "numeric", month: "short", day: "numeric" };
   const timeOptions = { hour: '2-digit', minute: '2-digit' };
   const formattedClosedDate = new Date(date_closed).toLocaleDateString('en-US', dateOptions);
   const formattedClosedTime = new Date(date_closed).toLocaleTimeString('en-US', timeOptions);
   const formattedClosedDateTime = formattedClosedDate + " - " + formattedClosedTime;
-
-  const imageClass = classNames("queue-workorder-screenshot",
-    { " hidden": !screenshot_url }
-  );
 
   const headerStatusClass = classNames("queue-workorder-header",
     {

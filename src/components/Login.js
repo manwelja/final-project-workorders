@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState } from "react";
 import './login.css';
 
 // Login component for application. Sets email and password when onChange events occur in the input fields
