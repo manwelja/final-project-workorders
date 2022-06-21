@@ -88,21 +88,23 @@ export default function useApplicationData() {
   };
 
 
+  // Deletes existing meeting link in the database
   const deleteMeetingLink = function(workorderID) {
-    //Status id should be set to 1 initially - 
+    // Status id should be set to 1 initially 
     return axios.post(`/api/meetingLinks/${workorderID}`)
       .then((res) => {
         return;
       }).catch((err) => console.log("error - should show screen"));
   };
 
+  // Resets the state of workorders, resets the meeting link for a workorder ID
   const resetState = function(workorderID) {
     setState({ workorderList: [], workorderItem: {} });
     setMeetingLink("");
-    //   setUserID("");
   };
 
 
+  // Fetches the meeting link for a specific workorder
   const getMeetingLink = (workorderID) => {
     return axios.get(`/api/meetingLinks/${workorderID}`)
       .then((res) => {

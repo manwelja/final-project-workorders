@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import './login.css';
 
-// Login component for application
+// Login component for application. Sets email and password when onChange events occur in the input fields
 
 export default function Login(props) {
   const [email, setEmail] = useState("");
