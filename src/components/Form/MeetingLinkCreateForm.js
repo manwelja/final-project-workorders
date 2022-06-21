@@ -64,7 +64,7 @@ const MeetingLinkCreateForm = (props) => {
   return (
     <>
       <label
-        class="wo-form-label">Please enter a meeting link for the assistance session:
+        class="wo-form-label-meeting-link">Please enter a meeting link for the assistance session:
         <a href={meetingLinkDisplay}>  {meetingLinkDisplay}</a>
       </label>
       <input
@@ -75,7 +75,7 @@ const MeetingLinkCreateForm = (props) => {
         value={meetingLink}
         onChange={event => { setMeetingLink(event.target.value); }}
       />
-      <div class="wo-form-data">
+      <div class="wo-form-data-meeting-link">
         <button id="send-meeting-link" class="" onClick={(event) => { event.preventDefault(); saveData(); }}>Send</button>
       </div>
     </>
