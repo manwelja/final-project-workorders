@@ -32,6 +32,7 @@ export default function NavigationMentor(props) {
           font-size: 1.25rem;
           width: 10rem;
           height: 4rem;
+          border: transparent;
         }
         .queue-dropdown-menu-item {
           background: transparent;
@@ -41,23 +42,22 @@ export default function NavigationMentor(props) {
         .header{
           color: white;
           border: solid white 1px;
-          /*padding: 0.5rem;*/
         }      
         .header:hover {
-         /* background: white;*/
           color: #657860;  
         }
         .header:select {
-          /* background: white;*/
            color: red;  
          }
         .queue-dropdown-menu:hover {
           background: transparent;
           color: #657860;
+          border: transparent;
         }
         .queue-dropdown-menu:focus {
           background: white;
           color: #657860;
+          border: transparent;
         }
 
       `}
