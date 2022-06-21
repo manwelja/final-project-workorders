@@ -36,6 +36,9 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 .nav-container-button div{
    padding:0px 20px;
 }
+.nav-container-button-dropdown{
+  padding:0px 20px;
+}
 
 .nav-app-logo {
   display: flex;

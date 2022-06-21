@@ -73,26 +73,26 @@ export default function ViewWorkorder(props) {
               </div>
             </div>
             <div class="wo-form-label-data">
-              <div class="wo-form-label"><label>Please describe your issue:</label></div>
+              <div class="wo-form-label"><label>Issue Description:</label></div>
               <div class="wo-form-data">
                 {workorder.description}
               </div>
             </div>
             <div class="wo-form-label-data">
-              <div class="wo-form-label"><label>Please specify your computer environment:</label></div>
+              <div class="wo-form-label"><label>Computer Environment:</label></div>
               <div class="wo-form-data">
                 {workorder.environment}
               </div>
             </div>
             <div class="wo-form-label-data">
-              <div class="wo-form-label"><label>Please specify the category:</label></div>
+              <div class="wo-form-label"><label>Category:</label></div>
               <div class="wo-form-data">
                 {workorder.category}
               </div>
             </div>
 
             <div class="wo-form-label-data">
-              <div class="wo-form-label"><label>Please specify which module you're working on:</label></div>
+              <div class="wo-form-label"><label>Module:</label></div>
               <div class="wo-form-data">
                 {workorder.topic}
               </div>

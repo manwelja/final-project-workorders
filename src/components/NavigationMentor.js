@@ -31,42 +31,47 @@ export default function NavigationMentor(props) {
           color: white;
           font-size: 1.25rem;
           width: 10rem;
-          height: 4rem;
-          border: transparent;
+          height: 4rem;   
+          border: transparent;       
         }
         .queue-dropdown-menu-item {
           background: transparent;
           color: white;
-          font-size: 1.1rem;
+          font-size: 1.1rem;   
+          border: transparent;       
+        }
+        .queue-dropdown-menu-item:focus {
+          background: white;
+          color: #657860;
+          border: transparent;
         }
         .header{
           color: white;
-          border: transparent;
+          border: none;
+          border: solid 1px white;
         }      
         .header:hover {
           color: #657860;  
+          border: solid 1px white;
         }
-        .header:select {
-           color: red;  
-         }
+
         .queue-dropdown-menu:hover {
           background: transparent;
           color: #657860;
-        }
-        
+          border: transparent;
+        }        
         .queue-dropdown-menu:focus {
           background: white;
           color: #657860;
-          outline: none;
-          box-shadow: none;
+          border: transparent;
         }
 
       `}
           </style>
 
-          <div>
+          <div class="nav-container-button-dropdown">
             <Dropdown as={ButtonGroup} onSelect={handleSelect} className="queue-dropdown-menu header">
-              <span className="nav-dropdown"><Dropdown.Toggle className="queue-dropdown-menu header" variant="outline-light"> {menuValue}</Dropdown.Toggle></span>
+              <span><Dropdown.Toggle className="queue-dropdown-menu header" variant="outline-light"> {menuValue}</Dropdown.Toggle></span>
               <Dropdown.Menu className="queue-dropdown-menu" >
                 <Dropdown.Item className="queue-dropdown-menu-item" onClick={onShowNew} eventKey="Queue">Queue</Dropdown.Item>
                 <Dropdown.Item className="queue-dropdown-menu-item" onClick={onShowInProgress} eventKey="In Progress">In Progress</Dropdown.Item>
@@ -85,3 +90,4 @@ export default function NavigationMentor(props) {
     </div>
   );
 };
+//className="nav-dropdown"
