@@ -41,18 +41,17 @@ const SHOW_STUDENT_WO = "SHOW_STUDENT_WO";
 
 // Main component that is responsible for invoking children to display workorder system content
 export default function Application(props) {
-  //declare the functions that are being exported in the useApplicationData hook
-  //Display the login component - the login will determine what the user will ultimately see
 
+  // By default, display the login component - the login will determine what the user will ultimately see
   const { mode, transitionView } = useVisualMode(
     SHOW_LOGIN
   );
 
+  // By default, set the user to undefined - the user will be set upon login to mentor or student
   const { user, transitionUser } = useUserMode(SHOW_USER_UNDEFINED);
-  // need users: mentor, student, unknown for the different views
 
 
-  //declare the functions that are being exported in the useApplicationData hook
+  // Declare the functions that are being imported via the useApplicationData hook
   const {
     state,
     verifyUserLogin,
@@ -166,24 +165,15 @@ export default function Application(props) {
     if (userRole.trim() === "mentor") {
       transitionView(SHOW_QUEUE);
       transitionUser(SHOW_USER_MENTOR);
-      //     updateState();
-      //getWorkordersByMentorID(userID) 
     } else if (userRole.trim() === "student") {
       transitionView(SHOW_WO_LIST);
       transitionUser(SHOW_USER_STUDENT);
-      //   updateState();
-      //  getWorkordersByStudentID(userID) 
     }
-    //return;
   };
 
   const openWorkOrder = function(workorder_id) {
-    // if(workorder_id){
     getWorkorderByID(workorder_id);
-    // getMeetingLink(workorder_id);
-    // console.log("callGetMeetingLink");
     transitionView(SHOW_EXISTING_WO);
-    //  }
     return;
   };
 
