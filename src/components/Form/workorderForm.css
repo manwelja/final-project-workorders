@@ -208,6 +208,11 @@ input[type="file"] {
   color: #707070;
 }
 
+.spinner {
+  color:#4a725c;
+  margin: 0 4rem;
+}
+
 
 /* font-size: 1.25rem;
   height: 2rem;

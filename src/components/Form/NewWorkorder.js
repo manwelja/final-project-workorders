@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Spinner } from "react-bootstrap";
 import Button from "../Button";
 import Select from 'react-select';
 
@@ -25,7 +26,8 @@ export default function NewWorkorder(props) {
   const [description, setDescription] = useState("");
   const [link_to_module, setLinkToModule] = useState("");
   const [environment, setEnvironment] = useState("");
-
+  const [loading, setLoading] = useState(false);
+  const [saveButton, setSaveButton] = useState("Save Me!");
 
   // update the state to selected module from dropdown menu
   const handleModuleChange = (event) => {
@@ -90,7 +92,14 @@ export default function NewWorkorder(props) {
   // upload screenshot to cloudinary and post to db is screenshot exists, otherwise post to db
   function saveData() {
     state.selectedFileUpload ? uploadToCloudifyData() : postToDatabase();
-    onSave();
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setSaveButton("Saved!");
+    }, 1000);
+    setTimeout(() => {
+      onSave();
+    }, 2000);
   }
 
   //populate the workorder when the application loads
@@ -194,7 +203,10 @@ export default function NewWorkorder(props) {
           </div>
           <div class="wo-form-footer">
             <div><Button className="button--danger" danger onClick={() => { resetFormState(); }}>Cancel</Button></div>
-            <div><Button className="button--confirm" confirm onClick={() => { saveData(); }}>Save Me</Button></div>
+            <div>
+              {loading && <Spinner className="spinner" animation="border" />}
+              {!loading && <Button className="button--confirm" confirm onClick={() => { saveData(); }}>{saveButton}</Button>}
+            </div>
           </div>
         </section>
       </form>

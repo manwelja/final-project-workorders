@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Rating } from "react-simple-star-rating";
+import { Spinner } from "react-bootstrap";
 
 import axios from "axios";
 
@@ -7,6 +8,8 @@ const NewFeedbackForm = (props) => {
 
   const [rating, setRating] = useState(0);
   const [description, setDescription] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [feedbackButton, setFeedbackButton] = useState("Submit Feedback");
 
   // set the state of star rating component when clicked
   const handleRating = (rating) => {
@@ -30,6 +33,20 @@ const NewFeedbackForm = (props) => {
         setDescription("");
       })
       .catch((err) => { console.error(err); });
+  };
+
+  const handleSubmit = () => {
+    setLoading(true);
+
+    setTimeout(() => {
+      setLoading(false);
+      setFeedbackButton("Submitted!");
+    }, 1000);
+
+    setTimeout(() => {
+      saveData();
+    }, 2000);
+
   };
 
   return (
@@ -73,7 +90,8 @@ const NewFeedbackForm = (props) => {
           />
           <br />
           <button class="btn-workorder-footer-viewhist" onClick={() => resetForm()}>Cancel</button>
-          <button class="btn-workorder-footer-viewhist" onClick={() => saveData()}>Submit Feedback</button>
+          {loading && <Spinner className="spinner" animation="border" />}
+          {!loading && <button class="btn-workorder-footer-viewhist" onClick={() => handleSubmit()}>{feedbackButton}</button>}
         </form>
 
       </section>
