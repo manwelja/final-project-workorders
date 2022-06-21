@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "../Button";
+import { Spinner } from "react-bootstrap";
 import MentorFeedback from "./MentorFeedback";
 import StudentFeedback from "./StudentFeedback";
 import MeetingLinkCreateForm from "./MeetingLinkCreateForm";
@@ -12,10 +13,27 @@ import './workorderForm.css';
 export default function ViewWorkorder(props) {
   const { workorder, userRole, onHistory, onPickupTicket, onCloseTicket } = props;
 
+  const [loading, setLoading] = useState(false);
+  const [closeTicketButton, setCloseTicketButton] = useState("Close Ticket");
+
+
   // display screenshot in component only if it exists
   const imageClass = classNames("wo-form-view-screenshot",
     { " hidden": !workorder.screenshot_url }
   );
+
+  const handleCloseTicket = () => {
+    setLoading(true);
+
+    setTimeout(() => {
+      setLoading(false);
+      setCloseTicketButton("Closed!");
+    }, 1000);
+
+    setTimeout(() => {
+      onCloseTicket(workorder.id);
+    }, 2000);
+  };
 
   return (
     <>
@@ -90,7 +108,11 @@ export default function ViewWorkorder(props) {
             <div class="wo-form-footer">
               {userRole === "mentor" && <div><Button className="button--confirm" confirm onClick={(e) => { e.preventDefault(); onHistory(workorder.user_student_id); }}>See History</Button></div>}
               {workorder.status_id === 1 && userRole === "mentor" && <div><Button className="button--confirm" confirm onClick={() => { onPickupTicket(workorder.id); }}>Pick Up</Button></div>}
-              {workorder.status_id === 2 && userRole === "mentor" && <div><Button className="button--confirm" confirm onClick={() => { onCloseTicket(workorder.id); }}>Close Ticket</Button></div>}
+              {workorder.status_id === 2 && userRole === "mentor" &&
+                <div>
+                  {loading && <Spinner className="spinner" animation="border" />}
+                  {!loading && <Button className="button--confirm" confirm onClick={() => { handleCloseTicket(); }}>{closeTicketButton}</Button>}
+                </div>}
             </div>
           </section>
         </form>
