@@ -71,15 +71,11 @@ export default function Application(props) {
   } = useApplicationData();
 
   const componentDidMount = function() {
-    client.onopen = () => {
-      console.log('WebSocket Client Connected');
-    };
 
     // Update the state to reflect the data sent from the server via websocket
     client.onmessage = (message) => {
       const dataFromServer = JSON.parse(message.data);
       // Save this data to state to refresh screen
-      console.log("Received data from server - need to update view state ");
       if (mode === SHOW_EXISTING_WO) {
         getWorkorderByID(state.workorderItem.id);
         getMeetingLink(state.workorderItem.id);
@@ -113,7 +109,6 @@ export default function Application(props) {
         getWorkordersByStatus(3);
         break;
       case SHOW_MY_WO:
-        console.log("get by mentor id", userID);
         // Show workorders by mentor id
         getWorkordersByMentorID(userID);
         break;
@@ -122,7 +117,6 @@ export default function Application(props) {
         break;
       case SHOW_WO_LIST:
         // Show workorders by student id
-        console.log("get by student id", userID);
         getWorkordersByStudentID(userID);
 
         break;
@@ -133,17 +127,14 @@ export default function Application(props) {
   };
 
   useEffect(() => {
-    console.log("update state");
     updateState();
   }, [mode]);
 
   useEffect(() => {
-    console.log("update state");
     updateState();
   }, [userID]);
 
   useEffect(() => {
-    console.log("update view");
     setUserView();
   }, [userRole]);
 
@@ -175,7 +166,6 @@ export default function Application(props) {
 
   // Allows a mentor to open the workorder history for a specific student
   const openUserHistory = function(student_id) {
-    console.log("get by student id openhistory", userID);
     getWorkordersByStudentID(student_id);
     transitionView(SHOW_STUDENT_WO);
     return;
