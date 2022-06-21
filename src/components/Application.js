@@ -173,6 +173,7 @@ export default function Application(props) {
   const markWorkorderInProgress = function(workorder_id) {
     if (userRole.trim() === "mentor") {
       changeWorkorderStatus(userID, 2, workorder_id);
+      updateState();
     }
     return;
   };

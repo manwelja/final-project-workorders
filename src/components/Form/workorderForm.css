@@ -111,7 +111,7 @@ body {
   padding: 5px;
 }
 .wo-form-label {
-  width: 45rem;
+  width: 49%;
   justify-content: flex-start;
   padding: 5px;
   font-size: 1rem;
@@ -183,6 +183,7 @@ input[type="file"] {
 }
 
 .wo-form-container-meetlink {
+  display: flex;
   font-size: 1rem;
 }
 
