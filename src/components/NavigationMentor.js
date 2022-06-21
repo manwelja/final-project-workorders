@@ -4,7 +4,6 @@ import Button from "./Button";
 import Dropdown from "react-bootstrap/Dropdown";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 // Component that renders Navigation bar with proper buttons displayed for mentor view
 
@@ -13,6 +12,7 @@ export default function NavigationMentor(props) {
   const logoUrl = "./images/SOAR_Logo.png";
 
   const [menuValue, setMenuValue] = useState('Queue');
+
   const handleSelect = (e) => {
     setMenuValue(e);
   };
@@ -41,7 +41,7 @@ export default function NavigationMentor(props) {
         }
         .header{
           color: white;
-          border: solid white 1px;
+          border: transparent;
         }      
         .header:hover {
           color: #657860;  
@@ -52,12 +52,13 @@ export default function NavigationMentor(props) {
         .queue-dropdown-menu:hover {
           background: transparent;
           color: #657860;
-          border: transparent;
         }
+        
         .queue-dropdown-menu:focus {
           background: white;
           color: #657860;
-          border: transparent;
+          outline: none;
+          box-shadow: none;
         }
 
       `}
@@ -65,7 +66,7 @@ export default function NavigationMentor(props) {
 
           <div>
             <Dropdown as={ButtonGroup} onSelect={handleSelect} className="queue-dropdown-menu header">
-              <Dropdown.Toggle className="queue-dropdown-menu header" variant="outline-light"> {menuValue}</Dropdown.Toggle>
+              <span className="nav-dropdown"><Dropdown.Toggle className="queue-dropdown-menu header" variant="outline-light"> {menuValue}</Dropdown.Toggle></span>
               <Dropdown.Menu className="queue-dropdown-menu" >
                 <Dropdown.Item className="queue-dropdown-menu-item" onClick={onShowNew} eventKey="Queue">Queue</Dropdown.Item>
                 <Dropdown.Item className="queue-dropdown-menu-item" onClick={onShowInProgress} eventKey="In Progress">In Progress</Dropdown.Item>
