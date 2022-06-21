@@ -11,6 +11,7 @@ export default function WorkorderList(props) {
     // Returns a populated WorkorderListItem component for each workorder that exists in the data set
     return (
       <WorkorderListItem class="workorder-container"
+        key={workorder.id}
         workorder_id={workorder.id}
         student_name={workorder.user_student_id}
         mentor_first_name={workorder.mentor_first_name || "N/A"}
