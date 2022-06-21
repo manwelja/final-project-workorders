@@ -31,7 +31,7 @@ export default function WorkorderListItem(props) {
   }
     = props;
 
-  const options = { year: "numeric", month: "long", day: "numeric" };
+  const options = { year: "numeric", month: "short", day: "numeric" };
   const formattedDateCreated = new Date(date_created).toLocaleDateString(undefined, options);
   const formattedTimeCreated = new Date(date_created).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
