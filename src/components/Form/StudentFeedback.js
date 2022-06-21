@@ -5,18 +5,12 @@ import NewFeedbackForm from "./NewFeedbackForm";
 
 const StudentFeedback = (props) => {
   const { userRole, workorder } = props;
-console.log("WO props", workorder)
+  console.log("WO props", workorder);
   return (
-    <article
-      style={{
-        textAlign: "center",
-        display: "flex",
-        "flex-direction": "column"
-      }}
-    >
+    <article class="new-feedback">
 
-       <NewFeedbackForm workorderID={workorder.id} role={"student"}/>
-     
+      <NewFeedbackForm workorderID={workorder.id} role={"student"} />
+
     </article >
   );
 };

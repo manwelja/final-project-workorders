@@ -8,13 +8,8 @@ const MentorFeedback = (props) => {
   const { userRole, workorder } = props;
 
   return (
-    <article style={{
-      textAlign: "center",
-      display: "flex",
-      "flex-direction": "column"
-    }}
-    >
-      <NewFeedbackForm workorderID={workorder.id} role={"mentor"}/>
+    <article class="new-feedback">
+      <NewFeedbackForm workorderID={workorder.id} role={"mentor"} />
     </article >
 
   );
@@ -25,3 +20,9 @@ export default MentorFeedback;
 // {workorder.mentor_notes ?
 //   <PreviousFeedback userRole={userRole} feedback={workorder.mentor_notes} rating={workorder.student_rating * 20} /> :
 //   <NewFeedbackForm workorderID={workorder.id} role={"mentor"}/>}
+
+// style = {{
+//   textAlign: "center",
+//     display: "flex",
+//       "flex-direction": "column";
+// }}

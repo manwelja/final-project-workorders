@@ -165,3 +165,21 @@
   background: white;
   color: #4a725c;
 }
+
+#send-meeting-link {
+  font-size: 1rem;
+  width: 4rem;
+  text-align: center;
+  color: #4a725c;
+  background-color: transparent;
+  border: #4a725c 2px solid;
+  font-size: 0.8rem;
+  margin-right: 1rem;
+  padding: 0.5rem 0.2rem;
+}
+
+#send-meeting-link:hover {
+  color: #F0F0F0;
+  background-color: #4a725c;
+  border: #4a725c 2px solid;
+}
