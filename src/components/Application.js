@@ -55,7 +55,6 @@ export default function Application(props) {
   const {
     state,
     verifyUserLogin,
-    updateQueue,
     getWorkordersByStudentID,
     getWorkordersByMentorID,
     changeWorkorderStatus,
