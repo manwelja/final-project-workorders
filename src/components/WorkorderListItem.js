@@ -1,11 +1,9 @@
-// Emma
-// Parallel to what mentor sees when they click a ticket to open it up
-// will need to import css or css for this page
 import classNames from "classnames";
 import React, { Fragment } from "react";
 import 'bootstrap/dist/css/bootstrap.css';
 import './workorders.css';
 
+// Individual workorder component that renders for the application's student view
 export default function WorkorderListItem(props) {
   const {
     workorder_id,

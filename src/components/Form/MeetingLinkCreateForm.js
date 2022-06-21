@@ -75,7 +75,7 @@ const MeetingLinkCreateForm = (props) => {
         onChange={event => { setMeetingLink(event.target.value); }}
       />
       <div class="wo-form-data">
-        <button id="send-meeting-link" class="button--wo-inline" onClick={(event) => { event.preventDefault(); saveData(); }}>Send</button>
+        <button id="send-meeting-link" class="" onClick={(event) => { event.preventDefault(); saveData(); }}>Send</button>
       </div>
     </>
   );

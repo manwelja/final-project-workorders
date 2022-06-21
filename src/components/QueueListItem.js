@@ -4,7 +4,7 @@ import classNames from "classnames";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './queue.css';
 
-//Component that displays individual interviewer data
+// Individual queue item component that renders for the application's mentor view
 export default function QueueListItem(props) {
   const { date_created, date_closed, workorderID, student_first_name, student_last_name, environment, description, numInQueue, category, topic, screenshot_url, onView, workorder_id, student_id, status_id, onHistory, onPickupTicket } = props;
   //return an item for each workorder passed in as a prop

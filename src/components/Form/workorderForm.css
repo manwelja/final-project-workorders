@@ -82,25 +82,19 @@ body {
   flex-wrap: nowrap;
   justify-content: flex-start;
   margin: 2rem 0rem 4rem 0rem;
-  /* background-color: rgb(101, 120, 96);
-  background-image: url("/public/images/brick-wall.png"); */
-  border: 1px solid;
   background: rgba( 211, 211, 211, 0.5);
   border: 1px solid rgba(0,0,0 ,0.15);
 }
 
 
 .wo-form-container-view-mentor {
-    width: 70vw;
-    /* padding-top: 15rem; */
-    /* padding: 3px; */
+    width: 80vw;
     padding: 3rem;
     min-height: 95vh;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     justify-content: flex-start;
-    /* margin: 2rem 0rem 4rem 0rem; */
     border: 1px solid;
     background: rgba( 211, 211, 211, 0.5);
     border: 1px solid rgba(0,0,0 ,0.15);
@@ -136,6 +130,7 @@ body {
   flex-wrap: nowrap;
   justify-content: space-between;
   width: 100%;
+  padding: 0rem 1rem 1rem 1rem;
 }
 
 .wo-form-text-box {
@@ -152,10 +147,18 @@ body {
   margin-bottom: 15px;
 }
 
+.wo-form-title-container {
+  font-family: 'Roboto';
+  font-weight: 700;
+  border: 0.15rem solid #4a725c;
+  color: #41725c;
+  padding: 1rem;
+}
+
 .view-wo-img {
-  border: 1px solid #ddd; /* Gray border */
-  border-radius: 4px;  /* Rounded border */
-  padding: 5px; /* Some padding */
+  border: 1px solid #ddd; 
+  border-radius: 4px; 
+  padding: 5px; 
   width: 100%;
   height: auto;
   margin-top: 2rem;
@@ -207,17 +210,3 @@ input[type="file"] {
   font-size: 1rem;
   color: #707070;
 }
-
-
-/* font-size: 1.25rem;
-  height: 2rem;
-  line-height: 1.2rem;
-  margin-right: 1rem;
-  margin-top: 1rem;
-  width: 7rem;
-  border-width: 2px;
-  border-style: solid;
-  border-color: white;
-  color: white;
-  background-color: transparent;
-  justify-items: center; */
