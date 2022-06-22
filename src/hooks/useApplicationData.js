@@ -73,8 +73,9 @@ export default function useApplicationData() {
       user_mentor_id: mentorID,
       status_id: newStatusID
     };
-    const date = new Date();
-    const formatDate = date.toISOString();
+ 
+    const tzOffset = (new Date()).getTimezoneOffset() * 60000; 
+    const formatDate = (new Date(Date.now() - tzOffset)).toISOString()
 
     if (newStatusID === 3) {
       updates.date_closed = formatDate;
@@ -86,7 +87,6 @@ export default function useApplicationData() {
         return;
       }).catch((err) => console.log("error - should show screen"));
   };
-
 
   // Deletes existing meeting link in the database
   const deleteMeetingLink = function(workorderID) {
@@ -100,6 +100,7 @@ export default function useApplicationData() {
   // Resets the state of workorders, resets the meeting link for a workorder ID
   const resetState = function(workorderID) {
     setState({ workorderList: [], workorderItem: {} });
+    setUserRole("");
     setMeetingLink("");
   };
 
