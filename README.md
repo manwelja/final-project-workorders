@@ -1,70 +1,95 @@
-# Getting Started with Create React App
+## Product Overview
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Summary: An assistance ticket app made for the use case of a coding bootcamp in which students request help from mentors. 
 
-## Available Scripts
+SOAR or (Student Online Assistance Request) is a help ticket web application created to help connect web development bootcamp students with mentor assistance. Students can create a help ticket and receive assistance from a mentor who has expertise in the area their issue pertains to. Mentors can view all help request tickets and pick up specific tickets that they are equipped to assist with. 
 
-In the project directory, you can run:
+## Technologies
 
-### `npm start`
+This application was created with Create React App. A complete list of the technologies used to build this application can be seen below:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+  ### Client Side:
+  -  React
+  -  Web Sockets
+  -  Cloudinary API
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+  ### Server-Side:
+  -  PostgreSQL
+  -  Express.js
 
-### `npm test`
+  ### Testing:
+  -  Storybook
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## Final Product - Screenshots
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+!["Login Screen"](https://github.com/manwelja/final-project-workorders/blob/main/docs/login_screen.png)
+!["Mentor Queue"](https://github.com/manwelja/final-project-workorders/blob/main/docs/mentor_queue.png)
+!["Student Workorders"](https://github.com/manwelja/final-project-workorders/blob/main/docs/student_view.png)
+!["New Workorder"](https://github.com/manwelja/final-project-workorders/blob/main/docs/workorder_new.png)
+!["View Workorder"](https://github.com/manwelja/final-project-workorders/blob/main/docs/workorder_view.png)
+!["Meeting Link"](https://github.com/manwelja/final-project-workorders/blob/main/docs/meeting_link.png)
+!["Feedback"](https://github.com/manwelja/final-project-workorders/blob/main/docs/feedback_view.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## SECTION - Using The Application
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  ### Student 
+  -  Login to the application and go to the top navigation bar. Click on the “My Workorders” button to view all help tickets you created. You can view each workorder’s status at the top section of the box.
+  -  Click the “New Workorder” button at the top navigation bar to create a new workorder. Enter the relevant information for the assistance requests in the fields, such as computer environment, language and framework, and upload a screenshot. 
 
-### `npm run eject`
+  ### Mentor
+-  Login to the application and go to the top navigation bar. Click on the “My Workorders” button to view all of your workorders. 
+-  On each individual ticket, you can view the student’s request history by clicking “View History” or view more information about the student’s issue by clicking “View”. 
+-  Once the ticket information is open for display, you can click the “Pick Up” button at the bottom right. This automatically changes the workorder’s status to “in progress”. 
+-  You can then choose to add a video meeting link URL. Clicking “send” will add that link to the workorder information that the student sees. 
+-  Once the workorder has been resolved, you can click “Close” at the bottom right to close out the workorder.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Authors
+  -  Emma Grannis (https://github.com/egrannis)
+  -  Aaron Au (https://github.com/chunloy)
+  -  Jennifer Manwell (https://github.com/manwelja)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Project Setup Instructions
 
-## Learn More
+### Workorder System API
+  1.  Clone the final-project-workorders-api (https://github.com/manwelja/final-project-workorders-api) repo. 
+  2.  Follow the setup instructions in the API README. 
+  3.  Run the API server as per the instructions in the final-project-workorders-api README. 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Workorder System
+  1. Create a new repository using this repository as a template.
+  2. Clone your repository onto your local device.
+  3. Install dependencies using the npm install command.
+  4. Create an .env file and complete it with the database and Cloudinary API connection information (see .env.example)
+  4. Start the API web server (https://github.com/manwelja/final-project-workorders-api)
+  5. Start the application using the npm start local command. The app will be served at http://localhost:8000/.
+  6. Go to http://localhost:8000 in your browser.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Dependencies
+  -  Axios 0.27.2 or above
+  -  websocket 1.0.34 or above
+  -  @cloudinary/react 1.4.1
+  -  @cloudinary/url-gen 1.8.0 or above
+  -  @fortawesome/free-regular-svg-icons 6.1.1 or above
+  -  @testing-library/jest-dom 5.16.4 or above
+  -  @testing-library/react 13.3.0 or above
+  -  @testing-library/user-event 13.5.0 or above
+  -  bootstrap 5.1.3 or above
+  -  classnames 2.3.1 or above
+  -  cloudinary 1.30.0 or above
+  -  cloudinary-core 2.12.3 or above
+  -  fns 1.0.0 or above
+  -  fs 
+  -  react 18.1.0 or above
+  -  react-bootstrap 2.4.0 or above
+  -  react-cookie 4.1.1 or above
+  -  react-dom 18.1.0 or above
+  -  react-scripts": "5.0.1 or above
+  -  react-select 5.3.2 or above
+  -  react-simple-star-rating 4.0.5 or above
+  -  react-stars 2.2.5 or above
+  -  reactstrap 9.1.1 or above
+  -  web-vitals 2.1.4 or above
